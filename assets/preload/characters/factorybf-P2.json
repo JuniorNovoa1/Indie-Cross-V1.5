@@ -107,7 +107,7 @@
 		400
 	],
 	"healthicon": "bf",
-	"flip_x": false,
+	"flip_x": true,
 	"healthbar_colors": [
 		49,
 		176,
@@ -118,5 +118,5 @@
 		0
 	],
 	"sing_duration": 4,
-	"scale": 1.6
+	"scale": 1.0
 }

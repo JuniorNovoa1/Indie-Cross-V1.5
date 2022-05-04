@@ -1,0 +1,29 @@
+{
+	"song": {
+		"speed": 2.7,
+		"stage": "stage",
+		"player1": "factorybf-P1",
+		"player2": "dad",
+		"player3": null,
+		"events": [
+			[
+				84600,
+				[
+					[
+						"Change Character",
+						"bf",
+						"factorybf-P2"
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": null,
+		"validScore": false,
+		"gfVersion": "gf",
+		"bpm": 200,
+		"arrowSkin": null,
+		"needsVoices": true,
+		"song": "imminent-demise"
+	}
+}
