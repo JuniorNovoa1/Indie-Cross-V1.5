@@ -1,5 +1,6 @@
 package;
 
+import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
@@ -8,20 +9,18 @@ import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
-import lime.system.System;
+import openfl.display.StageScaleMode;
 
 class Main extends Sprite
 {
 	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var gameHeight:Int = 720; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
-	var initialState:Class<FlxState> = TitleState; // The FlxState the game starts with.
+	var initialState:Class<FlxState> = Startup; // The FlxState the game starts with.
 	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
 	var framerate:Int = 60; // How many frames per second the game should run at.
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 	public static var fpsVar:FPS;
-
-	public static var path:String = System.applicationStorageDirectory;	
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -69,15 +68,14 @@ class Main extends Sprite
 		}
 
 		#if !debug
-		initialState = TitleState;
+		initialState = Startup;
 		#end
-
-		ClientPrefs.startControls();
-		
+	
+		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
 		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
-
+		
 		#if web
 		var str1:String = "HTML CRAP";
 		var vHandler = new VideoHandler();
@@ -87,7 +85,7 @@ class Main extends Sprite
 		vHandler.init2();
 		GlobalVideo.setVid(vHandler);
 		vHandler.source(ourSource);
-		#elseif sys
+		#elseif desktop
 		var str1:String = "WEBM SHIT"; 
 		var webmHandle = new WebmHandler();
 		webmHandle.source(ourSource);
@@ -97,11 +95,15 @@ class Main extends Sprite
 		GlobalVideo.setWebm(webmHandle);
 		#end
 
+		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
+		Lib.current.stage.align = "tl";
+		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
+		#end
 
 		#if html5
 		FlxG.autoPause = false;
