@@ -40,11 +40,11 @@ class NoteSplash extends FlxSprite
 		colorSwap.hue = hueColor;
 		colorSwap.saturation = satColor;
 		colorSwap.brightness = brtColor;
-		offset.set(10, 10);
+		offset.set(10*(ClientPrefs.noteSize/0.7), 10*(ClientPrefs.noteSize/0.7));
 
 		var animNum:Int = FlxG.random.int(1, 2);
 		animation.play('note' + note + '-' + animNum, true);
-		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
+		animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
 	}
 
 	function loadAnims(skin:String) {
@@ -58,7 +58,7 @@ class NoteSplash extends FlxSprite
 	}
 
 	override function update(elapsed:Float) {
-		if(animation.curAnim != null)if(animation.curAnim.finished) kill();
+		if(animation.curAnim.finished) kill();
 
 		super.update(elapsed);
 	}
