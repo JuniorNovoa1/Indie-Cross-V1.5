@@ -1753,10 +1753,6 @@ class PlayState extends MusicBeatState
 		songLength = FlxG.sound.music.length;
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-		if(SONG.song.toLowerCase( )== 'imminent-demise')
-		{
-			timeBar = 120000;
-		}
 
 		#if desktop
 		// Updating Discord Rich Presence (with Time Left)

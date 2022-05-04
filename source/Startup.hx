@@ -43,8 +43,7 @@ class Startup extends MusicBeatState
 	{
 		FlxG.mouse.visible = false;
 
-		var bg:FlxSprite = new FlxSprite();
-		bg.loadGraphic(Paths.image('Loading_screen', 0, 0));
+		var bg:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('Loading_screen'));
 		add(bg);
 
 		bitmapData = new Map<String, FlxGraphic>();

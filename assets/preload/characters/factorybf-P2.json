@@ -1,0 +1,122 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				-27,
+				16
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"indices": [],
+			"name": "L-Miss"
+		},
+		{
+			"offsets": [
+				-25,
+				-32
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"indices": [],
+			"name": "D-Miss"
+		},
+		{
+			"offsets": [
+				-57,
+				105
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUPmiss",
+			"indices": [],
+			"name": "U-Miss"
+		},
+		{
+			"offsets": [
+				9,
+				15
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"indices": [],
+			"name": "R-Miss"
+		},
+		{
+			"offsets": [
+				-5,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "BF annoyed instance 1"
+		},
+		{
+			"offsets": [
+				14,
+				-5
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "BF NOTE LEFT copy instance 1"
+		},
+		{
+			"offsets": [
+				-52,
+				43
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "BF NOTE UP copy instance 1"
+		},
+		{
+			"offsets": [
+				-24,
+				-35
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "BF NOTE DOWN copy instance 1"
+		},
+		{
+			"offsets": [
+				-39,
+				-7
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "BF NOTE RIGHT copy instance 1"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/BF_FINAL",
+	"position": [
+		0,
+		400
+	],
+	"healthicon": "bf",
+	"flip_x": false,
+	"healthbar_colors": [
+		49,
+		176,
+		209
+	],
+	"camera_position": [
+		-200,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1.6
+}
