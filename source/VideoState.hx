@@ -34,6 +34,7 @@ class VideoState extends MusicBeatState
 	public var pauseText:String = "Press P To Pause/Unpause";
 	public var autoPause:Bool = false;
 	public var musicPaused:Bool = false;
+	public static var midsong:Bool = false;
 
 	public function new(source:String, toTrans:FlxState, frameSkipLimit:Int = -1, autopause:Bool = false)
 	{
@@ -216,6 +217,20 @@ class VideoState extends MusicBeatState
 			}
 			FlxG.autoPause = true;
 			FlxG.switchState(transClass);
+		}
+		else if (controls.ACCEPT || GlobalVideo.get().ended && midsong)
+		{
+			notDone = false;
+			FlxG.sound.music.volume = fuckingVolume;
+			txt.text = pauseText;
+			if (musicPaused)
+			{
+				musicPaused = false;
+				FlxG.sound.music.resume();
+			}
+			FlxG.autoPause = true;
+			FlxG.switchState(transClass);
+			PlayState.bendyaftercutscene = true; //useless
 		}
 		
 		if (GlobalVideo.get().played || GlobalVideo.get().restarted)

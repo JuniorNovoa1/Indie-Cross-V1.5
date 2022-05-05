@@ -245,9 +245,12 @@ class PlayState extends MusicBeatState
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
 
+	//bendy cutscene
+	public static var bendyaftercutscene:Bool = false;
+
 	//bendy sprites
-	var musicbox:BGSprite;
-	var light:BGSprite;
+	var musicbox:FlxSprite;
+	var light:FlxSprite;
 
 	#if desktop
 	// Discord RPC variables
@@ -372,6 +375,8 @@ class PlayState extends MusicBeatState
 					curStage = 'school';
 				case 'thorns':
 					curStage = 'schoolEvil';
+				case 'imminent-demise':
+					curStage = 'bendy-p1';
 				default:
 					curStage = 'stage';
 			}
@@ -451,20 +456,33 @@ class PlayState extends MusicBeatState
 					add(stageCurtains);
 				}
 			case 'bendy-p1':
-				var bg:BGSprite = new BGSprite('first/BG01', -600, -200, 0.9, 0.9);
+				var bg:FlxSprite = new FlxSprite(200, 200).loadGraphic(Paths.image('first/BG01'));
+				bg.updateHitbox();
 				add(bg);
 
-				musicbox = new BGSprite('first/MusicBox', 0, 0, 0.9, 0.9, ['Music box thingy instance 1'], true);
+				musicbox = new FlxSprite(200, 200);
+				musicbox.frames = Paths.getSparrowAtlas('first/MusicBox');
+				musicbox.animation.addByPrefix('idle', "Music box thingy instance 1", 24);
+				musicbox.animation.play('idle');
+				musicbox.updateHitbox();
 				add(musicbox);
 
-				light = new BGSprite('first/Light(Add-Blend)', 0, 0, 0.9, 0.9, ['fezt instance 1'], true);
+				light = new FlxSprite(200, 200);
+				light.frames = Paths.getSparrowAtlas('first/Light(Add-Blend)');
+				light.animation.addByPrefix('idle', "fezt instance 1", 24);
+				light.animation.play('idle');
+				light.updateHitbox();
 				add(light);
 
-				var pillar:BGSprite = new BGSprite('first/Pillar', 0, 0, 0.9, 0.9);
+				var pillar:FlxSprite = new FlxSprite(200, 200).loadGraphic(Paths.image('first/Pillar'));
+				pillar.updateHitbox();
 				add(pillar);
 
-				var bendy:BGSprite = new BGSprite('first/Boi', 0, 0, 0.9, 0.9);
+				var bendy:FlxSprite = new FlxSprite(200, 200).loadGraphic(Paths.image('first/Boi'));
+				bendy.updateHitbox();
 				add(bendy);
+
+				//THIS IS NOT APPEARING IM DONE WITH THIS SHIT.
 		}
 
 		if(isPixelStage) {
@@ -774,33 +792,75 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 		moveCameraSection(0);
 
-		healthBarBG = new AttachedSprite('healthBar');
+		if (curSong == 'imminent-demise')
+		{
+			healthBarBG = new AttachedSprite('healthbar/bendyhealthbar');
+		}
+		else
+		{
+			healthBarBG = new AttachedSprite('healthBar');
+		}
 		healthBarBG.y = FlxG.height * 0.89;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		healthBarBG.visible = !ClientPrefs.hideHud;
-		healthBarBG.xAdd = -4;
-		healthBarBG.yAdd = -4;
-		add(healthBarBG);
+		if (curSong == 'imminent-demise') //location
+		{
+			healthBarBG.xAdd = -4;
+			healthBarBG.yAdd = -4;
+		}
+		else
+		{
+			healthBarBG.xAdd = -4;
+			healthBarBG.yAdd = -4;
+		}
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
+		if (curSong == 'imminent-demise') //location again
+		{
+			healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y - 100, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
+			'health', 0, 2);	
+		}
+		else
+		{
+			healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
+		}
 		healthBar.scrollFactor.set();
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
+
+		if (curSong == 'imminent-demise') //scale
+		{
+            healthBar.scale.set(0.85, 0.25); //x then y lol
+		}
 		add(healthBar);
+		add(healthBarBG);
 		healthBarBG.sprTracker = healthBar;
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		iconP1.y = healthBar.y - 75;
+		if (curSong == 'imminent-demise') //icon for player
+		{
+			iconP1.y = healthBar.y + 8;
+		}
+		else
+		{
+			iconP1.y = healthBar.y - 75;
+		}
 		iconP1.visible = !ClientPrefs.hideHud;
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
-		iconP2.y = healthBar.y - 75;
+		if (curSong == 'imminent-demise') //icon for enemy
+		{
+			iconP2.y = healthBar.y + 8;
+		}
+		else
+		{
+			iconP2.y = healthBar.y - 75;
+		}
 		iconP2.visible = !ClientPrefs.hideHud;
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
 		add(iconP2);
@@ -932,7 +992,10 @@ class PlayState extends MusicBeatState
 				case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
-
+				case 'imminent-demise':
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.webm", new PlayState()));
+					startCountdown();
+					if(bendyaftercutscene) startOnTime = 124000;
 				default:
 					startCountdown();
 			}
@@ -1307,7 +1370,14 @@ class PlayState extends MusicBeatState
 			}
 
 			startedCountdown = true;
-			Conductor.songPosition = 0;
+			if (!bendyaftercutscene)
+			{
+				Conductor.songPosition = 0;
+			}
+			else
+			{
+				Conductor.songPosition = 943;
+			}
 			Conductor.songPosition -= Conductor.crochet * 5;
 			setOnLuas('startedCountdown', true);
 			callOnLuas('onCountdownStarted', []);
@@ -2932,6 +3002,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
+		bendyaftercutscene = false;
 		timeBarBG.visible = false;
 		timeBar.visible = false;
 		timeTxt.visible = false;
@@ -3986,10 +4057,13 @@ class PlayState extends MusicBeatState
 		{
 			switch (curStep)
 			{
-				case 25:
-					FlxTween.tween(this, {timeBar: songLength}, 3);
+				case 940:
+					VideoState.midsong = true;
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.5.webm", new PlayState()));
+					//THIS IS WHERE I CAN'T FIGURE OUT HOW TO PLAY THE GAME AFTER THE CUTSCENE WITHOUT HAVING TO REPLAY SONG
 			}
 		}
+
 		setOnLuas('curStep', curStep);
 		callOnLuas('onStepHit', []);
 	}

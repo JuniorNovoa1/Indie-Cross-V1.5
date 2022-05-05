@@ -1,0 +1,89 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				54,
+				1
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "Scream",
+			"indices": [],
+			"name": "Scream instance 1"
+		},
+		{
+			"offsets": [
+				119,
+				103
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "Up instance 1"
+		},
+		{
+			"offsets": [
+				238,
+				11
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Left instance 1"
+		},
+		{
+			"offsets": [
+				74,
+				-35
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "bendydown instance 1"
+		},
+		{
+			"offsets": [
+				53,
+				-19
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "B-Right instance 1"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-5,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Bendy Idle instance 1",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Bendy_remastered",
+	"position": [
+		0,
+		220
+	],
+	"healthicon": "bendyP1",
+	"flip_x": false,
+	"healthbar_colors": [
+	    0,
+		0,
+		0
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}
