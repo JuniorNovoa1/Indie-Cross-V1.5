@@ -3,76 +3,87 @@
 		{
 			"loop": false,
 			"offsets": [
+				142,
+				-9
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-59,
+				-31
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-7,
+				88
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "Up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-38,
+				-13
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Right",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
 				0,
 				0
 			],
 			"anim": "idle",
 			"fps": 24,
-			"name": "Cuphead_standing instance",
+			"name": "Cuphead_s",
 			"indices": []
 		},
 		{
-			"loop": false,
 			"offsets": [
-				134,
-				10
+				238,
+				115
 			],
-			"anim": "singLEFT",
+			"indices": [],
 			"fps": 24,
-			"name": "Cupleft instance",
-			"indices": []
-		},
-		{
+			"anim": "hit",
 			"loop": false,
-			"offsets": [
-				-41,
-				-17
-			],
-			"anim": "singDOWN",
-			"fps": 24,
-			"name": "CupON THE GROUND NOW instance",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				32,
-				40
-			],
-			"anim": "singUP",
-			"fps": 24,
-			"name": "CupUp instance",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-18,
-				17
-			],
-			"anim": "singRIGHT",
-			"fps": 24,
-			"name": "CupyRight instance",
-			"indices": []
+			"name": "Hurt"
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/cuphead",
+	"image": "characters/Cuphead_Remastered",
 	"position": [
-		0,
-		0
+		20,
+		350
 	],
-	"healthicon": "cuphead",
+	"healthicon": "cup",
 	"flip_x": false,
 	"healthbar_colors": [
-		215,
-		35,
-		106
+		255,
+		255,
+		255
 	],
 	"camera_position": [
 		0,
-		0
+		-90
 	],
 	"sing_duration": 6.1,
-	"scale": 1
+	"scale": 1.8
 }
