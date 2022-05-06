@@ -6,13 +6,13 @@
 	],
 
 	"weekCharacters": [
-		"dad",
-		"bf",
-		"gf"
+		"Bendy_Gaming",
+		"",
+		""
 	],
-	"weekBackground": "stage",
+	"weekBackground": "Bendy_Gaming",
 
-	"storyName": "Daddy Dearest",
+	"storyName": "Vs Bendy",
 	"weekBefore": "tutorial",
 	"weekName": "Week 1",
 	"startUnlocked": true,

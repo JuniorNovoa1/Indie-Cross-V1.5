@@ -78,8 +78,8 @@ class MainMenuState extends MusicBeatState
 		menuItems.add(story);
 		story.scrollFactor.set();
 		story.antialiasing = ClientPrefs.globalAntialiasing;
-		story.setGraphicSize(Std.int(freeplay.width * 0.7));
-		story.y += 300;		
+		story.setGraphicSize(Std.int(story.width * 0.7));
+		story.y += 230;		
 		story.x -= 200;
 		story.alpha = 0.60;
 
@@ -315,8 +315,8 @@ class MainMenuState extends MusicBeatState
 
 		switch (optionShit[curSelected])
 		{
-			case 'story':
-				story.alpha = 1.2;
+			case 'story_mode':
+				story.alpha = 1.5;
 				freeplay.alpha = 1; 
 				awards.alpha = 0.6;				
 				credits.alpha = 0.6;  
