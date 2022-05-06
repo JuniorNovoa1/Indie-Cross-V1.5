@@ -6,7 +6,6 @@ import Discord.DiscordClient;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.FlxCamera;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -19,25 +18,27 @@ import flixel.util.FlxColor;
 import lime.app.Application;
 import Achievements;
 import editors.MasterEditorMenu;
-import flixel.input.keyboard.FlxKey;
+import flixel.FlxCamera;
 
 using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '0.5.2h'; //This is also used for Discord RPC
-	public static var curSelected:Int = 0;
-
-	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
-	
+
+	public static var psychEngineVersion:String = '0.4.2';
+	public static var curSelected:Int = 0;
+
 	var optionShit:Array<String> = ['freeplay', 'options', 'credits', 'awards'];
+	var menuItems:FlxTypedGroup<FlxSprite>;
 	var freeplay:FlxSprite;
 	var options:FlxSprite;
 	var credits:FlxSprite;
 	var awards:FlxSprite;
+	var story:FlxSprite;
 
+	var storySplash:FlxSprite;
 	var freeplaySplash:FlxSprite;
 	var optionsSplash:FlxSprite;
 	var creditsSplash:FlxSprite;
@@ -48,14 +49,11 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
-		WeekData.loadTheFirstEnabledMod();
-
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
-		menuItems = new FlxTypedGroup<FlxSprite>();
-		add(menuItems);
+
 		camGame = new FlxCamera();
 		camAchievement = new FlxCamera();
 		camAchievement.bgColor.alpha = 0;
@@ -69,12 +67,21 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuBG'));
+		bg = new FlxSprite().loadGraphic(Paths.image('BG'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
+
+		story = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Story mode'));
+		menuItems.add(story);
+		story.scrollFactor.set();
+		story.antialiasing = ClientPrefs.globalAntialiasing;
+		story.setGraphicSize(Std.int(freeplay.width * 0.7));
+		story.y += 300;		
+		story.x -= 200;
+		story.alpha = 0.60;
 
 		freeplay = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Freeplay'));
 		menuItems.add(freeplay);
@@ -110,7 +117,16 @@ class MainMenuState extends MusicBeatState
 		awards.setGraphicSize(Std.int(awards.width * 0.7));
 		awards.y += 230;
 		awards.x -= 200;
-		awards.alpha = 0.60;				
+		awards.alpha = 0.60;	
+		
+		storySplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Story mode flash'));
+		storySplash.scrollFactor.set();
+		storySplash.antialiasing = ClientPrefs.globalAntialiasing;
+		storySplash.setGraphicSize(Std.int(storySplash.width * 0.7));
+		storySplash.x -= 200;
+		storySplash.y += 230;
+		storySplash.alpha = 0;
+		add(storySplash);
 		
 		freeplaySplash = new FlxSprite(-100, -400).loadGraphic(Paths.image('mainmenu/opened/Freeplay flash'));
 		freeplaySplash.scrollFactor.set();
@@ -157,21 +173,21 @@ class MainMenuState extends MusicBeatState
 		sketch.y -= 200;
 		add(sketch);
 
-	var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
-	versionShit.scrollFactor.set();
-	versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-	add(versionShit);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
+		versionShit.scrollFactor.set();
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(versionShit);
 
-	var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'), 12);
-	versionShit.scrollFactor.set();
-	versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-	add(versionShit);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'), 12);
+		versionShit.scrollFactor.set();
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(versionShit);
 
-	var IndieLogo:FlxSprite = new FlxSprite(-310, -170).loadGraphic(Paths.image('mainmenu/LOGO'));
-	IndieLogo.updateHitbox();
-	IndieLogo.setGraphicSize(Std.int(IndieLogo.width * 0.7));
-	IndieLogo.antialiasing = ClientPrefs.globalAntialiasing;
-	add(IndieLogo);
+		var IndieLogo:FlxSprite = new FlxSprite(-310, -170).loadGraphic(Paths.image('mainmenu/LOGO'));
+		IndieLogo.updateHitbox();
+		IndieLogo.setGraphicSize(Std.int(IndieLogo.width * 0.7));
+		IndieLogo.antialiasing = ClientPrefs.globalAntialiasing;
+		add(IndieLogo);
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -190,6 +206,10 @@ class MainMenuState extends MusicBeatState
 		}
 		#end
 
+		#if mobileC
+		addVirtualPad(UP_DOWN, A_B_C);
+		#end
+
 		super.create();
 	}
 
@@ -201,7 +221,7 @@ class MainMenuState extends MusicBeatState
 		trace('Giving achievement "friday_night_play"');
 	}
 	#end
-
+	
 	var selectedSomethin:Bool = false;
 
 	override function update(elapsed:Float)
@@ -210,8 +230,6 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
-
-		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
 
 		if (!selectedSomethin)
 		{
@@ -236,111 +254,93 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == 'donate')
+				selectedSomethin = true;
+				FlxG.sound.play(Paths.sound('confirmMenu'));
+				
+				if (curSelected == 0) 
 				{
-					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
-				}
-				else
+					FlxTween.tween(freeplaySplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(freeplaySplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
+				} 
+				else if (curSelected == 1) 
 				{
-					selectedSomethin = true;
-					FlxG.sound.play(Paths.sound('confirmMenu'));
-
-					menuItems.forEach(function(spr:FlxSprite)
-					{
-						if (curSelected != spr.ID)
-						{
-							FlxTween.tween(spr, {alpha: 0}, 0.4, {
-								ease: FlxEase.quadOut,
-								onComplete: function(twn:FlxTween)
-								{
-									spr.kill();
-								}
-							});
-						}
-						else
-						{
-							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
-							{
-								var daChoice:String = optionShit[curSelected];
-
-								switch (daChoice)
-								{
-									case 'story_mode':
-										MusicBeatState.switchState(new StoryMenuState());
-									case 'freeplay':
-										MusicBeatState.switchState(new FreeplayState());
-									//#if MODS_ALLOWED
-									//case 'mods':
-									//	MusicBeatState.switchState(new ModsMenuState());
-									//#end
-									case 'awards':
-										MusicBeatState.switchState(new AchievementsMenuState());
-									case 'credits':
-										MusicBeatState.switchState(new CreditsState());
-									//case 'options':
-									//	LoadingState.loadAndSwitchState(new options.OptionsState());
-								}
-							});
-						}
-					});
+					FlxTween.tween(optionsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(optionsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
 				}
+				else if (curSelected == 2) 
+				{
+					FlxTween.tween(creditsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(creditsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
+				}
+				else 
+				{
+					FlxTween.tween(awardsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(awardsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
+				}									
+			}
+			else if (FlxG.keys.justPressed.SEVEN #if mobileC || _virtualpad.buttonC.justPressed #end)
+			{
+				selectedSomethin = true;
+				MusicBeatState.switchState(new MasterEditorMenu());
 			}
 		}
 
 		super.update(elapsed);
 
-		menuItems.forEach(function(spr:FlxSprite)
-		{
-			spr.screenCenter(X);
-		});
 	}
 
-	function changeItem(huh:Int = 0)
+	public function goToState()
+	{
+		var daChoice:String = optionShit[curSelected];
+
+		switch (daChoice)
+		{
+			case 'story_mode':
+				MusicBeatState.switchState(new StoryMenuState());
+			case 'freeplay':
+				MusicBeatState.switchState(new FreeplayState());
+			case 'options':
+				MusicBeatState.switchState(new OptionsState());
+			case 'credits':
+				MusicBeatState.switchState(new CreditsState());	
+			case 'awards':
+				MusicBeatState.switchState(new AchievementsMenuState());				
+		}
+	}
+
+	public function changeItem(huh:Int = 0)
 	{
 		curSelected += huh;
 
 		if (curSelected >= menuItems.length)
 			curSelected = 0;
 		if (curSelected < 0)
-			curSelected = menuItems.length - 1;
+			curSelected = menuItems.length - 1;	
 
-		menuItems.forEach(function(spr:FlxSprite)
+		switch (optionShit[curSelected])
 		{
-			spr.animation.play('idle');
-			spr.updateHitbox();
-
-			if (spr.ID == curSelected)
-			{
-				spr.animation.play('selected');
-				var add:Float = 0;
-				if(menuItems.length > 4) {
-					add = menuItems.length * 8;
-				}
-				spr.centerOffsets();
-			}
-			switch (optionShit[curSelected])
-			{
-				case 'freeplay':
-					freeplay.alpha = 1; 
-					awards.alpha = 0.6;				
-					credits.alpha = 0.6;  
-					options.alpha = 0.6; 				
-				case 'options':			
-					options.alpha = 1; 
-					freeplay.alpha = 0.6;
-					awards.alpha = 0.6;  
-					credits.alpha = 0.6; 
-				case 'credits':		
-					credits.alpha = 1; 
-					options.alpha = 0.6; 
-					freeplay.alpha = 0.6;
-					awards.alpha = 0.6;  
-				case 'awards':	
-					awards.alpha = 1;				
-					credits.alpha = 0.6; 
-					options.alpha = 0.6; 
-					freeplay.alpha = 0.6; 				
-			}
-		});
+			case 'story':
+				story.alpha = 1.2;
+				freeplay.alpha = 1; 
+				awards.alpha = 0.6;				
+				credits.alpha = 0.6;  
+				options.alpha = 0.6; 
+			case 'freeplay':
+				freeplay.alpha = 1; 
+				awards.alpha = 0.6;				
+				credits.alpha = 0.6;  
+				options.alpha = 0.6; 				
+			case 'options':			
+				options.alpha = 1; 
+				freeplay.alpha = 0.6;
+				awards.alpha = 0.6;  
+				credits.alpha = 0.6; 
+			case 'credits':		
+				credits.alpha = 1; 
+				options.alpha = 0.6; 
+				freeplay.alpha = 0.6;
+				awards.alpha = 0.6;  
+			case 'awards':	
+				awards.alpha = 1;				
+				credits.alpha = 0.6; 
+				options.alpha = 0.6; 
+				freeplay.alpha = 0.6; 				
+		}						
 	}
 }
