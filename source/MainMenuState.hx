@@ -30,7 +30,7 @@ class MainMenuState extends MusicBeatState
 	public static var psychEngineVersion:String = '0.4.2';
 	public static var curSelected:Int = 0;
 
-	var optionShit:Array<String> = ['freeplay', 'options', 'credits', 'awards'];
+	var optionShit:Array<String> = ['story_mode' ,'freeplay', 'options', 'credits', 'awards'];
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	var freeplay:FlxSprite;
 	var options:FlxSprite;
