@@ -27,7 +27,7 @@ class MainMenuState extends MusicBeatState
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
 
-	public static var psychEngineVersion:String = '0.4.2';
+	public static var psychEngineVersion:String = '0.5.2h';
 	public static var IndieCrossVersion:String = '1.5';
 	public static var curSelected:Int = 0;
 
