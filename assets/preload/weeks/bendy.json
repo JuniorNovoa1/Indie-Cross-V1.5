@@ -1,0 +1,22 @@
+{
+	"songs": [
+		["Imminent-demise", "dad", [106, 80, 0]],
+		["Fresh", "dad", [106, 80, 0]],
+		["Dad Battle", "dad", [106, 80, 0]]
+	],
+
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"weekBackground": "stage",
+
+	"storyName": "Bendy",
+	"weekBefore": "sans",
+	"weekName": "Bendy Week",
+	"startUnlocked": true,
+
+	"hideStoryMode": false,
+	"hideFreeplay": false
+}

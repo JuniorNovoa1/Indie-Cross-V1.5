@@ -28,9 +28,10 @@ class MainMenuState extends MusicBeatState
 	private var camAchievement:FlxCamera;
 
 	public static var psychEngineVersion:String = '0.4.2';
+	public static var IndieCrossVersion:String = '1.5';
 	public static var curSelected:Int = 0;
 
-	var optionShit:Array<String> = ['story_mode' ,'freeplay', 'options', 'credits', 'awards'];
+	var optionShit:Array<String> = ['story_mode', 'freeplay', 'options', 'credits', 'awards'];
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	var freeplay:FlxSprite;
 	var options:FlxSprite;
@@ -115,7 +116,7 @@ class MainMenuState extends MusicBeatState
 		awards.scrollFactor.set();
 		awards.antialiasing = ClientPrefs.globalAntialiasing;
 		awards.setGraphicSize(Std.int(awards.width * 0.7));
-		awards.y += 230;
+		awards.y += 200;
 		awards.x -= 200;
 		awards.alpha = 0.60;	
 		
@@ -159,7 +160,7 @@ class MainMenuState extends MusicBeatState
 		awardsSplash.scrollFactor.set();
 		awardsSplash.antialiasing = ClientPrefs.globalAntialiasing;
 		awardsSplash.setGraphicSize(Std.int(awardsSplash.width * 0.7));
-		awardsSplash.y += 230;
+		awardsSplash.y += 200;
 		awardsSplash.x -= 200;
 		awardsSplash.alpha = 0;
 		add(awardsSplash);					
@@ -169,16 +170,16 @@ class MainMenuState extends MusicBeatState
 		sketch.animation.addByPrefix('bump', 'menu bru', 3); 
 		sketch.animation.play('bump');
 		sketch.setGraphicSize(Std.int(sketch.width * 0.7));
-		sketch.x -= 300;
+		sketch.x -= 340;
 		sketch.y -= 200;
 		add(sketch);
 
 		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
+		//add(versionShit);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' v" + Application.current.meta.get('version'), 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 24, 0, "INDIE CROSS V" + IndieCrossVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -193,34 +194,12 @@ class MainMenuState extends MusicBeatState
 
 		changeItem();
 
-		#if ACHIEVEMENTS_ALLOWED
-		Achievements.loadAchievements();
-		var leDate = Date.now();
-		if (leDate.getDay() == 5 && leDate.getHours() >= 18) {
-			var achieveID:Int = Achievements.getAchievementIndex('friday_night_play');
-			if(!Achievements.isAchievementUnlocked(Achievements.achievementsStuff[achieveID][2])) { //It's a friday night. WEEEEEEEEEEEEEEEEEE
-				Achievements.achievementsMap.set(Achievements.achievementsStuff[achieveID][2], true);
-				giveAchievement();
-				ClientPrefs.saveSettings();
-			}
-		}
-		#end
-
 		#if mobileC
 		addVirtualPad(UP_DOWN, A_B_C);
 		#end
 
 		super.create();
 	}
-
-	#if ACHIEVEMENTS_ALLOWED
-	// Unlocks "Freaky on a Friday Night" achievement
-	function giveAchievement() {
-		add(new AchievementObject('friday_night_play', camAchievement));
-		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-		trace('Giving achievement "friday_night_play"');
-	}
-	#end
 	
 	var selectedSomethin:Bool = false;
 
@@ -259,20 +238,24 @@ class MainMenuState extends MusicBeatState
 				
 				if (curSelected == 0) 
 				{
-					FlxTween.tween(freeplaySplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(freeplaySplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
+					FlxTween.tween(storySplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(storySplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) {goToState();}}); }});
 				} 
-				else if (curSelected == 1) 
+				else if (curSelected == 1)
 				{
-					FlxTween.tween(optionsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(optionsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
+					FlxTween.tween(freeplaySplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(freeplaySplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) {goToState();}}); }});
 				}
-				else if (curSelected == 2) 
+				else if (curSelected == 2)
 				{
-					FlxTween.tween(creditsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(creditsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
+					FlxTween.tween(optionsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(optionsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) {goToState();}}); }});
 				}
-				else 
+				else if (curSelected == 3)
 				{
-					FlxTween.tween(awardsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(awardsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { goToState(); }}); }});
-				}									
+					FlxTween.tween(creditsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(creditsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) {goToState();}}); }});
+				}
+				else
+				{
+					FlxTween.tween(awardsSplash, {alpha: 1}, 0.1, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) { FlxTween.tween(awardsSplash, {alpha: 0}, 0.4, {ease: FlxEase.linear, onComplete: function(twn:FlxTween) {goToState();}}); }});
+				}								
 			}
 			else if (FlxG.keys.justPressed.SEVEN #if mobileC || _virtualpad.buttonC.justPressed #end)
 			{
@@ -316,31 +299,35 @@ class MainMenuState extends MusicBeatState
 		switch (optionShit[curSelected])
 		{
 			case 'story_mode':
-				story.alpha = 1.5;
-				freeplay.alpha = 1; 
+				story.alpha = 1;
+				freeplay.alpha = 0.6; 
 				awards.alpha = 0.6;				
 				credits.alpha = 0.6;  
 				options.alpha = 0.6; 
 			case 'freeplay':
+				story.alpha = 0.6;
 				freeplay.alpha = 1; 
 				awards.alpha = 0.6;				
 				credits.alpha = 0.6;  
 				options.alpha = 0.6; 				
-			case 'options':			
-				options.alpha = 1; 
-				freeplay.alpha = 0.6;
+			case 'options':		
+				story.alpha = 0.6;
+				freeplay.alpha = 0.6;	
 				awards.alpha = 0.6;  
 				credits.alpha = 0.6; 
-			case 'credits':		
-				credits.alpha = 1; 
-				options.alpha = 0.6; 
+				options.alpha = 1; 
+			case 'credits':	
+				story.alpha = 0.6;
 				freeplay.alpha = 0.6;
-				awards.alpha = 0.6;  
-			case 'awards':	
+				awards.alpha = 0.6;		
+				credits.alpha = 1; 
+				options.alpha = 0.6;  
+			case 'awards':
+				story.alpha = 0.6;
+				freeplay.alpha = 0.6;	
 				awards.alpha = 1;				
 				credits.alpha = 0.6; 
-				options.alpha = 0.6; 
-				freeplay.alpha = 0.6; 				
+				options.alpha = 0.6; 				
 		}						
 	}
 }

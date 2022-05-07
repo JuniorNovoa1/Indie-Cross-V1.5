@@ -7,6 +7,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
+import flixel.math.FlxPoint;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
@@ -49,6 +50,28 @@ class StoryMenuState extends MusicBeatState
 
 	var loadedWeeks:Array<WeekData> = [];
 
+	//sprites :)
+	var bg:FlxSprite;
+	var sans:FlxSprite;
+	var cuphead:FlxSprite;
+	var bendy:FlxSprite;
+	var panel:FlxSprite;
+	var Difficulty:FlxSprite;
+	var DifficultyMechanic:FlxSprite;
+	var week1:FlxSprite;
+	var week1s:FlxSprite;
+	var week2:FlxSprite;
+	var week2s:FlxSprite;
+	var week3:FlxSprite;
+	var week3s:FlxSprite;
+	var storytext:FlxSprite;
+	var scorepanel:FlxSprite;
+	var The_Thing:FlxSprite; //loading screen
+
+	//mechanic shit
+	var Shifting:Bool = false;
+	var MechanicSelection:Int = 1;
+
 	override function create()
 	{
 		Paths.clearStoredMemory();
@@ -59,9 +82,6 @@ class StoryMenuState extends MusicBeatState
 		if(curWeek >= WeekData.weeksList.length) curWeek = 0;
 		persistentUpdate = persistentDraw = true;
 
-		scoreText = new FlxText(10, 10, 0, "SCORE: 49324858", 36);
-		scoreText.setFormat("VCR OSD Mono", 32);
-
 		txtWeekTitle = new FlxText(FlxG.width * 0.7, 10, 0, "", 32);
 		txtWeekTitle.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, RIGHT);
 		txtWeekTitle.alpha = 0.7;
@@ -69,7 +89,7 @@ class StoryMenuState extends MusicBeatState
 		var rankText:FlxText = new FlxText(0, 10);
 		rankText.text = 'RANK: GREAT';
 		rankText.setFormat(Paths.font("vcr.ttf"), 32);
-		rankText.size = scoreText.size;
+		//rankText.size = scoreText.size;
 		rankText.screenCenter(X);
 
 		var ui_tex = Paths.getSparrowAtlas('campaign_menu_UI_assets');
@@ -179,8 +199,136 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist.color = 0xFFe55777;
 		add(txtTracklist);
 		// add(rankText);
-		add(scoreText);
 		add(txtWeekTitle);
+
+		//so no vision :)
+		//difficultySelectors.visible = false;
+		grpWeekText.visible = false;
+		blackBarThingie.visible = false;
+	    grpLocks.visible = false;
+		bgYellow.visible = false;
+		bgSprite.visible = false;
+		grpWeekCharacters.visible = false;
+		tracksSprite.visible = false;
+		txtTracklist.visible = false;
+		txtWeekTitle.visible = false;
+
+		bg = new FlxSprite(-250, -200).loadGraphic(Paths.image('story mode/BG'));
+		bg.antialiasing = ClientPrefs.globalAntialiasing;
+		bg.scale.set(0.6, 0.65);
+		bg.visible = false;
+		add(bg);
+
+		cuphead = new FlxSprite(675, 50); //how did this take me 2 hours to figure out
+		cuphead.frames = Paths.getSparrowAtlas('story mode/Cuphead_Gaming');
+		cuphead.animation.addByPrefix('cup', 'Cuphead Gaming instance 1', 24); 
+		cuphead.animation.play('cup');
+		cuphead.antialiasing = ClientPrefs.globalAntialiasing;
+		cuphead.scale.set(0.75, 0.75);
+		cuphead.visible = false;
+		add(cuphead);
+
+		sans = new FlxSprite(0, -50); //how did this take me 2 hours to figure out
+		sans.frames = Paths.getSparrowAtlas('story mode/SansStorymodeMenu');
+		sans.animation.addByPrefix('sansanim', 'Saness instance 1', 24); 
+		sans.animation.play('sansanim');
+		sans.antialiasing = ClientPrefs.globalAntialiasing;
+		sans.visible = false;
+		add(sans);
+
+		bendy = new FlxSprite(-250, -225); //how did this take me 2 hours to figure out
+		bendy.frames = Paths.getSparrowAtlas('story mode/Bendy_Gaming');
+		bendy.animation.addByPrefix('bendycreep', 'Creepy shit instance 1', 24); 
+		bendy.animation.play('bendycreep');
+		bendy.antialiasing = ClientPrefs.globalAntialiasing;
+		bendy.scale.set(0.6, 0.65);
+		bendy.visible = false;
+		add(bendy);
+
+		panel = new FlxSprite(0, -350).loadGraphic(Paths.image('story mode/Left-Panel_above BGs'));
+		panel.antialiasing = ClientPrefs.globalAntialiasing;
+		panel.screenCenter();
+		add(panel);
+
+		Difficulty = new FlxSprite(-10, 175); //how did this take me 2 hours to figure out
+		Difficulty.frames = Paths.getSparrowAtlas('story mode/Difficulties');
+		Difficulty.animation.addByPrefix('easy', 'Chart Easy instance 1', 24); 
+		Difficulty.animation.addByPrefix('normal', 'Chart Normal instance 1', 24);
+		Difficulty.animation.addByPrefix('hard', 'Chart Hard instance 1', 24);
+		Difficulty.animation.play('normal');
+		Difficulty.antialiasing = ClientPrefs.globalAntialiasing;
+		//Difficulty.scale.set(0.6, 0.65);
+		add(Difficulty);
+
+		DifficultyMechanic = new FlxSprite(-10, 250); //how did this take me 2 hours to figure out
+		DifficultyMechanic.frames = Paths.getSparrowAtlas('story mode/MechanicDifficulty');
+		DifficultyMechanic.animation.addByPrefix('mechanic-off', 'Mechs Dis instance 1', 24);
+		DifficultyMechanic.animation.addByPrefix('mechanic-standard', 'Mechs Hard instance 1', 24);
+		DifficultyMechanic.animation.addByPrefix('mechanic-hard', 'Mechs Hell instance 1', 24);
+		DifficultyMechanic.animation.play('mechanic-standard');
+		DifficultyMechanic.antialiasing = ClientPrefs.globalAntialiasing;
+		//Difficulty.scale.set(0.6, 0.65);
+		add(DifficultyMechanic);
+
+		week1 = new FlxSprite(-215, -125).loadGraphic(Paths.image('story mode/Weeks/Week1'));
+		week1.antialiasing = ClientPrefs.globalAntialiasing;
+		week1.scale.set(0.75, 0.75);
+		week1.visible = false;
+		add(week1);
+
+		week1s = new FlxSprite(-215, -125).loadGraphic(Paths.image('story mode/Weeks/Week1_selected'));
+		week1s.antialiasing = ClientPrefs.globalAntialiasing;
+		week1s.scale.set(0.75, 0.75);
+		week1s.visible = false;
+		add(week1s);
+
+		week2 = new FlxSprite(-215, -125).loadGraphic(Paths.image('story mode/Weeks/Week2'));
+		week2.antialiasing = ClientPrefs.globalAntialiasing;
+		week2.scale.set(0.75, 0.75);
+		week2.visible = false;
+		add(week2);
+
+		week2s = new FlxSprite(-215, -125).loadGraphic(Paths.image('story mode/Weeks/Week2_selected'));
+		week2s.antialiasing = ClientPrefs.globalAntialiasing;
+		week2s.scale.set(0.75, 0.75);
+		week2s.visible = false;
+		add(week2s);
+
+		week3 = new FlxSprite(-215, -125).loadGraphic(Paths.image('story mode/Weeks/Week3'));
+		week3.antialiasing = ClientPrefs.globalAntialiasing;
+		week3.scale.set(0.75, 0.75);
+		week3.visible = false;
+		add(week3);
+
+		week3s = new FlxSprite(-215, -125).loadGraphic(Paths.image('story mode/Weeks/Week3_selected'));
+		week3s.antialiasing = ClientPrefs.globalAntialiasing;
+		week3s.scale.set(0.75, 0.75);
+		week3s.visible = false;
+		add(week3s);
+
+		storytext = new FlxSprite(-480, -200).loadGraphic(Paths.image('story mode/Storymode'));
+		storytext.antialiasing = ClientPrefs.globalAntialiasing;
+		storytext.scale.set(0.5, 0.5);
+		add(storytext);
+
+		scorepanel = new FlxSprite(0, -350).loadGraphic(Paths.image('story mode/Score_bottom panel'));
+		scorepanel.antialiasing = ClientPrefs.globalAntialiasing;
+		scorepanel.screenCenter(X);
+		add(scorepanel);
+
+		scoreText = new FlxText(0, 665, 0, "SCORE: 49324858", 36);
+		scoreText.setFormat("VCR OSD Mono", 32);
+		scoreText.screenCenter(X);
+		add(scoreText);
+
+		The_Thing = new FlxSprite(0, 0); //how did this take me 2 hours to figure out
+		The_Thing.frames = Paths.getSparrowAtlas('the_thing2.0', 'cup');
+		The_Thing.animation.addByPrefix('load', 'BOO instance 1', 20, false);
+		The_Thing.antialiasing = ClientPrefs.globalAntialiasing;
+		The_Thing.scale.set(1.25, 1.25);
+		The_Thing.screenCenter();
+		The_Thing.visible = false;
+		add(The_Thing);
 
 		changeWeek();
 		changeDifficulty();
@@ -202,6 +350,77 @@ class StoryMenuState extends MusicBeatState
 
 		scoreText.text = "WEEK SCORE:" + lerpScore;
 
+		if (curWeek == 0)
+		{
+			week1.visible = false;
+			week1s.visible = true;
+			week2.visible = true;
+			week2s.visible = false;
+			week3.visible = true;
+			week3s.visible = false;
+
+			bg.visible = true;
+			cuphead.visible = true;
+			sans.visible = false;
+			bendy.visible = false;
+		}
+		else if (curWeek == 1)
+		{
+			week1.visible = true;
+			week1s.visible = false;
+			week2.visible = false;
+			week2s.visible = true;
+			week3.visible = true;
+			week3s.visible = false;
+
+			bg.visible = false;
+			cuphead.visible = false;
+			sans.visible = true;
+			bendy.visible = false;
+		}
+		else if (curWeek == 2)
+		{
+			week1.visible = true;
+			week1s.visible = false;
+			week2.visible = true;
+			week2s.visible = false;
+			week3.visible = false;
+			week3s.visible = true;
+
+			bg.visible = false;
+			cuphead.visible = false;
+			sans.visible = false;
+			bendy.visible = true;
+		}
+
+		if (curDifficulty == 0)
+		{
+			Difficulty.animation.play('easy');
+		}
+		else if (curDifficulty == 1)
+		{
+			Difficulty.animation.play('normal');
+		}
+		else if (curDifficulty == 2)
+		{
+			Difficulty.animation.play('hard');
+		}
+
+		if (MechanicSelection == 0)
+		{
+			DifficultyMechanic.animation.play('mechanic-off');
+		}
+		else if (MechanicSelection == 1)
+		{
+			DifficultyMechanic.animation.play('mechanic-standard');
+		}
+		else if (MechanicSelection == 2)
+		{
+			DifficultyMechanic.animation.play('mechanic-hard');
+		}
+
+		Shifting = FlxG.keys.pressed.SHIFT;
+
 		// FlxG.watch.addQuick('font', scoreText.font);
 
 		if (!movedBack && !selectedWeek)
@@ -220,21 +439,24 @@ class StoryMenuState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
 
-			if (controls.UI_RIGHT)
-				rightArrow.animation.play('press')
-			else
-				rightArrow.animation.play('idle');
+			if (Shifting && controls.UI_RIGHT_P)
+			{
+				changeMechanicDifficulty(1);
+			}
+			else if (Shifting && controls.UI_LEFT_P)
+			{
+				changeMechanicDifficulty(-1);
+			}
+			else if (Shifting && upP || downP)
+			{
+				changeMechanicDifficulty();
+			}
 
-			if (controls.UI_LEFT)
-				leftArrow.animation.play('press');
-			else
-				leftArrow.animation.play('idle');
-
-			if (controls.UI_RIGHT_P)
+			if (controls.UI_RIGHT_P && !Shifting)
 				changeDifficulty(1);
-			else if (controls.UI_LEFT_P)
+			else if (controls.UI_LEFT_P && !Shifting)
 				changeDifficulty(-1);
-			else if (upP || downP)
+			else if (upP || downP && !Shifting)
 				changeDifficulty();
 
 			if(FlxG.keys.justPressed.CONTROL)
@@ -250,6 +472,13 @@ class StoryMenuState extends MusicBeatState
 			}
 			else if (controls.ACCEPT)
 			{
+				if (curWeek == 0)
+				{
+					The_Thing.visible = true;
+					The_Thing.animation.play('load');
+					FlxG.sound.play(Paths.sound('boing', 'cup'));
+				}
+
 				selectWeek();
 			}
 		}
@@ -280,7 +509,7 @@ class StoryMenuState extends MusicBeatState
 		{
 			if (stopspamming == false)
 			{
-				FlxG.sound.play(Paths.sound('confirmMenu'));
+				//FlxG.sound.play(Paths.sound('confirmMenu'));
 
 				grpWeekText.members[curWeek].startFlashing();
 
@@ -354,6 +583,35 @@ class StoryMenuState extends MusicBeatState
 		#if !switch
 		intendedScore = Highscore.getWeekScore(loadedWeeks[curWeek].fileName, curDifficulty);
 		#end
+	}
+
+	function changeMechanicDifficulty(MechanicChange:Int = 0):Void
+	{
+		MechanicSelection += MechanicChange;
+
+		if (MechanicSelection < 0)
+		{
+			MechanicSelection = CoolUtil.difficulties.length-1;
+		}
+        //same code different thing still works lol
+		if (MechanicSelection >= CoolUtil.difficulties.length)
+		{
+			MechanicSelection = 0;
+		}
+
+		/*
+		if (MechanicChange == 3)
+		{
+			MechanicChange == 1;
+			MechanicSelection == 1;
+		}
+		
+		if (MechanicChange == -1)
+		{
+			MechanicChange == 2;
+			MechanicSelection == 2;
+		}
+		*/
 	}
 
 	var lerpScore:Int = 0;

@@ -95,6 +95,7 @@ class Main extends Sprite
 		GlobalVideo.setWebm(webmHandle);
 		#end
 
+		/*
 		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
@@ -104,6 +105,7 @@ class Main extends Sprite
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
 		#end
+		*/
 
 		#if html5
 		FlxG.autoPause = false;

@@ -1,28 +1,7 @@
 {
 	"song": {
-		"player1": "bfbendy",
-		"events": [
-			[
-				69750,
-				[
-					[
-						"Change Character",
-						"1",
-						"bendy"
-					]
-				]
-			],
-			[
-				69750,
-				[
-					[
-						"Change Character",
-						"0",
-						"bfscared"
-					]
-				]
-			]
-		],
+		"player1": "factorybf-P1",
+		"events": [],
 		"gfVersion": "gf",
 		"notes": [
 			{
@@ -4007,10 +3986,10 @@
 				"mustHitSection": true
 			}
 		],
-		"player2": "gf",
+		"player2": "dad",
 		"player3": "gf",
 		"song": "imminent-demise",
-		"stage": "no",
+		"stage": "bendy-p1",
 		"needsVoices": true,
 		"validScore": true,
 		"bpm": 200,

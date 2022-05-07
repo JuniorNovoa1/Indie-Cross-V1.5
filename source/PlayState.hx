@@ -456,31 +456,34 @@ class PlayState extends MusicBeatState
 					add(stageCurtains);
 				}
 			case 'bendy-p1':
-				var bg:FlxSprite = new FlxSprite(200, 200).loadGraphic(Paths.image('first/BG01'));
+				var bg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('first/BG01', 'bendy'));
 				bg.updateHitbox();
 				add(bg);
 
-				musicbox = new FlxSprite(200, 200);
-				musicbox.frames = Paths.getSparrowAtlas('first/MusicBox');
+				musicbox = new FlxSprite(700, 125);
+				musicbox.frames = Paths.getSparrowAtlas('first/MusicBox', 'bendy');
 				musicbox.animation.addByPrefix('idle', "Music box thingy instance 1", 24);
 				musicbox.animation.play('idle');
 				musicbox.updateHitbox();
 				add(musicbox);
 
-				light = new FlxSprite(200, 200);
-				light.frames = Paths.getSparrowAtlas('first/Light(Add-Blend)');
+				light = new FlxSprite(350, -250);
+				light.frames = Paths.getSparrowAtlas('first/Light(Add-Blend)', 'bendy');
 				light.animation.addByPrefix('idle', "fezt instance 1", 24);
 				light.animation.play('idle');
 				light.updateHitbox();
 				add(light);
 
-				var pillar:FlxSprite = new FlxSprite(200, 200).loadGraphic(Paths.image('first/Pillar'));
-				pillar.updateHitbox();
-				add(pillar);
-
-				var bendy:FlxSprite = new FlxSprite(200, 200).loadGraphic(Paths.image('first/Boi'));
+				var bendy:FlxSprite = new FlxSprite(180, 0).loadGraphic(Paths.image('first/Boi', 'bendy'));
 				bendy.updateHitbox();
 				add(bendy);
+
+				remove(boyfriendGroup);
+				add(boyfriendGroup); //so the pillar is above bf lol (im gonna figure out better code later)
+				dadGroup.visible = false;
+				var pillar:FlxSprite = new FlxSprite(1325, -250).loadGraphic(Paths.image('first/Pillar', 'bendy'));
+				pillar.updateHitbox();
+				add(pillar);
 
 				//THIS IS NOT APPEARING IM DONE WITH THIS SHIT.
 		}
@@ -994,8 +997,12 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'imminent-demise':
 					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.webm", new PlayState()));
+					if (!FlxG.save.data.BendyWarning1) //this is to fart :)
+					{
+						Warning.BendyWarning1 = true;
+						LoadingState.loadAndSwitchState(new Warning());
+					}
 					startCountdown();
-					if(bendyaftercutscene) startOnTime = 124000;
 				default:
 					startCountdown();
 			}
@@ -4059,8 +4066,8 @@ class PlayState extends MusicBeatState
 			{
 				case 940:
 					VideoState.midsong = true;
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.5.webm", new PlayState()));
-					//THIS IS WHERE I CAN'T FIGURE OUT HOW TO PLAY THE GAME AFTER THE CUTSCENE WITHOUT HAVING TO REPLAY SONG
+					//LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.5.webm", new PlayState()));
+					//THIS IS WHERE I CAN'T FIGURE OUT HOW TO PLAY THE GAME AFTER THE CUTSCENE WITHOUT HAVING TO REPLAY SONG AND IT REPEATING
 			}
 		}
 
