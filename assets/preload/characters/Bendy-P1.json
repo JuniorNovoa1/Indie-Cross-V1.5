@@ -1,70 +1,70 @@
 {
 	"animations": [
 		{
-			"offsets": [
-				54,
-				1
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				120,
+				3
+			],
 			"anim": "Scream",
-			"indices": [],
-			"name": "Scream instance 1"
+			"fps": 24,
+			"name": "Scream instance 1",
+			"indices": []
 		},
 		{
-			"offsets": [
-				119,
-				103
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				239,
+				200
+			],
 			"anim": "singUP",
-			"indices": [],
-			"name": "Up instance 1"
+			"fps": 24,
+			"name": "Up instance 1",
+			"indices": []
 		},
 		{
-			"offsets": [
-				238,
-				11
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				464,
+				10
+			],
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "Left instance 1"
+			"fps": 24,
+			"name": "Left instance 1",
+			"indices": []
 		},
 		{
-			"offsets": [
-				74,
-				-35
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				130,
+				-80
+			],
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "bendydown instance 1"
-		},
-		{
-			"offsets": [
-				53,
-				-19
-			],
-			"loop": false,
 			"fps": 24,
-			"anim": "singRIGHT",
-			"indices": [],
-			"name": "B-Right instance 1"
+			"name": "bendydown instance 1",
+			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
-				-5,
+				116,
+				-38
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "B-Right instance 1",
+			"indices": []
+		},
+		{
+			"offsets": [
+				0,
 				0
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 24,
-			"name": "Bendy Idle instance 1",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "Bendy Idle instance 1"
 		}
 	],
 	"no_antialiasing": false,
@@ -76,14 +76,14 @@
 	"healthicon": "bendyP1",
 	"flip_x": false,
 	"healthbar_colors": [
-	    0,
+		0,
 		0,
 		0
 	],
 	"camera_position": [
-		0,
-		0
+		-500,
+		-650
 	],
 	"sing_duration": 4,
-	"scale": 1
+	"scale": 2.6
 }

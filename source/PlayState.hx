@@ -252,6 +252,11 @@ class PlayState extends MusicBeatState
 	var musicbox:FlxSprite;
 	var light:FlxSprite;
 
+	var sammy:FlxSprite;
+
+	//healthbar shit
+	var bendysong:Bool = false;
+
 	#if desktop
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -484,8 +489,29 @@ class PlayState extends MusicBeatState
 				var pillar:FlxSprite = new FlxSprite(1325, -250).loadGraphic(Paths.image('first/Pillar', 'bendy'));
 				pillar.updateHitbox();
 				add(pillar);
+			case 'bendy-p2':
+				var veryfarbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('BACKBACKgROUND', 'bendy'));
+				veryfarbg.updateHitbox();
+				add(veryfarbg);
+                
+				var farbg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('BackgroundwhereDEEZNUTSfitINYOmOUTH', 'bendy'));
+				farbg.updateHitbox();
+				add(farbg);
 
-				//THIS IS NOT APPEARING IM DONE WITH THIS SHIT.
+				sammy = new FlxSprite(600, 300);
+				sammy.frames = Paths.getSparrowAtlas('third/SammyBg', 'bendy');
+				sammy.animation.addByPrefix('idle', "Sam instance 1", 24);
+				sammy.animation.play('idle');
+				sammy.updateHitbox();
+				add(sammy);
+
+				var closebg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('MidGrounUTS', 'bendy'));
+				closebg.updateHitbox();
+				add(closebg);
+
+				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('ForegroundEEZNUTS', 'bendy'));
+				bg.updateHitbox();
+				add(bg);
 		}
 
 		if(isPixelStage) {
@@ -521,6 +547,11 @@ class PlayState extends MusicBeatState
 				light.updateHitbox();
 				phillyCityLightsEvent.add(light);
 			}
+		}
+
+		if (curSong == 'imminent-demise' || curSong == 'terrible-sin' || curSong == 'last-reel' || curSong == 'nightmare-run')
+		{
+			bendysong = true;
 		}
 
 
@@ -795,7 +826,7 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 		moveCameraSection(0);
 
-		if (curSong == 'imminent-demise')
+		if (bendysong = true)
 		{
 			healthBarBG = new AttachedSprite('healthbar/bendyhealthbar');
 		}
@@ -807,7 +838,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		healthBarBG.visible = !ClientPrefs.hideHud;
-		if (curSong == 'imminent-demise') //location
+		if (bendysong = true) //location
 		{
 			healthBarBG.xAdd = -4;
 			healthBarBG.yAdd = -4;
@@ -819,7 +850,7 @@ class PlayState extends MusicBeatState
 		}
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
-		if (curSong == 'imminent-demise') //location again
+		if (bendysong = true) //location again
 		{
 			healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y - 100, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);	
@@ -834,7 +865,7 @@ class PlayState extends MusicBeatState
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 
-		if (curSong == 'imminent-demise') //scale
+		if (bendysong = true) //scale
 		{
             healthBar.scale.set(0.85, 0.25); //x then y lol
 		}
@@ -843,7 +874,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.sprTracker = healthBar;
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		if (curSong == 'imminent-demise') //icon for player
+		if (bendysong = true) //icon for player
 		{
 			iconP1.y = healthBar.y + 8;
 		}
@@ -856,7 +887,7 @@ class PlayState extends MusicBeatState
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
-		if (curSong == 'imminent-demise') //icon for enemy
+		if (bendysong = true) //icon for enemy
 		{
 			iconP2.y = healthBar.y + 8;
 		}
@@ -997,7 +1028,10 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'imminent-demise':
 					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.webm", new PlayState()));
-					if (!FlxG.save.data.BendyWarning1) //this is to fart :)
+					startCountdown();
+			    case 'terrible-sin':
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/2.webm", new PlayState()));
+					if (!FlxG.save.data.BendyWarning1) //this is the warning
 					{
 						Warning.BendyWarning1 = true;
 						LoadingState.loadAndSwitchState(new Warning());
