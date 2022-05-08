@@ -65,6 +65,8 @@ class ClientPrefs {
 		'note_down'		=> [S, DOWN],
 		'note_up'		=> [W, UP],
 		'note_right'	=> [D, RIGHT],
+		'note_dodge'    => [SPACE, SPACE],
+		'note_attack'   => [SHIFT, SHIFT],
 		
 		'ui_left'		=> [A, LEFT],
 		'ui_down'		=> [S, DOWN],
@@ -248,24 +250,6 @@ class ClientPrefs {
 		{
 			FlxG.sound.muted = FlxG.save.data.mute;
 		}
-
-		//GameJolt Things
-		if(FlxG.save.data.gjUser != null)
-		{
-			FlxG.save.data.gjUser = FlxG.save.data.gjUser;
-		}
-
-		if (FlxG.save.data.gjToken != null)
-		{
-			FlxG.save.data.gjToken = FlxG.save.data.gjToken;
-		}
-
-        if (FlxG.save.data.lbToggle == null)
-        {
-            FlxG.save.data.lbToggle = false;
-            FlxG.save.flush();
-        }
-
 
 		var save:FlxSave = new FlxSave();
 		save.bind('controls_v2', 'ninjamuffin99');

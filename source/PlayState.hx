@@ -257,6 +257,8 @@ class PlayState extends MusicBeatState
 	var InkCurrentlyOnScreen:Bool = false;
 
 	//healthbar shit
+	var cupheadsong:Bool = false;
+	var sanssong:Bool = false;
 	var bendysong:Bool = false;
 
 	#if desktop
@@ -551,6 +553,11 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		if (curSong == 'whoopee' || curSong == 'sansational' || curSong == 'final-stretch' || curSong == 'burning-in-hell')
+		{
+			sanssong = true;
+		}
+		
 		if (curSong == 'imminent-demise' || curSong == 'terrible-sin' || curSong == 'last-reel' || curSong == 'nightmare-run')
 		{
 			bendysong = true;
@@ -831,6 +838,11 @@ class PlayState extends MusicBeatState
 		if (bendysong = true)
 		{
 			healthBarBG = new AttachedSprite('healthbar/bendyhealthbar');
+		}
+		else
+		if (sanssong = true)
+		{
+			healthBarBG = new AttachedSprite('healthbar/sanshealthbar');
 		}
 		else
 		{
