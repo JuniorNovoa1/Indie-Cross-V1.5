@@ -53,7 +53,6 @@ class VideoState extends MusicBeatState
 	override function create()
 	{
 		super.create();
-		FlxG.autoPause = false;
 		doShit = false;
 		
 		if (GlobalVideo.isWebm)
@@ -215,7 +214,6 @@ class VideoState extends MusicBeatState
 				musicPaused = false;
 				FlxG.sound.music.resume();
 			}
-			FlxG.autoPause = true;
 			FlxG.switchState(transClass);
 		}
 		else if (controls.ACCEPT || GlobalVideo.get().ended && midsong)
@@ -228,7 +226,6 @@ class VideoState extends MusicBeatState
 				musicPaused = false;
 				FlxG.sound.music.resume();
 			}
-			FlxG.autoPause = true;
 			FlxG.switchState(transClass);
 			PlayState.bendyaftercutscene = true; //useless
 		}

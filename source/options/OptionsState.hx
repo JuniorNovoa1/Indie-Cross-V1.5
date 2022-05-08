@@ -64,6 +64,9 @@ class OptionsState extends MusicBeatState
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 
+		FlxG.sound.music == null
+		FlxG.sound.playMusic(Paths.music('settin'));
+
 		persistentUpdate = persistentDraw = true;
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
@@ -123,7 +126,9 @@ class OptionsState extends MusicBeatState
 		}
 
 		if (controls.BACK) {
+			FlxG.sound.music == null
 			FlxG.sound.play(Paths.sound('cancelMenu'));
+			FlxG.sound.playMusic(Paths.music('freakyMenu', 0.7));
 			MusicBeatState.switchState(new MainMenuState());
 		}
 

@@ -251,8 +251,10 @@ class PlayState extends MusicBeatState
 	//bendy sprites
 	var musicbox:FlxSprite;
 	var light:FlxSprite;
-
 	var sammy:FlxSprite;
+	var Ink:FlxSprite;
+	var InkOnScreen:Int = 0;
+	var InkCurrentlyOnScreen:Bool = false;
 
 	//healthbar shit
 	var bendysong:Bool = false;
@@ -2063,6 +2065,57 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 
+		if (InkOnScreen == 1)
+		{
+			remove(Ink);
+			Ink = new FlxSprite().loadGraphic(Paths.image('Damage01', 'bendy'));
+			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.screenCenter();
+			add(Ink);
+		}
+		else if (InkOnScreen == 2)
+		{
+			remove(Ink);
+			Ink = new FlxSprite().loadGraphic(Paths.image('Damage02', 'bendy'));
+			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.screenCenter();
+			add(Ink);
+		}
+		else if (InkOnScreen == 3)
+		{
+			remove(Ink);
+			Ink = new FlxSprite().loadGraphic(Paths.image('Damage03', 'bendy'));
+			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.screenCenter();
+			add(Ink);
+		}
+		else if (InkOnScreen == 4)
+		{
+			remove(Ink);
+			Ink = new FlxSprite().loadGraphic(Paths.image('Damage04', 'bendy'));
+			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.screenCenter();
+			add(Ink);
+		}
+
+		if (InkCurrentlyOnScreen)
+		{
+			new FlxTimer().start(2.5, function(tmr:FlxTimer)
+			{
+				FlxTween.tween(Ink, {alpha: 0}, 0.5);
+				new FlxTimer().start(0.51, function(tmr:FlxTimer)
+				{
+					InkOnScreen = 0;
+					InkCurrentlyOnScreen = false;
+				});
+			});
+		}
+
+		if (InkOnScreen == 5)
+	    {
+			health = 0;
+		}
+
 		callOnLuas('onUpdate', [elapsed]);
 
 		switch (curStage)
@@ -3766,12 +3819,18 @@ class PlayState extends MusicBeatState
 					spawnNoteSplashOnNote(note);
 				}
 
-				switch(note.noteType) {
+				switch(note.noteType) 
+		        {
 					case 'Hurt Note': //Hurt note
-						if(boyfriend.animation.getByName('hurt') != null) {
+						if(boyfriend.animation.getByName('hurt') != null) 
+						{
 							boyfriend.playAnim('hurt', true);
 							boyfriend.specialAnim = true;
 						}
+					case 'Ink Note':
+					    InkOnScreen += 1;
+						FlxG.sound.play(Paths.sound('inked', 'bendy'));
+						InkCurrentlyOnScreen = true;
 				}
 				
 				note.wasGoodHit = true;
