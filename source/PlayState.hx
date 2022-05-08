@@ -555,7 +555,7 @@ class PlayState extends MusicBeatState
 
 		if (curSong == 'whoopee' || curSong == 'sansational' || curSong == 'final-stretch' || curSong == 'burning-in-hell')
 		{
-			sanssong = true;
+			sanssong = true; //i love you bush for being actually smart
 		}
 		
 		if (curSong == 'imminent-demise' || curSong == 'terrible-sin' || curSong == 'last-reel' || curSong == 'nightmare-run')

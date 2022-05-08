@@ -598,20 +598,6 @@ class StoryMenuState extends MusicBeatState
 		{
 			MechanicSelection = 0;
 		}
-
-		/*
-		if (MechanicChange == 3)
-		{
-			MechanicChange == 1;
-			MechanicSelection == 1;
-		}
-		
-		if (MechanicChange == -1)
-		{
-			MechanicChange == 2;
-			MechanicSelection == 2;
-		}
-		*/
 	}
 
 	var lerpScore:Int = 0;
