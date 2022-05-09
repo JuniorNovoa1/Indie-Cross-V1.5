@@ -69,7 +69,7 @@ class FreeplaySelect extends MusicBeatState
 	    nightmarelocked.screenCenter(Y);
 		nightmarelocked.scale.set(0.7, 0.7);
 		add(nightmarelocked);
-		
+
 		changeSelection();
 
 		super.create();
@@ -152,15 +152,15 @@ class FreeplaySelect extends MusicBeatState
 
 		if (SelectionWeek == 0)
 		{
-			MusicBeatState.switchState(new FreeplayState());
+			MusicBeatState.switchState(new FreeplayMain());
 		}
 		else if (SelectionWeek == 1)
 		{
-
+            MusicBeatState.switchState(new BonusSongsSelection());
 		}
 		else if (SelectionWeek == 2)
 		{
-
+			MusicBeatState.switchState(new NightmareSelection());
 		}
 	}
 
