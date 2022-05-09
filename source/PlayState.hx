@@ -262,7 +262,7 @@ class PlayState extends MusicBeatState
 	var bendysong:Bool = false;
 
 	//CupHead Stuff
-
+	
 	#if desktop
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -568,13 +568,17 @@ class PlayState extends MusicBeatState
 				phillyCityLightsEvent.add(light);
 			}
 		}
+	    if (curSong == 'snake_eyes' || curSong == 'technicolor-tussle' || curSong == 'knockout' || curSong == 'devils-gamebit')
+		{
+			cupheadsong = true; //Your Welcome
+		}
 
 		if (curSong == 'whoopee' || curSong == 'sansational' || curSong == 'final-stretch' || curSong == 'burning-in-hell')
 		{
 			sanssong = true; //i love you bush for being actually smart
 		}
 		
-		if (curSong == 'imminent-demise' || curSong == 'terrible-sin' || curSong == 'last-reel' || curSong == 'nightmare-run')
+		if (curSong == 'imminent-demise' || curSong == 'terrible-sin' || curSong == 'last-reel' || curSong == 'nightmare-run' || curSong == 'despair')
 		{
 			bendysong = true;
 		}
@@ -850,17 +854,19 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 		moveCameraSection(0);
-
-		if (bendysong = true)
+		if (cupheadsong = true)
+		{
+			healthBarBG = new AttachedSprite('healthbar/cuphealthbar');
+		}
+		else if (bendysong = true)
 		{
 			healthBarBG = new AttachedSprite('healthbar/bendyhealthbar');
 		}
-		else
-		if (sanssong = true)
+	    else if (sanssong = true)
 		{
 			healthBarBG = new AttachedSprite('healthbar/sanshealthbar');
 		}
-		else
+        else
 		{
 			healthBarBG = new AttachedSprite('healthBar');
 		}
@@ -868,7 +874,17 @@ class PlayState extends MusicBeatState
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		healthBarBG.visible = !ClientPrefs.hideHud;
-		if (bendysong = true) //location
+		if (cupheadsong = true)
+		{
+			healthBarBG.xAdd = -4;
+		    healthBarBG.yAdd = -4;
+		}
+		else if (sanssong = true)
+		{
+			healthBarBG.xAdd = -4;
+			healthBarBG.yAdd = -4;
+		}
+		else if (bendysong = true) //location
 		{
 			healthBarBG.xAdd = -4;
 			healthBarBG.yAdd = -4;
@@ -937,7 +953,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 
-		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
+		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
