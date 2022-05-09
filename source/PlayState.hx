@@ -261,6 +261,8 @@ class PlayState extends MusicBeatState
 	var sanssong:Bool = false;
 	var bendysong:Bool = false;
 
+	//CupHead Stuff
+
 	#if desktop
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -384,6 +386,8 @@ class PlayState extends MusicBeatState
 					curStage = 'school';
 				case 'thorns':
 					curStage = 'schoolEvil';
+				case 'snake-eyes':
+				    curStage = 'Cuphead-1';
 				case 'imminent-demise':
 					curStage = 'bendy-p1';
 				default:
@@ -514,6 +518,18 @@ class PlayState extends MusicBeatState
 				add(closebg);
 
 				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('ForegroundEEZNUTS', 'bendy'));
+				bg.updateHitbox();
+				add(bg);
+			case 'Cuphead-1':
+				var cupbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('BG-00', 'cup'));
+				cupbg.updateHitbox();
+				add(cupbg);
+
+				var cupfarbg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('BG-01', 'cup'));
+				cupfarbg.updateHitbox();
+				add(cupfarbg);
+
+				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('Foreground', 'cup'));
 				bg.updateHitbox();
 				add(bg);
 		}
