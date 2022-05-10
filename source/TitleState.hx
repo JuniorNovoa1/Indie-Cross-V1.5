@@ -78,6 +78,14 @@ class TitleState extends MusicBeatState
 	var mustUpdate:Bool = false;
 	
 	var titleJSON:TitleData;
+
+	var Bge:FlxSprite;
+	var CupCircle:FlxSprite;
+	var SansCircle:FlxSprite;
+	var BendyCircle:FlxSprite;
+	var BF:FlxSprite;
+	var PlayButton:FlxSprite;
+	var Logo:FlxSprite;
 	
 	public static var updateVersion:String = '';
 
@@ -313,9 +321,9 @@ class TitleState extends MusicBeatState
 		}
 		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
 		
-		add(gfDance);
+		//add(gfDance);
 		gfDance.shader = swagShader.shader;
-		add(logoBl);
+		//add(logoBl);
 		logoBl.shader = swagShader.shader;
 
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
@@ -341,12 +349,55 @@ class TitleState extends MusicBeatState
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
 		// titleText.screenCenter(X);
-		add(titleText);
+		//add(titleText);
 
 		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
 		logo.screenCenter();
 		logo.antialiasing = ClientPrefs.globalAntialiasing;
 		// add(logo);
+
+		Bge = new FlxSprite(0, 0); //how did this take me 2 hours to figure out
+		Bge.frames = Paths.getSparrowAtlas('title/Bg');
+		Bge.animation.addByPrefix('Idle', 'ddddd instance 1', 24); 
+		Bge.animation.play('Idle');
+		Bge.antialiasing = ClientPrefs.globalAntialiasing;
+		Bge.screenCenter();
+		add(Bge);
+
+		CupCircle = new FlxSprite(100, -125).loadGraphic(Paths.image('title/CupCircle'));
+		CupCircle.antialiasing = ClientPrefs.globalAntialiasing;
+		add(CupCircle);
+
+		SansCircle = new FlxSprite(0, -230).loadGraphic(Paths.image('title/SansCircle'));
+		SansCircle.antialiasing = ClientPrefs.globalAntialiasing;
+		SansCircle.screenCenter(X);
+		add(SansCircle);
+
+		BendyCircle = new FlxSprite(-200, -75).loadGraphic(Paths.image('title/BendyCircle'));
+		BendyCircle.antialiasing = ClientPrefs.globalAntialiasing;
+		add(BendyCircle);
+
+		BF = new FlxSprite(-675, 200); //how did this take me 2 hours to figure out
+		BF.frames = Paths.getSparrowAtlas('title/BF');
+		BF.animation.addByPrefix('Idle', 'BF idle dance instance 1', 24); 
+		BF.animation.play('Idle');
+		BF.antialiasing = ClientPrefs.globalAntialiasing;
+		add(BF);
+
+		PlayButton = new FlxSprite(-500, 125); //how did this take me 2 hours to figure out
+		PlayButton.frames = Paths.getSparrowAtlas('title/Playbutton');
+		PlayButton.animation.addByPrefix('Idle', 'BF idle dance instance 1', 24); 
+		PlayButton.animation.play('Idle');
+		PlayButton.antialiasing = ClientPrefs.globalAntialiasing;
+		add(PlayButton);
+
+		Logo = new FlxSprite(-50, 200); //how did this take me 2 hours to figure out
+		Logo.frames = Paths.getSparrowAtlas('title/Logo');
+		Logo.animation.addByPrefix('Idle', 'Tween 11 instance 1', 24); 
+		Logo.animation.play('Idle');
+		Logo.scale.set(0.75, 0.75);
+		Logo.antialiasing = ClientPrefs.globalAntialiasing;
+		add(Logo);
 
 		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
 		// FlxTween.tween(logo, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.1});
