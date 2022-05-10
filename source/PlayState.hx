@@ -4,6 +4,7 @@ import flixel.graphics.FlxGraphic;
 #if desktop
 import Discord.DiscordClient;
 #end
+import lime.app.Application;
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
@@ -245,6 +246,10 @@ class PlayState extends MusicBeatState
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
 
+	//song name
+	var SongCreator:String = "";
+	var TitleDifficulty:String = "";
+
 	//bendy cutscene
 	public static var bendyaftercutscene:Bool = false;
 
@@ -364,6 +369,37 @@ class PlayState extends MusicBeatState
 		detailsPausedText = "Paused - " + detailsText;
 		#end
 
+        #if desktop
+		if (SONG.song == 'Snake-Eyes')
+		{
+	        SongCreator = 'Mike Geno - ';
+		}
+		else if (SONG.song == 'Technicolor-Tussle')
+		{
+			SongCreator = 'BLVKARROT - ';
+		}
+		else if (SONG.song == 'Knockout')
+		{
+			SongCreator = 'Orenji Music - '; 
+		}
+		else if (SONG.song == 'Whoopee')
+		{
+			SongCreator = 'YingYang48 & Saster - ' ;
+		}
+		else if (SONG.song == 'Sansational')
+		{
+			SongCreator = 'Tenzubushi - ';
+		}
+		else if (SONG.song == 'Final-Stretch')
+		{
+			SongCreator = 'Saru - ';
+		}
+
+		TitleDifficulty = ' [' + CoolUtil.difficultyString() + ']';
+
+		Application.current.window.title = 'Indie Cross - ' + SongCreator + SONG.song + TitleDifficulty; //song names lollll
+		#end
+
 		GameOverSubstate.resetVariables();
 		var songName:String = Paths.formatToSongPath(SONG.song);
 
@@ -387,7 +423,7 @@ class PlayState extends MusicBeatState
 				case 'thorns':
 					curStage = 'schoolEvil';
 				case 'snake-eyes':
-				    curStage = 'Cuphead-1';
+				    curStage = 'cuphead-p1';
 				case 'imminent-demise':
 					curStage = 'bendy-p1';
 				default:
@@ -520,16 +556,22 @@ class PlayState extends MusicBeatState
 				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('ForegroundEEZNUTS', 'bendy'));
 				bg.updateHitbox();
 				add(bg);
-			case 'Cuphead-1':
+			case 'cuphead-p1':
 				var cupbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('BG-00', 'cup'));
+				cupbg.scale.set(2.5, 2.5);
+				cupbg.screenCenter();
 				cupbg.updateHitbox();
 				add(cupbg);
 
 				var cupfarbg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('BG-01', 'cup'));
+				cupfarbg.scale.set(2.5, 2.5);
+				cupfarbg.screenCenter();
 				cupfarbg.updateHitbox();
 				add(cupfarbg);
 
 				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('Foreground', 'cup'));
+				bg.scale.set(2.5, 2.5);
+				bg.screenCenter();
 				bg.updateHitbox();
 				add(bg);
 		}
@@ -570,16 +612,22 @@ class PlayState extends MusicBeatState
 		}
 	    if (curSong == 'snake_eyes' || curSong == 'technicolor-tussle' || curSong == 'knockout' || curSong == 'devils-gamebit')
 		{
-			cupheadsong = true; //Your Welcome
+			cupheadsong = true;
+			sanssong = false;
+			bendysong = false;
 		}
 
 		if (curSong == 'whoopee' || curSong == 'sansational' || curSong == 'final-stretch' || curSong == 'burning-in-hell')
 		{
-			sanssong = true; //i love you bush for being actually smart
+			cupheadsong = false;
+			sanssong = true;
+			bendysong = false;
 		}
 		
 		if (curSong == 'imminent-demise' || curSong == 'terrible-sin' || curSong == 'last-reel' || curSong == 'nightmare-run' || curSong == 'despair')
 		{
+			cupheadsong = false;
+			sanssong = false;
 			bendysong = true;
 		}
 
@@ -862,7 +910,7 @@ class PlayState extends MusicBeatState
 		{
 			healthBarBG = new AttachedSprite('healthbar/bendyhealthbar');
 		}
-	    else if (sanssong = true)
+		else if (sanssong = true)
 		{
 			healthBarBG = new AttachedSprite('healthbar/sanshealthbar');
 		}
@@ -3152,6 +3200,10 @@ class PlayState extends MusicBeatState
 
 		deathCounter = 0;
 		seenCutscene = false;
+
+		#if desktop
+		Application.current.window.title = 'Indie Cross'; //back to normal :))))))))))))))
+		#end
 
 		#if ACHIEVEMENTS_ALLOWED
 		if(achievementObj != null) {

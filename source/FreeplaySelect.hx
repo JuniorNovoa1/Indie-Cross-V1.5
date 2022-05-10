@@ -35,7 +35,7 @@ class FreeplaySelect extends MusicBeatState
 	var nightmare:FlxSprite;
 	var nightmarelocked:FlxSprite;
 
-	var SelectionWeek:Int = 1;
+	var SelectionWeek:Int = 0;
 	var NoSpam:Bool = false;
 	var NightmareUnlocked:Bool = false;
 

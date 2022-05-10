@@ -7,7 +7,7 @@
 				16
 			],
 			"anim": "singLEFTmiss",
-			"fps": 24,
+			"fps": 30,
 			"name": "L-Miss",
 			"indices": []
 		},
@@ -18,7 +18,7 @@
 				-32
 			],
 			"anim": "singDOWNmiss",
-			"fps": 24,
+			"fps": 30,
 			"name": "D-Miss",
 			"indices": []
 		},
@@ -29,7 +29,7 @@
 				105
 			],
 			"anim": "singUPmiss",
-			"fps": 24,
+			"fps": 30,
 			"name": "U-Miss",
 			"indices": []
 		},
@@ -40,7 +40,7 @@
 				15
 			],
 			"anim": "singRIGHTmiss",
-			"fps": 24,
+			"fps": 30,
 			"name": "R-Miss",
 			"indices": []
 		},
@@ -51,7 +51,7 @@
 				0
 			],
 			"anim": "idle",
-			"fps": 24,
+			"fps": 30,
 			"name": "BF annoyed instance 1",
 			"indices": []
 		},
@@ -62,7 +62,7 @@
 				-9
 			],
 			"anim": "singLEFT",
-			"fps": 24,
+			"fps": 30,
 			"name": "BF NOTE LEFT copy instance 1",
 			"indices": []
 		},
@@ -73,7 +73,7 @@
 				63
 			],
 			"anim": "singUP",
-			"fps": 24,
+			"fps": 30,
 			"name": "BF NOTE UP copy instance 1",
 			"indices": []
 		},
@@ -84,7 +84,7 @@
 				-55
 			],
 			"anim": "singDOWN",
-			"fps": 24,
+			"fps": 30,
 			"name": "BF NOTE DOWN copy instance 1",
 			"indices": []
 		},
@@ -95,7 +95,7 @@
 				-7
 			],
 			"anim": "singRIGHT",
-			"fps": 24,
+			"fps": 30,
 			"name": "BF NOTE RIGHT copy instance 1",
 			"indices": []
 		}
