@@ -1,202 +1,158 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				7,
 				19
 			],
-			"anim": "singLEFTmiss",
+			"loop": false,
 			"fps": 30,
-			"name": "BF NOTE LEFT MISS",
-			"indices": []
+			"anim": "singLEFTmiss",
+			"indices": [],
+			"name": "BF NOTE LEFT MISS"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-15,
 				-19
 			],
-			"anim": "singDOWNmiss",
+			"loop": false,
 			"fps": 30,
-			"name": "BF NOTE DOWN MISS",
-			"indices": []
+			"anim": "singDOWNmiss",
+			"indices": [],
+			"name": "BF NOTE DOWN MISS"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-36,
 				27
 			],
-			"anim": "singUPmiss",
+			"loop": false,
 			"fps": 30,
-			"name": "BF NOTE UP MISS",
-			"indices": []
+			"anim": "singUPmiss",
+			"indices": [],
+			"name": "BF NOTE UP MISS"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-44,
 				22
 			],
+			"loop": false,
+			"fps": 30,
 			"anim": "singRIGHTmiss",
-			"fps": 30,
-			"name": "BF NOTE RIGHT MISS",
-			"indices": []
+			"indices": [],
+			"name": "BF NOTE RIGHT MISS"
 		},
 		{
-			"loop": false,
-			"offsets": [
-				-3,
-				5
-			],
-			"anim": "hey",
-			"fps": 30,
-			"name": "BF HEY",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				15,
-				18
-			],
-			"anim": "hurt",
-			"fps": 30,
-			"name": "BF hit",
-			"indices": []
-		},
-		{
-			"loop": true,
-			"offsets": [
-				-4,
-				0
-			],
-			"anim": "scared",
-			"fps": 30,
-			"name": "BF idle shaking",
-			"indices": []
-		},
-		{
-			"loop": false,
 			"offsets": [
 				37,
 				11
 			],
-			"anim": "firstDeath",
+			"loop": false,
 			"fps": 30,
-			"name": "BF dies",
-			"indices": []
+			"anim": "firstDeath",
+			"indices": [],
+			"name": "BF dies"
 		},
 		{
-			"loop": true,
 			"offsets": [
 				37,
 				5
 			],
-			"anim": "deathLoop",
+			"loop": true,
 			"fps": 30,
-			"name": "BF Dead Loop",
-			"indices": []
+			"anim": "deathLoop",
+			"indices": [],
+			"name": "BF Dead Loop"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				37,
 				69
 			],
-			"anim": "deathConfirm",
+			"loop": false,
 			"fps": 30,
-			"name": "BF Dead confirm",
-			"indices": []
+			"anim": "deathConfirm",
+			"indices": [],
+			"name": "BF Dead confirm"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-10,
+				0,
 				-16
 			],
+			"loop": false,
+			"fps": 30,
 			"anim": "dodge",
-			"fps": 30,
-			"name": "boyfriend dodge",
-			"indices": []
+			"indices": [],
+			"name": "0Dodge"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				294,
-				267
+				915,
+				-13
 			],
+			"loop": false,
+			"fps": 30,
 			"anim": "attack",
-			"fps": 30,
-			"name": "boyfriend attack",
-			"indices": []
+			"indices": [],
+			"name": "0BF attack"
 		},
 		{
-			"loop": false,
-			"offsets": [
-				-40,
-				-40
-			],
-			"anim": "pre-attack",
-			"fps": 30,
-			"name": "bf pre attack",
-			"indices": []
-		},
-		{
-			"loop": false,
 			"offsets": [
 				-5,
 				0
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 30,
-			"name": "0Idle",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "0Idle"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-51,
 				33
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 30,
-			"name": "0UPPP",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "0UPPP"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-2,
 				-9
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 30,
-			"name": "0EERR",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "0EERR"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-16,
 				-55
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 30,
-			"name": "0Ouu",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "0Ouu"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-47,
 				-11
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 30,
-			"name": "0EEEE",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "0EEEE"
 		}
 	],
 	"no_antialiasing": false,

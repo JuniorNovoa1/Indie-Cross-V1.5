@@ -8,6 +8,7 @@ import lime.app.Application;
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
+import flixel.effects.FlxFlicker;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -182,6 +183,7 @@ class PlayState extends MusicBeatState
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
 	public var camHUD:FlxCamera;
+	public var camHUD2:FlxCamera;
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 	public var cameraSpeed:Float = 1;
@@ -245,6 +247,14 @@ class PlayState extends MusicBeatState
 	public var boyfriendCameraOffset:Array<Float> = null;
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
+
+	//Dodging
+	var canDodge:Bool = false;
+	var dodging:Bool = false;
+	var miss:Bool = false;
+	var dodge:Bool = false;
+	var on:Bool = false;
+	var space:Bool = false;
 
 	//song name
 	var SongCreator:String = "";
@@ -330,12 +340,15 @@ class PlayState extends MusicBeatState
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
+		camHUD2 = new FlxCamera();
 		camOther = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
+		camHUD2.bgColor.alpha = 0;
 		camOther.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
+		FlxG.cameras.add(camHUD2);
 		FlxG.cameras.add(camOther);
 		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
 
@@ -610,21 +623,21 @@ class PlayState extends MusicBeatState
 				phillyCityLightsEvent.add(light);
 			}
 		}
-	    if (curSong == 'snake_eyes' || curSong == 'technicolor-tussle' || curSong == 'knockout' || curSong == 'devils-gamebit')
+	    if (SONG.song == 'Snake-Eyes' || SONG.song == 'Technicolor-Tussle' || SONG.song == 'Knockout'|| SONG.song == 'Devils-Gambit')
 		{
 			cupheadsong = true;
 			sanssong = false;
 			bendysong = false;
 		}
 
-		if (curSong == 'whoopee' || curSong == 'sansational' || curSong == 'final-stretch' || curSong == 'burning-in-hell')
+		if (SONG.song == 'Whoopee' || SONG.song == 'Sansational' || SONG.song == 'Final-Stretch' || SONG.song == 'Burning-In-Hell' || SONG.song == 'Bad-Time')
 		{
 			cupheadsong = false;
 			sanssong = true;
 			bendysong = false;
 		}
 		
-		if (curSong == 'imminent-demise' || curSong == 'terrible-sin' || curSong == 'last-reel' || curSong == 'nightmare-run' || curSong == 'despair')
+		if (SONG.song == 'Imminent-Demise' || SONG.song == 'Terrible-Sin' || SONG.song == 'Last-Reel' || SONG.song == 'Nightmare-Run' || SONG.song == 'Despair')
 		{
 			cupheadsong = false;
 			sanssong = false;
@@ -902,11 +915,15 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 		moveCameraSection(0);
-		if (cupheadsong = true)
+		if (cupheadsong)
 		{
 			healthBarBG = new AttachedSprite('healthbar/cuphealthbar');
 		}
-		else if (sanssong = true)
+		else if (bendysong)
+		{
+			healthBarBG = new AttachedSprite('healthbar/bendyhealthbar');
+		}
+		else if (sanssong)
 		{
 			healthBarBG = new AttachedSprite('healthbar/sanshealthbar');
 		}
@@ -922,17 +939,17 @@ class PlayState extends MusicBeatState
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		healthBarBG.visible = !ClientPrefs.hideHud;
-		if (cupheadsong = true)
+		if (cupheadsong)
 		{
 			healthBarBG.xAdd = -4;
 		    healthBarBG.yAdd = -4;
 		}
-		else if (sanssong = true)
+		else if (sanssong)
 		{
 			healthBarBG.xAdd = -4;
 			healthBarBG.yAdd = -4;
 		}
-		else if (bendysong = true) //location
+		else if (bendysong) //location
 		{
 			healthBarBG.xAdd = -4;
 			healthBarBG.yAdd = -4;
@@ -944,7 +961,7 @@ class PlayState extends MusicBeatState
 		}
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
-		if (bendysong = true) //location again
+		if (bendysong || cupheadsong) //location again
 		{
 			healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y - 100, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);	
@@ -959,7 +976,7 @@ class PlayState extends MusicBeatState
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 
-		if (bendysong = true) //scale
+		if (bendysong || cupheadsong) //scale
 		{
             healthBar.scale.set(0.85, 0.25); //x then y lol
 		}
@@ -968,7 +985,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.sprTracker = healthBar;
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		if (bendysong = true) //icon for player
+		if (bendysong || cupheadsong) //icon for player
 		{
 			iconP1.y = healthBar.y + 8;
 		}
@@ -981,7 +998,7 @@ class PlayState extends MusicBeatState
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
-		if (bendysong = true) //icon for enemy
+		if (bendysong || cupheadsong) //icon for enemy
 		{
 			iconP2.y = healthBar.y + 8;
 		}
@@ -1120,24 +1137,42 @@ class PlayState extends MusicBeatState
 				case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
-
 				case 'snake-eyes':
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cup/1.webm", new PlayState()));
-					if (!FlxG.save.data.CupWarning) //this is the warning
-					{
-						Warning.CupWarning = true;
-						LoadingState.loadAndSwitchState(new Warning());
-					}
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/1.webm", new PlayState()));
+					startCountdown();
+				case 'technicolor-tussle':
+					Warning.CupWarning = true;
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/2.webm", new Warning()));
+					startCountdown();
+				case 'knockout':
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/3.webm", new PlayState()));
+					startCountdown();
 				case 'imminent-demise':
 					LoadingState.loadAndSwitchState(new VideoState("assets/video/bendy/1.webm", new PlayState()));
 					startCountdown();
 			    case 'terrible-sin':
-					LoadingState.loadAndSwitchState(new VideoState("assets/video/bendy/2.webm", new PlayState()));
-					if (!FlxG.save.data.BendyWarning1) //this is the warning
-					{
-						Warning.BendyWarning1 = true;
-						LoadingState.loadAndSwitchState(new Warning());
-					}
+					Warning.BendyWarning1 = true;
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/2.webm", new Warning()));
+					startCountdown();
+				case 'last-reel':
+					Warning.BendyWarning2 = true;
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/3.webm", new Warning()));
+					startCountdown();
+				case 'nightmare-run':
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/4.webm", new PlayState()));
+					startCountdown();
+				case 'whoopee':
+					Warning.SansWarning = true;
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/1.webm", new Warning()));
+					startCountdown();
+				case 'sansational':
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/2.webm", new PlayState()));
+					startCountdown();
+				case 'final-stretch':
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/3.webm", new PlayState()));
+					startCountdown();
+				case 'burning-in-hell':
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/4b.webm", new PlayState()));
 					startCountdown();
 				default:
 					startCountdown();
@@ -2165,6 +2200,20 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 
+		if (FlxG.keys.justPressed.SPACE && canDodge)
+		{
+			dodging = true;
+			//boyfriend.nonanimated = true;
+			//boyfriend.animation.finishCallback = function(a:String)
+			new FlxTimer().start(0.75, function(tmr:FlxTimer)
+			{
+				//boyfriend.nonanimated = false;
+				dodging = false;
+				canDodge = false;
+			});
+		}
+
+		/*
 		if (InkOnScreen == 1)
 		{
 			remove(Ink);
@@ -2215,6 +2264,7 @@ class PlayState extends MusicBeatState
 	    {
 			health = 0;
 		}
+		*/
 
 		callOnLuas('onUpdate', [elapsed]);
 
@@ -3209,6 +3259,10 @@ class PlayState extends MusicBeatState
 		deathCounter = 0;
 		seenCutscene = false;
 
+		cupheadsong = false;
+		sanssong = false;
+		bendysong = false;
+
 		#if desktop
 		Application.current.window.title = 'Indie Cross'; //back to normal :))))))))))))))
 		#end
@@ -3265,7 +3319,27 @@ class PlayState extends MusicBeatState
 					if(FlxTransitionableState.skipNextTransIn) {
 						CustomFadeTransition.nextCamera = null;
 					}
-					MusicBeatState.switchState(new StoryMenuState());
+
+					if (SONG.song == 'Knockout')
+					{
+						LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/4.webm", new StoryMenuState()));
+					}
+					else if (SONG.song == 'final-stretch' && CoolUtil.difficultyString() == 'HARD')
+					{
+						LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/4.webm", new StoryMenuState()));
+					}
+					else if (SONG.song == 'nightmare-run' && CoolUtil.difficultyString() == 'HARD')
+					{
+						LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/5.webm", new StoryMenuState()));
+					}
+					else if (SONG.song == 'last-reel' && CoolUtil.difficultyString() == 'EASY' || CoolUtil.difficultyString() == 'NORMAL')
+					{
+						LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/4ez.webm", new StoryMenuState()));
+					}
+					else
+					{
+						MusicBeatState.switchState(new StoryMenuState());
+					}
 
 					// if ()
 					if(!ClientPrefs.getGameplaySetting('practice', false) && !ClientPrefs.getGameplaySetting('botplay', false)) {
@@ -4241,6 +4315,86 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	function SansDodge()
+	{
+		var BonePopup:FlxSprite;
+		var BoneDodge:FlxSprite;
+		var BoneMiss:FlxSprite;
+		BonePopup = new FlxSprite(600, 300);
+		BonePopup.frames = Paths.getSparrowAtlas('DodgeMechs', 'sans');
+		BonePopup.animation.addByPrefix('BonePopup', "Alarm instance 1", 24, false);
+		BonePopup.antialiasing = ClientPrefs.globalAntialiasing;
+		BonePopup.animation.play('BonePopup');
+		//BonePopup.scale.set(0.75, 0.75);
+		BonePopup.updateHitbox();
+		BonePopup.cameras = [camHUD2];
+		add(BonePopup);
+
+		BoneMiss = new FlxSprite(600, 300);
+		BoneMiss.frames = Paths.getSparrowAtlas('DodgeMechs', 'sans');
+		BoneMiss.animation.addByPrefix('DodgeMiss', "Bones boi instance 1", 24, false);
+		BoneMiss.antialiasing = ClientPrefs.globalAntialiasing;
+		//BoneMiss.scale.set(0.75, 0.75);
+		BoneMiss.updateHitbox();
+		BoneMiss.cameras = [camHUD2];
+		BoneMiss.visible = false;
+		add(BoneMiss);
+
+		BoneDodge = new FlxSprite(750, 300);
+		BoneDodge.frames = Paths.getSparrowAtlas('DodgeMechs', 'sans');
+		BoneDodge.animation.addByPrefix('Dodge', "Dodge instance 1", 24, false);
+		BoneDodge.antialiasing = ClientPrefs.globalAntialiasing;
+		//BoneDodge.scale.set(0.75, 0.75);
+		BoneDodge.updateHitbox();
+		BoneDodge.cameras = [camHUD2];
+		BoneDodge.visible = false;
+		add(BoneDodge);
+	
+		canDodge = true;
+		FlxG.sound.play(Paths.sound('dodge', 'sans'));
+		
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		{
+			remove(BonePopup);
+	
+			if (dodging && !miss && !cpuControlled)
+			{
+				boyfriend.visible = false;
+				BoneMiss.visible = true;
+				BoneMiss.animation.play('DodgeMiss');
+				BoneDodge.visible = true;
+				BoneDodge.animation.play('Dodge');
+				FlxG.sound.play(Paths.sound('dodge', 'sans'));
+				canDodge = false;
+			}
+			else if (!dodging && !cpuControlled)
+			{
+				//BoneMiss.visible = true;
+				//BoneMiss.animation.play('DodgeMiss');
+				//health -= 0.475;
+				health -= 1;
+				boyfriend.playAnim('hurt');
+				canDodge = false;
+			}
+	
+			if (cpuControlled) //don't worry i got yall botplay users! -Junior
+			{
+				BoneMiss.visible = true;
+				BoneMiss.animation.play('DodgeMiss');
+				BoneDodge.visible = true;
+				BoneDodge.animation.play('Dodge');
+				canDodge = false;
+			}
+		});
+
+		new FlxTimer().start(1.25, function(tmr:FlxTimer)
+		{
+			remove(BoneDodge);
+			remove(BoneMiss);
+			boyfriend.visible = true;
+		});
+	}
+
 	var lastStepHit:Int = -1;
 	override function stepHit()
 	{
@@ -4265,6 +4419,15 @@ class PlayState extends MusicBeatState
 					VideoState.midsong = true;
 					//LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.5.webm", new PlayState()));
 					//THIS IS WHERE I CAN'T FIGURE OUT HOW TO PLAY THE GAME AFTER THE CUTSCENE WITHOUT HAVING TO REPLAY SONG AND IT REPEATING
+			}
+		}
+
+		if (SONG.song == 'Whoopee')
+		{
+		    switch (curStep)
+			{
+				case 2:
+					SansDodge();
 			}
 		}
 

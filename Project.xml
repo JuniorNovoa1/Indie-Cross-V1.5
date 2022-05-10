@@ -65,6 +65,7 @@
 		<library name="shared"        preload="true" />
 		<library name="bendy"         preload="true" />
 		<library name="cup"           preload="true" />
+		<library name="sans"           preload="true" />
 		<library name="achievements"  preload="true" />
 	</section>
 	
@@ -73,6 +74,7 @@
 		<library name="shared"        preload="false" />
 		<library name="bendy"         preload="false" />
 		<library name="cup"           preload="false" />
+		<library name="sans"          preload="false" />
 		<library name="achievements"  preload="false" />
 	</section>
 	
@@ -85,6 +87,7 @@
 	<assets path="assets/shared"        library="shared"        exclude="*.mp3" unless="web"/>
 	<assets path="assets/bendy"         library="bendy"         exclude="*.mp3" unless="web"/>
 	<assets path="assets/cup"           library="cup"           exclude="*.mp3" unless="web"/>
+	<assets path="assets/sans"          library="sans"           exclude="*.mp3" unless="web"/>
 	
 	<assets path='example_mods' rename='mods' embed='false' if="MODS_ALLOWED"/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />

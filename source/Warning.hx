@@ -106,6 +106,15 @@ class Warning extends MusicBeatState
 			FlxG.save.data.BendyWarning3;
 			FlxG.save.data.BendyWarning3 = true;
 		}
+		else if (!CupWarning || !FlxG.save.data.SansWarning || !FlxG.save.data.BendyWarning1 || !FlxG.save.data.BendyWarning2 || !FlxG.save.data.BendyWarning3)
+		{
+			CupWarning = false;
+			SansWarning = false;
+			BendyWarning1 = false;
+			BendyWarning2 = false;
+			BendyWarning3 = false;
+			LoadingState.loadAndSwitchState(new PlayState());
+		}
 	}
 
 	override public function update(elapsed:Float)

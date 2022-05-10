@@ -365,6 +365,8 @@ class BonusSongsSelection extends MusicBeatState
 		if (controls.BACK)
 		{
 			persistentUpdate = false;
+			destroyFreeplayVocals();
+			
 			if(colorTween != null) {
 				colorTween.cancel();
 			}
@@ -384,6 +386,8 @@ class BonusSongsSelection extends MusicBeatState
 		else if (accepted)
 		{
 			persistentUpdate = false;
+			destroyFreeplayVocals();
+
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
 			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
 			/*#if MODS_ALLOWED

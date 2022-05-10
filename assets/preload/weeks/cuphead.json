@@ -6,11 +6,11 @@
 	],
 
 	"weekCharacters": [
-		"Bendy_Gaming",
-		"",
-		""
+		"dad",
+		"bf",
+		"gf"
 	],
-	"weekBackground": "Bendy_Gaming",
+	"weekBackground": "stage",
 
 	"storyName": "Cuphead",
 	"weekBefore": "tutorial",
