@@ -906,13 +906,13 @@ class PlayState extends MusicBeatState
 		{
 			healthBarBG = new AttachedSprite('healthbar/cuphealthbar');
 		}
-		else if (bendysong = true)
-		{
-			healthBarBG = new AttachedSprite('healthbar/bendyhealthbar');
-		}
 		else if (sanssong = true)
 		{
 			healthBarBG = new AttachedSprite('healthbar/sanshealthbar');
+		}
+		else if (bendysong = true)
+		{
+			healthBarBG = new AttachedSprite('healthbar/bendyhealthbar');
 		}
         else
 		{
@@ -1120,11 +1120,19 @@ class PlayState extends MusicBeatState
 				case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
+
+				case 'snake-eyes':
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cup/1.webm", new PlayState()));
+					if (!FlxG.save.data.CupWarning) //this is the warning
+					{
+						Warning.CupWarning = true;
+						LoadingState.loadAndSwitchState(new Warning());
+					}
 				case 'imminent-demise':
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.webm", new PlayState()));
+					LoadingState.loadAndSwitchState(new VideoState("assets/video/bendy/1.webm", new PlayState()));
 					startCountdown();
 			    case 'terrible-sin':
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/2.webm", new PlayState()));
+					LoadingState.loadAndSwitchState(new VideoState("assets/video/bendy/2.webm", new PlayState()));
 					if (!FlxG.save.data.BendyWarning1) //this is the warning
 					{
 						Warning.BendyWarning1 = true;
