@@ -7,6 +7,9 @@ import Discord.DiscordClient;
 import lime.app.Application;
 import Section.SwagSection;
 import Song.SwagSong;
+//WEBM
+import webm.WebmPlayer;
+//no more webm
 import WiggleEffect.WiggleEffectType;
 import flixel.effects.FlxFlicker;
 import flixel.FlxBasic;
@@ -665,7 +668,7 @@ class PlayState extends MusicBeatState
 			bendysong = false;
 		}
 		
-		if (SONG.song == 'Imminent-Demise' || SONG.song == 'Terrible-Sin' || SONG.song == 'Last-Reel' || SONG.song == 'Nightmare-Run' || SONG.song == 'Despair')
+		if (SONG.song == 'imminent-demise' || SONG.song == 'Terrible-Sin' || SONG.song == 'Last-Reel' || SONG.song == 'Nightmare-Run' || SONG.song == 'Despair')
 		{
 			cupheadsong = false;
 			sanssong = false;
@@ -951,7 +954,7 @@ class PlayState extends MusicBeatState
 		{
 			healthBarBG = new AttachedSprite('healthbar/sanshealthbar');
 		}
-		else if (bendysong = true)
+		else if (bendysong)
 		{
 			healthBarBG = new AttachedSprite('healthbar/bendyhealthbar');
 		}
@@ -1172,7 +1175,7 @@ class PlayState extends MusicBeatState
 					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/3.webm", new PlayState()));
 					startCountdown();
 				case 'imminent-demise':
-					LoadingState.loadAndSwitchState(new VideoState("assets/video/bendy/1.webm", new PlayState()));
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.webm", new PlayState()));
 					startCountdown();
 			    case 'terrible-sin':
 					Warning.BendyWarning1 = true;
@@ -1803,7 +1806,7 @@ class PlayState extends MusicBeatState
 
 		#if desktop
 		// Updating Discord Rich Presence (with Time Left)
-		DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength);
+		DiscordClient.changePresence(detailsText, SONG.song + "- Score: " + songScore + "- (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength);
 		#end
 		setOnLuas('songLength', songLength);
 		callOnLuas('onSongStart', []);
@@ -4420,6 +4423,60 @@ class PlayState extends MusicBeatState
 		});
 	}
 
+	public var fuckingVolume:Float = 1;
+	public var useVideo = false;
+
+	public static var webmHandler:WebmHandler;
+
+	public var playingDathing = false;
+
+	public var videoSprite:FlxSprite;
+
+	public function backgroundVideo(source:String) // for background videos and its kade engine 1.18 code lol
+	{
+		useVideo = true;
+	
+		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
+		// WebmPlayer.SKIP_STEP_LIMIT = 90;
+		var str1:String = "WEBM SHIT";
+		webmHandler = new WebmHandler();
+		webmHandler.source(ourSource);
+		webmHandler.makePlayer();
+		webmHandler.webm.name = str1;
+	
+		GlobalVideo.setWebm(webmHandler);
+	
+		GlobalVideo.get().source(source);
+		GlobalVideo.get().clearPause();
+		if (GlobalVideo.isWebm)
+		{
+			GlobalVideo.get().updatePlayer();
+		}
+		GlobalVideo.get().show();
+	
+		if (GlobalVideo.isWebm)
+		{
+			GlobalVideo.get().restart();
+		}
+		else
+		{
+			GlobalVideo.get().play();
+		}
+	
+		var data = webmHandler.webm.bitmapData;
+	
+		videoSprite = new FlxSprite(-470, -30).loadGraphic(data);
+		videoSprite.scrollFactor.set(0, 0);
+		videoSprite.scale.set(1.6, 1.6);
+		videoSprite.cameras = [camHUD2];
+	    videoSprite.screenCenter();
+		add(videoSprite);
+	
+		trace('poggers');
+	
+		webmHandler.resume();
+	}
+
 	var lastStepHit:Int = -1;
 	override function stepHit()
 	{
@@ -4440,10 +4497,13 @@ class PlayState extends MusicBeatState
 		{
 			switch (curStep)
 			{
-				case 940:
-					VideoState.midsong = true;
-					//LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.5.webm", new PlayState()));
-					//THIS IS WHERE I CAN'T FIGURE OUT HOW TO PLAY THE GAME AFTER THE CUTSCENE WITHOUT HAVING TO REPLAY SONG AND IT REPEATING
+				case 943:
+					backgroundVideo('assets/videos/bendy/1.5.webm');
+					FlxG.sound.play('assets/videos/bendy/1.5.ogg');
+					dadGroup.visible = true;
+					curStage = 'bendy-p2';
+				case 1209:
+					remove(videoSprite);
 			}
 		}
 
