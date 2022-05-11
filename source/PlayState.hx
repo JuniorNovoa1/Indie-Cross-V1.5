@@ -607,13 +607,11 @@ class PlayState extends MusicBeatState
 				add(bg);
 
 				var cuprain:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRAINLayer01', 'cup'));
-				cuprain.scale.set(2.5, 2.5);
 				cuprain.screenCenter();
 				cuprain.updateHitbox();
 				add(cuprain);
 				
 				var cuprain2:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRainLayer02', 'cup'));
-				cuprain2.scale.set(2.5, 2.5);
 				cuprain2.screenCenter();
 				cuprain2.updateHitbox();
 				add(cuprain2);
@@ -948,10 +946,6 @@ class PlayState extends MusicBeatState
 		if (cupheadsong)
 		{
 			healthBarBG = new AttachedSprite('healthbar/cuphealthbar');
-		}
-		else if (bendysong)
-		{
-			healthBarBG = new AttachedSprite('healthbar/bendyhealthbar');
 		}
 		else if (sanssong)
 		{
