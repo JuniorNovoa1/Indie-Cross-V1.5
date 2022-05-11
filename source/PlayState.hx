@@ -587,6 +587,36 @@ class PlayState extends MusicBeatState
 				bg.screenCenter();
 				bg.updateHitbox();
 				add(bg);
+            case 'cuphead-p2':
+				var cupbg2:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('CH-RN-00', 'cup'));
+				cupbg2.scale.set(2.5, 2.5);
+				cupbg2.screenCenter();
+				cupbg2.updateHitbox();
+				add(cupbg2);
+
+				var cupfarbg2:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('CH-RN-01', 'cup'));
+				cupfarbg2.scale.set(2.5, 2.5);
+				cupfarbg2.screenCenter();
+				cupfarbg2.updateHitbox();
+				add(cupfarbg2);
+
+				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('CH-RN-02', 'cup'));
+				bg.scale.set(2.5, 2.5);
+				bg.screenCenter();
+				bg.updateHitbox();
+				add(bg);
+
+				var cuprain:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRAINLayer01', 'cup'));
+				cuprain.scale.set(2.5, 2.5);
+				cuprain.screenCenter();
+				cuprain.updateHitbox();
+				add(cuprain);
+				
+				var cuprain2:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRainLayer02', 'cup'));
+				cuprain2.scale.set(2.5, 2.5);
+				cuprain2.screenCenter();
+				cuprain2.updateHitbox();
+				add(cuprain2);
 		}
 
 		if(isPixelStage) {
@@ -1586,6 +1616,7 @@ class PlayState extends MusicBeatState
 				var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 				introAssets.set('default', ['ready', 'set', 'go']);
 				introAssets.set('pixel', ['pixelUI/ready-pixel', 'pixelUI/set-pixel', 'pixelUI/date-pixel']);
+				introAssets.set('cuphead', ['cup/ready_wallop']);
 
 				var introAlts:Array<String> = introAssets.get('default');
 				var antialias:Bool = ClientPrefs.globalAntialiasing;
