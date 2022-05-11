@@ -607,14 +607,50 @@ class PlayState extends MusicBeatState
 				add(bg);
 
 				var cuprain:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRAINLayer01', 'cup'));
+				cuprain.frames = Paths.getSparrowAtlas('NewRainLayer01', 'cup');
+				cuprain.animation.addByPrefix('NewRainLayer01', 'cup', 2);
+				cuprain.animation.play('idle');
 				cuprain.screenCenter();
 				cuprain.updateHitbox();
 				add(cuprain);
 				
 				var cuprain2:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRainLayer02', 'cup'));
+				cuprain2.frames = Paths.getSparrowAtlas('NewRainLayer02', 'cup');
+				cuprain2.animation.addByPrefix('NewRainLayer02', 'cup', 4);
+				cuprain2.animation.play('idle');
 				cuprain2.screenCenter();
 				cuprain2.updateHitbox();
 				add(cuprain2);
+
+
+			case 'cuphead-devil':
+			    var cupbgdevil:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('nightmarecupbg', 'cup'));
+			    cupbgdevil.scale.set(2.5, 2.5);
+			    cupbgdevil.screenCenter();
+			    cupbgdevil.updateHitbox();
+			    add(cupbgdevil);
+
+				var lightdevil:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NMClight', 'cup'));
+				lightdevil = new FlxSprite(350, -250);
+				lightdevil.frames = Paths.getSparrowAtlas('NMClight', 'cup');
+				lightdevil.animation.addByPrefix('idle', "rgrrr instance 10000", 24);
+				lightdevil.animation.play('idle');
+				lightdevil.updateHitbox();
+				add(lightdevil);
+
+			case 'hall':
+				var sansBG:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('hall', 'sans'));
+			    sansBG.scale.set(2.5, 2.5);
+			    sansBG.screenCenter();
+			    sansBG.updateHitbox();
+			    add(sansBG);
+
+            case 'dark-hall':
+				var sansBG2:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('halldark', 'sans'));
+				sansBG2.scale.set(2.5, 2.5);
+			    sansBG2.screenCenter();
+			    sansBG2.updateHitbox();
+			    add(sansBG2);
 		}
 
 		if(isPixelStage) {
