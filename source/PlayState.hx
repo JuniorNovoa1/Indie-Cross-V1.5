@@ -4503,7 +4503,6 @@ class PlayState extends MusicBeatState
 	
 		videoSprite = new FlxSprite(-470, -30).loadGraphic(data);
 		videoSprite.scrollFactor.set(0, 0);
-		videoSprite.scale.set(1.6, 1.6);
 		videoSprite.cameras = [camHUD2];
 	    videoSprite.screenCenter();
 		add(videoSprite);
