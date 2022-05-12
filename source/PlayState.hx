@@ -2285,18 +2285,18 @@ class PlayState extends MusicBeatState
 			{
 				attacked = false;
 				canAttack = true;
-			}
+			});
 		}
 
 		if (FlxG.keys.anyJustPressed(AttackRightKey) && canAttack)
 		{
-			boyfriend.playAnim('attack', true)
+			boyfriend.playAnim('attack', true);
 			canAttack = false;
 	
 			new FlxTimer().start(3, function(tmr:FlxTimer)
 			{
 				canAttack = true;
-			}
+			});
 		}
 
 		if (FlxG.keys.anyJustPressed(DodgeKey) && canDodge)
