@@ -283,7 +283,7 @@ class PlayState extends MusicBeatState
 	var InkCurrentlyOnScreen:Bool = false;
 
 	//healthbar shit
-	var cupheadsong:Bool = false;
+	public static var cupheadsong:Bool = false;
 	var sanssong:Bool = false;
 	var bendysong:Bool = false;
 
