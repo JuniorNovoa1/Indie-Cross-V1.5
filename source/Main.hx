@@ -23,6 +23,8 @@ class Main extends Sprite
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 	public static var fpsVar:FPS;
 
+	public static var gjToastManager:GJToastManager; //this is needed for the child
+
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
 	public static function main():Void
@@ -56,6 +58,9 @@ class Main extends Sprite
 
 	private function setupGame():Void
 	{
+		gjToastManager = new GJToastManager();
+		addChild(gjToastManager); //adding the toddler
+		
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
