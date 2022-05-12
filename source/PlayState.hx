@@ -252,6 +252,7 @@ class PlayState extends MusicBeatState
 	public var girlfriendCameraOffset:Array<Float> = null;
 
 	//attacking
+	var ParryNoteHit:Bool = false;
 	var canAttack:Bool = false;
 	var attacked:Bool = false;
 	var AttackLeftKey:Array<FlxKey>;
@@ -635,7 +636,6 @@ class PlayState extends MusicBeatState
 				cuprain2.screenCenter();
 				cuprain2.updateHitbox();
 				add(cuprain2);
-
 
 			case 'cuphead-devil':
 			    var cupbgdevil:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('nightmarecupbg', 'cup'));
@@ -2275,9 +2275,15 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 
+		if (ParryNoteHit)//notetype == 'Parry Note' && goodNoteHit)
+		{
+			canAttack = true;
+		}
+
 		if (FlxG.keys.anyJustPressed(AttackLeftKey) && canAttack)
 		{
-		    boyfriend.playAnim('attack', true)
+		    boyfriend.playAnim('attack', true);
+			ParryNoteHit = false;
 			canAttack = false;
 			attacked = true;
 
@@ -2285,18 +2291,21 @@ class PlayState extends MusicBeatState
 			{
 				attacked = false;
 				canAttack = true;
-			}
+			});
 		}
 
 		if (FlxG.keys.anyJustPressed(AttackRightKey) && canAttack)
 		{
-			boyfriend.playAnim('attack', true)
+			boyfriend.playAnim('attack', true);
+			ParryNoteHit = false;
 			canAttack = false;
-	
+			attacked = true;
+			
 			new FlxTimer().start(3, function(tmr:FlxTimer)
 			{
+				attacked = false;
 				canAttack = true;
-			}
+			});
 		}
 
 		if (FlxG.keys.anyJustPressed(DodgeKey) && canDodge)
@@ -4108,6 +4117,9 @@ class PlayState extends MusicBeatState
 					    InkOnScreen += 1;
 						FlxG.sound.play(Paths.sound('inked', 'bendy'));
 						InkCurrentlyOnScreen = true;
+					case 'Parry Note':
+						FlxG.sound.play(Paths.sound('parry', 'cup'));
+						ParryNoteHit = true;
 				}
 				
 				note.wasGoodHit = true;

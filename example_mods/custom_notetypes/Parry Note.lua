@@ -23,9 +23,6 @@ end
 -- isSustainNote: If it's a hold note, can be either true or false
 function goodNoteHit(id, noteData, noteType, isSustainNote)
 	if noteType == 'Parry Note' then
-	  playSound('parry')
-	  triggerEvent('Play Animation','attack','BF');
-	  triggerEvent('Play Animation','hit','Dad');
 		-- put something here if you want
 	end
 end
