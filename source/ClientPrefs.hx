@@ -65,8 +65,9 @@ class ClientPrefs {
 		'note_down'		=> [S, DOWN],
 		'note_up'		=> [W, UP],
 		'note_right'	=> [D, RIGHT],
+		'attack_left'   => [SHIFT, SHIFT],
+		'attack_right'  => [SHIFT, SHIFT],
 		'note_dodge'    => [SPACE, SPACE],
-		'note_attack'   => [SHIFT, SHIFT],
 		
 		'ui_left'		=> [A, LEFT],
 		'ui_down'		=> [S, DOWN],

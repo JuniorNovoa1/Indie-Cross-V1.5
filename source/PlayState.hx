@@ -251,7 +251,14 @@ class PlayState extends MusicBeatState
 	public var opponentCameraOffset:Array<Float> = null;
 	public var girlfriendCameraOffset:Array<Float> = null;
 
+	//attacking
+	var canAttack:Bool = false;
+	var attacked:Bool = false;
+	var AttackLeftKey:Array<FlxKey>;
+	var AttackRightKey:Array<FlxKey>;
+
 	//Dodging
+	var DodgeKey:Array<FlxKey>;
 	var canDodge:Bool = false;
 	var dodging:Bool = false;
 	var miss:Bool = false;
@@ -384,6 +391,10 @@ class PlayState extends MusicBeatState
 		// String for when the game is paused
 		detailsPausedText = "Paused - " + detailsText;
 		#end
+
+		AttackLeftKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('attack_left'));
+		AttackRightKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('attack_right'));
+		DodgeKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_dodge'));
 
         #if desktop
 		if (SONG.song == 'Snake-Eyes')
@@ -2264,7 +2275,31 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 
-		if (FlxG.keys.justPressed.SPACE && canDodge)
+		if (FlxG.keys.anyJustPressed(AttackLeftKey) && canAttack)
+		{
+		    boyfriend.playAnim('attack', true)
+			canAttack = false;
+			attacked = true;
+
+			new FlxTimer().start(3, function(tmr:FlxTimer)
+			{
+				attacked = false;
+				canAttack = true;
+			}
+		}
+
+		if (FlxG.keys.anyJustPressed(AttackRightKey) && canAttack)
+		{
+			boyfriend.playAnim('attack', true)
+			canAttack = false;
+	
+			new FlxTimer().start(3, function(tmr:FlxTimer)
+			{
+				canAttack = true;
+			}
+		}
+
+		if (FlxG.keys.anyJustPressed(DodgeKey) && canDodge)
 		{
 			dodging = true;
 			//boyfriend.nonanimated = true;
@@ -4377,6 +4412,11 @@ class PlayState extends MusicBeatState
 		if(luaArray != null && !preventLuaRemove) {
 			luaArray.remove(lua);
 		}
+	}
+
+	function CupAttack()
+	{
+        //do later lol
 	}
 
 	function SansDodge()
