@@ -1016,7 +1016,7 @@ class PlayState extends MusicBeatState
 		if (cupheadsong)
 		{
 			healthBarBG.xAdd = -4;
-		    healthBarBG.yAdd = -4;
+		    healthBarBG.yAdd = 4;
 		}
 		else if (sanssong)
 		{

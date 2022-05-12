@@ -81,11 +81,11 @@ class FreeplaySelect extends MusicBeatState
 
 		if (!FlxG.save.data.NightmareUnlocked)
 		{
-			nightmare.visible = false;
+			nightmare.visible = true;
 		}
 		else
 		{
-		    nightmarelocked.visible = false;
+		    nightmarelocked.visible = true;
 		}
 
 		if (SelectionWeek == 0)
