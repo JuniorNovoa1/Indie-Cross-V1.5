@@ -2277,7 +2277,7 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.anyJustPressed(AttackLeftKey) && canAttack)
 		{
-		    boyfriend.playAnim('attack', true)
+		    boyfriend.playAnim('attack', true);
 			canAttack = false;
 			attacked = true;
 
