@@ -2300,7 +2300,7 @@ class PlayState extends MusicBeatState
 			ParryNoteHit = false;
 			canAttack = false;
 			attacked = true;
-			
+
 			new FlxTimer().start(3, function(tmr:FlxTimer)
 			{
 				attacked = false;

@@ -82,7 +82,7 @@ class CreditsState extends MusicBeatState
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
 			['The Porters'],
-			['Junior',		            'junior',		    'Made Most of the stuff',							'https://github.com/JuniorNovoa1',	'add8e6'],
+			['Junior',		            'junior',		    'Made Most of the stuff',							        'https://github.com/JuniorNovoa1',	'add8e6'],
 			['bushtrain460615',			'bushtrain',		'did the main menu and most of the backgrounds',			'https://github.com/BushsHaxs',		'e2583e'],
 			[''],
 			['Psych Engine Team'],
