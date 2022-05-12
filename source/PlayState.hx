@@ -4507,7 +4507,7 @@ class PlayState extends MusicBeatState
 	    videoSprite.screenCenter();
 		add(videoSprite);
 	
-		trace('poggers');
+		trace('ITS PLAYING NOW!!!!!!');
 	
 		webmHandler.resume();
 	}
@@ -4536,7 +4536,28 @@ class PlayState extends MusicBeatState
 					backgroundVideo('assets/videos/bendy/1.5.webm');
 					FlxG.sound.play('assets/videos/bendy/1.5.ogg');
 					dadGroup.visible = true;
-					curStage = 'bendy-p2';
+
+					var veryfarbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('BACKBACKgROUND', 'bendy'));
+					veryfarbg.updateHitbox();
+					add(veryfarbg);
+					
+					var farbg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('BackgroundwhereDEEZNUTSfitINYOmOUTH', 'bendy'));
+					farbg.updateHitbox();
+					add(farbg);
+	
+					var closebg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('MidGrounUTS', 'bendy'));
+					closebg.updateHitbox();
+					add(closebg);
+	
+					var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('ForegroundEEZNUTS', 'bendy'));
+					bg.updateHitbox();
+					add(bg);
+
+					boyfriend.x = 1200;
+					boyfriend.y = 500;
+
+					dad.x = 25;
+					dad.y = 175;
 				case 1209:
 					remove(videoSprite);
 			}
