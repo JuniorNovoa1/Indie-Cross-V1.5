@@ -584,6 +584,13 @@ class PlayState extends MusicBeatState
 				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('ForegroundEEZNUTS', 'bendy'));
 				bg.updateHitbox();
 				add(bg);
+			case 'bendy-run':
+				var runbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('run/Fuck_the_hallway', 'bendy'));
+				runbg.scale.set(2.5, 2.5);
+				runbg.screenCenter();
+				runbg.updateHitbox();
+				add(runbg);
+				
 			case 'cuphead-p1':
 				var cupbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('BG-00', 'cup'));
 				cupbg.scale.set(2.5, 2.5);
