@@ -587,6 +587,8 @@ class PlayState extends MusicBeatState
 			case 'bendy-run':
 				var runbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('run/Fuck_the_hallway', 'bendy'));
 				runbg.scale.set(2.5, 2.5);
+				runbg.animation.addByPrefix('idle', "Loop01 instance 1", 254);
+				runbg.animation.play('idle');
 				runbg.screenCenter();
 				runbg.updateHitbox();
 				add(runbg);
@@ -609,6 +611,13 @@ class PlayState extends MusicBeatState
 				bg.screenCenter();
 				bg.updateHitbox();
 				add(bg);
+
+				var Grain:FlxSprite = new FlxSprite(350, -250).loadGraphic(Paths.image('Grainshit', 'cup'));
+				Grain.scale.set(2.5, 2.5);
+				Grain.screenCenter();
+				Grain.updateHitbox();
+				add(Grain);
+
             case 'cuphead-p2':
 				var cupbg2:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('CH-RN-00', 'cup'));
 				cupbg2.scale.set(2.5, 2.5);
