@@ -612,11 +612,13 @@ class PlayState extends MusicBeatState
 				bg.updateHitbox();
 				add(bg);
 
-				var Grain:FlxSprite = new FlxSprite(350, -250).loadGraphic(Paths.image('Grainshit', 'cup'));
-				Grain.scale.set(2.5, 2.5);
-				Grain.screenCenter();
-				Grain.updateHitbox();
-				add(Grain);
+				var cupshid:FlxSprite;
+				cupshid = new FlxSprite();
+				cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
+				cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
+				cupshid.screenCenter();
+				add(cupshid);
+				cupshid.cameras = [camHUD];
 
             case 'cuphead-p2':
 				var cupbg2:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('CH-RN-00', 'cup'));
@@ -652,6 +654,14 @@ class PlayState extends MusicBeatState
 				cuprain2.screenCenter();
 				cuprain2.updateHitbox();
 				add(cuprain2);
+				
+				var cupshid:FlxSprite;
+				cupshid = new FlxSprite();
+				cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
+				cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
+				cupshid.screenCenter();
+				add(cupshid);
+				cupshid.cameras = [camHUD];
 
 			case 'cuphead-devil':
 			    var cupbgdevil:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('nightmarecupbg', 'cup'));
@@ -1131,17 +1141,6 @@ class PlayState extends MusicBeatState
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
-
-		if (SONG.song.toLowerCase() == 'snake-eyes')
-			{
-				var cupshid:FlxSprite;
-				cupshid = new FlxSprite();
-				cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
-				cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
-				cupshid.screenCenter();
-				add(cupshid);
-				cupshid.cameras = [camHUD];
-			}
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
