@@ -35,6 +35,8 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
+import GameJolt.GameJoltAPI;
+import GameJolt;
 
 using StringTools;
 typedef TitleData =
@@ -91,6 +93,8 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		GameJoltAPI.connect();
+		GameJoltAPI.authDaUser(FlxG.save.data.gjUser, FlxG.save.data.gjToken);
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
