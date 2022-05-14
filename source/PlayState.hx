@@ -1132,6 +1132,17 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
+		if (SONG.song.toLowerCase() == 'snake-eyes')
+			{
+				var cupshid:FlxSprite;
+				cupshid = new FlxSprite();
+				cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
+				cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
+				cupshid.screenCenter();
+				add(cupshid);
+				cupshid.cameras = [camHUD];
+			}
+
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
 		// UI_camera.zoom = 1;
