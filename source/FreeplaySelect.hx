@@ -62,6 +62,7 @@ class FreeplaySelect extends MusicBeatState
 		nightmare.antialiasing = ClientPrefs.globalAntialiasing;
 	    nightmare.screenCenter(Y);
 		nightmare.scale.set(0.7, 0.7);
+		nightmare.visible = false; //keep it like the original.
 		add(nightmare);
 
 		nightmarelocked = new FlxSprite(700, 0).loadGraphic(Paths.image('freeplayselect/locked'));

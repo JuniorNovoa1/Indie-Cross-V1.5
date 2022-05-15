@@ -534,138 +534,178 @@ class PlayState extends MusicBeatState
 				}
 			case 'bendy-p1':
 				var bg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('first/BG01', 'bendy'));
+				bg.antialiasing = ClientPrefs.globalAntialiasing;
 				bg.updateHitbox();
 				add(bg);
 
-				musicbox = new FlxSprite(700, 125);
-				musicbox.frames = Paths.getSparrowAtlas('first/MusicBox', 'bendy');
-				musicbox.animation.addByPrefix('idle', "Music box thingy instance 1", 24);
-				musicbox.animation.play('idle');
-				musicbox.updateHitbox();
-				add(musicbox);
-
-				light = new FlxSprite(350, -250);
-				light.frames = Paths.getSparrowAtlas('first/Light(Add-Blend)', 'bendy');
-				light.animation.addByPrefix('idle', "fezt instance 1", 24);
-				light.animation.play('idle');
-				light.updateHitbox();
-				add(light);
+				if (!ClientPrefs.lowQuality)
+				{
+					musicbox = new FlxSprite(700, 125);
+					musicbox.frames = Paths.getSparrowAtlas('first/MusicBox', 'bendy');
+					musicbox.animation.addByPrefix('idle', "Music box thingy instance 1", 24);
+					musicbox.animation.play('idle');
+					musicbox.antialiasing = ClientPrefs.globalAntialiasing;
+					musicbox.updateHitbox();
+					add(musicbox);
+	
+					light = new FlxSprite(350, -250);
+					light.frames = Paths.getSparrowAtlas('first/Light(Add-Blend)', 'bendy');
+					light.animation.addByPrefix('idle', "fezt instance 1", 24);
+					light.animation.play('idle');
+					light.antialiasing = ClientPrefs.globalAntialiasing;
+					light.updateHitbox();
+					add(light);
+				}
 
 				var bendy:FlxSprite = new FlxSprite(180, 0).loadGraphic(Paths.image('first/Boi', 'bendy'));
+				bendy.antialiasing = ClientPrefs.globalAntialiasing;
 				bendy.updateHitbox();
 				add(bendy);
 
 				remove(boyfriendGroup);
 				add(boyfriendGroup); //so the pillar is above bf lol (im gonna figure out better code later)
 				dadGroup.visible = false;
-				var pillar:FlxSprite = new FlxSprite(1325, -250).loadGraphic(Paths.image('first/Pillar', 'bendy'));
-				pillar.updateHitbox();
-				add(pillar);
+
+				if (!ClientPrefs.lowQuality)
+				{
+					var pillar:FlxSprite = new FlxSprite(1325, -250).loadGraphic(Paths.image('first/Pillar', 'bendy'));
+					pillar.antialiasing = ClientPrefs.globalAntialiasing;
+					pillar.updateHitbox();
+					add(pillar);
+				}
 			case 'bendy-p2':
 				var veryfarbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('BACKBACKgROUND', 'bendy'));
+				veryfarbg.antialiasing = ClientPrefs.globalAntialiasing;
 				veryfarbg.updateHitbox();
 				add(veryfarbg);
                 
 				var farbg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('BackgroundwhereDEEZNUTSfitINYOmOUTH', 'bendy'));
+				farbg.antialiasing = ClientPrefs.globalAntialiasing;
 				farbg.updateHitbox();
 				add(farbg);
 
-				sammy = new FlxSprite(600, 300);
-				sammy.frames = Paths.getSparrowAtlas('third/SammyBg', 'bendy');
-				sammy.animation.addByPrefix('idle', "Sam instance 1", 24);
-				sammy.animation.play('idle');
-				sammy.updateHitbox();
-				add(sammy);
+				if (!ClientPrefs.lowQuality)
+				{
+					sammy = new FlxSprite(600, 300);
+					sammy.frames = Paths.getSparrowAtlas('third/SammyBg', 'bendy');
+					sammy.animation.addByPrefix('idle', "Sam instance 1", 24);
+					sammy.animation.play('idle');
+	                sammy.antialiasing = ClientPrefs.globalAntialiasing;
+					sammy.updateHitbox();
+					add(sammy);
+				}
 
 				var closebg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('MidGrounUTS', 'bendy'));
+				closebg.antialiasing = ClientPrefs.globalAntialiasing;
 				closebg.updateHitbox();
 				add(closebg);
 
-				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('ForegroundEEZNUTS', 'bendy'));
-				bg.updateHitbox();
-				add(bg);
+				if (!ClientPrefs.lowQuality)
+				{
+					var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('ForegroundEEZNUTS', 'bendy'));
+					bg.antialiasing = ClientPrefs.globalAntialiasing;
+					bg.updateHitbox();
+					add(bg);
+				}
 			case 'bendy-run':
 				var runbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('run/Fuck_the_hallway', 'bendy'));
 				runbg.scale.set(2.5, 2.5);
 				runbg.animation.addByPrefix('idle', "Loop01 instance 1", 254);
 				runbg.animation.play('idle');
+				runbg.antialiasing = ClientPrefs.globalAntialiasing;
 				runbg.screenCenter();
 				runbg.updateHitbox();
 				add(runbg);
-				
 			case 'cuphead-p1':
 				var cupbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('BG-00', 'cup'));
 				cupbg.scale.set(2.5, 2.5);
+				cupbg.antialiasing = ClientPrefs.globalAntialiasing;
 				cupbg.screenCenter();
 				cupbg.updateHitbox();
 				add(cupbg);
 
 				var cupfarbg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('BG-01', 'cup'));
 				cupfarbg.scale.set(2.5, 2.5);
+				cupfarbg.antialiasing = ClientPrefs.globalAntialiasing;
 				cupfarbg.screenCenter();
 				cupfarbg.updateHitbox();
 				add(cupfarbg);
 
 				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('Foreground', 'cup'));
 				bg.scale.set(2.5, 2.5);
+				bg.antialiasing = ClientPrefs.globalAntialiasing;
 				bg.screenCenter();
 				bg.updateHitbox();
 				add(bg);
 
-				var cupshid:FlxSprite;
-				cupshid = new FlxSprite();
-				cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
-				cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
-				cupshid.screenCenter();
-				add(cupshid);
-				cupshid.cameras = [camHUD];
+				if (!ClientPrefs.lowQuality)
+				{
+					var cupshid:FlxSprite;
+					cupshid = new FlxSprite();
+					cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
+					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
+					cupshid.antialiasing = ClientPrefs.globalAntialiasing;
+					cupshid.screenCenter();
+					add(cupshid);
+					cupshid.cameras = [camHUD2];
+				}
 
             case 'cuphead-p2':
 				var cupbg2:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('CH-RN-00', 'cup'));
 				cupbg2.scale.set(2.5, 2.5);
+				cupbg2.antialiasing = ClientPrefs.globalAntialiasing;
 				cupbg2.screenCenter();
 				cupbg2.updateHitbox();
 				add(cupbg2);
 
 				var cupfarbg2:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('CH-RN-01', 'cup'));
 				cupfarbg2.scale.set(2.5, 2.5);
+				cupfarbg2.antialiasing = ClientPrefs.globalAntialiasing;
 				cupfarbg2.screenCenter();
 				cupfarbg2.updateHitbox();
 				add(cupfarbg2);
 
 				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('CH-RN-02', 'cup'));
 				bg.scale.set(2.5, 2.5);
+				bg.antialiasing = ClientPrefs.globalAntialiasing;
 				bg.screenCenter();
 				bg.updateHitbox();
 				add(bg);
 
-				var cuprain:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRAINLayer01', 'cup'));
-				cuprain.frames = Paths.getSparrowAtlas('NewRainLayer01', 'cup');
-				cuprain.animation.addByPrefix('NewRainLayer01', 'cup', 2);
-				cuprain.animation.play('idle');
-				cuprain.screenCenter();
-				cuprain.updateHitbox();
-				add(cuprain);
-				
-				var cuprain2:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRainLayer02', 'cup'));
-				cuprain2.frames = Paths.getSparrowAtlas('NewRainLayer02', 'cup');
-				cuprain2.animation.addByPrefix('NewRainLayer02', 'cup', 4);
-				cuprain2.animation.play('idle');
-				cuprain2.screenCenter();
-				cuprain2.updateHitbox();
-				add(cuprain2);
-				
-				var cupshid:FlxSprite;
-				cupshid = new FlxSprite();
-				cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
-				cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
-				cupshid.screenCenter();
-				add(cupshid);
-				cupshid.cameras = [camHUD];
+				if (!ClientPrefs.lowQuality)
+				{
+					var cuprain:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRAINLayer01', 'cup'));
+					cuprain.frames = Paths.getSparrowAtlas('NewRainLayer01', 'cup');
+					cuprain.animation.addByPrefix('NewRainLayer01', 'cup', 2);
+					cuprain.animation.play('idle');
+					cuprain.antialiasing = ClientPrefs.globalAntialiasing;
+					cuprain.screenCenter();
+					cuprain.updateHitbox();
+					add(cuprain);
+					
+					var cuprain2:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRainLayer02', 'cup'));
+					cuprain2.frames = Paths.getSparrowAtlas('NewRainLayer02', 'cup');
+					cuprain2.animation.addByPrefix('NewRainLayer02', 'cup', 4);
+					cuprain2.animation.play('idle');
+					cuprain2.antialiasing = ClientPrefs.globalAntialiasing;
+					cuprain2.screenCenter();
+					cuprain2.updateHitbox();
+					add(cuprain2);
+					
+					var cupshid:FlxSprite;
+					cupshid = new FlxSprite();
+					cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
+					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
+					cupshid.antialiasing = ClientPrefs.globalAntialiasing;
+					cupshid.screenCenter();
+					add(cupshid);
+					cupshid.cameras = [camHUD2];
+				}
 
 			case 'cuphead-devil':
 			    var cupbgdevil:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('nightmarecupbg', 'cup'));
 			    cupbgdevil.scale.set(2.5, 2.5);
+				cupbgdevil.antialiasing = ClientPrefs.globalAntialiasing;
 			    cupbgdevil.screenCenter();
 			    cupbgdevil.updateHitbox();
 			    add(cupbgdevil);
@@ -675,19 +715,20 @@ class PlayState extends MusicBeatState
 				lightdevil.frames = Paths.getSparrowAtlas('NMClight', 'cup');
 				lightdevil.animation.addByPrefix('idle', "rgrrr instance 10000", 24);
 				lightdevil.animation.play('idle');
+				lightdevil.antialiasing = ClientPrefs.globalAntialiasing;
 				lightdevil.updateHitbox();
 				add(lightdevil);
-
 			case 'hall':
 				var sansBG:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('hall', 'sans'));
 			    sansBG.scale.set(2.5, 2.5);
+				sansBG.antialiasing = ClientPrefs.globalAntialiasing;
 			    sansBG.screenCenter();
 			    sansBG.updateHitbox();
 			    add(sansBG);
-
             case 'dark-hall':
 				var sansBG2:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('halldark', 'sans'));
 				sansBG2.scale.set(2.5, 2.5);
+				sansBG2.antialiasing = ClientPrefs.globalAntialiasing;
 			    sansBG2.screenCenter();
 			    sansBG2.updateHitbox();
 			    add(sansBG2);
@@ -834,17 +875,20 @@ class PlayState extends MusicBeatState
 			gf = new Character(0, 0, gfVersion);
 			startCharacterPos(gf);
 			gf.scrollFactor.set(0.95, 0.95);
+			gf.antialiasing = ClientPrefs.globalAntialiasing;
 			gfGroup.add(gf);
 			startCharacterLua(gf.curCharacter);
 		}
 
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
+		dad.antialiasing = ClientPrefs.globalAntialiasing;
 		dadGroup.add(dad);
 		startCharacterLua(dad.curCharacter);
 		
 		boyfriend = new Boyfriend(0, 0, SONG.player1);
 		startCharacterPos(boyfriend);
+		boyfriend.antialiasing = ClientPrefs.globalAntialiasing;
 		boyfriendGroup.add(boyfriend);
 		startCharacterLua(boyfriend.curCharacter);
 		
@@ -1039,6 +1083,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		healthBarBG.visible = !ClientPrefs.hideHud;
+		healthBarBG.antialiasing = ClientPrefs.globalAntialiasing;
 		if (cupheadsong)
 		{
 			healthBarBG.xAdd = -4;
@@ -1075,6 +1120,7 @@ class PlayState extends MusicBeatState
 		// healthBar
 		healthBar.visible = !ClientPrefs.hideHud;
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
+		healthBar.antialiasing = ClientPrefs.globalAntialiasing;
 
 		if (bendysong || cupheadsong) //scale
 		{
@@ -1095,6 +1141,7 @@ class PlayState extends MusicBeatState
 		}
 		iconP1.visible = !ClientPrefs.hideHud;
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
+		iconP1.antialiasing = ClientPrefs.globalAntialiasing;
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
@@ -1108,6 +1155,7 @@ class PlayState extends MusicBeatState
 		}
 		iconP2.visible = !ClientPrefs.hideHud;
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
+		iconP2.antialiasing = ClientPrefs.globalAntialiasing;
 		add(iconP2);
 		reloadHealthBarColors();
 
@@ -4546,7 +4594,7 @@ class PlayState extends MusicBeatState
 
 	public var videoSprite:FlxSprite;
 
-	public function backgroundVideo(source:String) // for background videos and its kade engine 1.18 code lol
+	public function backgroundVideo(source:String, sound:Bool) // for background videos and its kade engine 1.18 code lol
 	{
 		useVideo = true;
 	
@@ -4560,7 +4608,7 @@ class PlayState extends MusicBeatState
 	
 		GlobalVideo.setWebm(webmHandler);
 	
-		GlobalVideo.get().source(source);
+		GlobalVideo.get().source(source + '.webm');
 		GlobalVideo.get().clearPause();
 		if (GlobalVideo.isWebm)
 		{
@@ -4582,8 +4630,14 @@ class PlayState extends MusicBeatState
 		videoSprite = new FlxSprite(-470, -30).loadGraphic(data);
 		videoSprite.scrollFactor.set(0, 0);
 		videoSprite.cameras = [camHUD2];
+		videoSprite.antialiasing = ClientPrefs.globalAntialiasing;
 	    videoSprite.screenCenter();
 		add(videoSprite);
+        
+		if (sound)
+		{
+			FlxG.sound.play(source);
+		}
 	
 		trace('ITS PLAYING NOW!!!!!!');
 	
@@ -4611,29 +4665,40 @@ class PlayState extends MusicBeatState
 			switch (curStep)
 			{
 				case 943:
-					backgroundVideo('assets/videos/bendy/1.5.webm');
-					FlxG.sound.play('assets/videos/bendy/1.5.ogg');
+					backgroundVideo('assets/videos/bendy/1.5', true);
 					dadGroup.visible = true;
 
+					remove(dadGroup);
+					remove(boyfriendGroup);
+
 					var veryfarbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('BACKBACKgROUND', 'bendy'));
+					veryfarbg.antialiasing = ClientPrefs.globalAntialiasing;
 					veryfarbg.updateHitbox();
 					add(veryfarbg);
 					
 					var farbg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('BackgroundwhereDEEZNUTSfitINYOmOUTH', 'bendy'));
+					farbg.antialiasing = ClientPrefs.globalAntialiasing;
 					farbg.updateHitbox();
 					add(farbg);
 	
 					var closebg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('MidGrounUTS', 'bendy'));
+					closebg.antialiasing = ClientPrefs.globalAntialiasing;
 					closebg.updateHitbox();
 					add(closebg);
 	
-					var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('ForegroundEEZNUTS', 'bendy'));
-					bg.updateHitbox();
-					add(bg);
+					if (!ClientPrefs.lowQuality)
+					{
+						var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('ForegroundEEZNUTS', 'bendy'));
+						bg.antialiasing = ClientPrefs.globalAntialiasing;
+						bg.updateHitbox();
+						add(bg);
+					}
+
+					add(dadGroup);
+					add(boyfriendGroup);
 
 					boyfriend.x = 1200;
-					boyfriend.y = 500;
-
+					boyfriend.y = -300;
 					dad.x = 25;
 					dad.y = 175;
 				case 1209:

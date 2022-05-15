@@ -29,19 +29,27 @@ using StringTools;
 
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
+	var options:Array<String> = ['Controls', 'Graphics', 'Visuals and UI', 'Gameplay', 'Adjust Delay and Combo'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
+			/*
 			case 'Note Colors':
 				persistentUpdate = false;
 				openSubState(new options.NotesSubState());
+			*/
+			#if (desktop || html5)
 			case 'Controls':
 				persistentUpdate = false;
 				openSubState(new options.ControlsSubState());
+			#else
+			case 'Controls':
+				persistentUpdate = false;
+				openSubState(new options.PreferencesSubstate());
+			#end
 			case 'Graphics':
 				persistentUpdate = false;
 				openSubState(new options.GraphicsSettingsSubState());
@@ -61,8 +69,8 @@ class OptionsState extends MusicBeatState
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 
-		FlxG.sound.music == null
-		FlxG.sound.playMusic(Paths.music('settin'));
+        FlxG.sound.music.stop();
+	    FlxG.sound.playMusic(Paths.music('settin'));
 
 		persistentUpdate = persistentDraw = true;
 
@@ -123,9 +131,9 @@ class OptionsState extends MusicBeatState
 		}
 
 		if (controls.BACK) {
-			FlxG.sound.music == null
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			FlxG.sound.playMusic(Paths.music('freakyMenu', 0.7));
+			FlxG.sound.music.stop();
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
