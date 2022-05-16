@@ -4594,7 +4594,7 @@ class PlayState extends MusicBeatState
 
 	public var videoSprite:FlxSprite;
 
-	public function backgroundVideo(source:String, sound:Bool) // for background videos and its kade engine 1.18 code lol
+	public function backgroundVideo(source:String, sound:Bool) // for background videos and its edited kade engine 1.18 code lol
 	{
 		useVideo = true;
 	
@@ -4608,7 +4608,7 @@ class PlayState extends MusicBeatState
 	
 		GlobalVideo.setWebm(webmHandler);
 	
-		GlobalVideo.get().source(source + '.webm');
+		GlobalVideo.get().source('assets/videos/' + source + '.webm');
 		GlobalVideo.get().clearPause();
 		if (GlobalVideo.isWebm)
 		{
@@ -4625,19 +4625,18 @@ class PlayState extends MusicBeatState
 			GlobalVideo.get().play();
 		}
 	
+		if (sound)
+		{
+			FlxG.sound.play(Paths.sound(source));
+		}
+
 		var data = webmHandler.webm.bitmapData;
-	
 		videoSprite = new FlxSprite(-470, -30).loadGraphic(data);
 		videoSprite.scrollFactor.set(0, 0);
 		videoSprite.cameras = [camHUD2];
 		videoSprite.antialiasing = ClientPrefs.globalAntialiasing;
 	    videoSprite.screenCenter();
 		add(videoSprite);
-        
-		if (sound)
-		{
-			FlxG.sound.play(source);
-		}
 	
 		trace('ITS PLAYING NOW!!!!!!');
 	
@@ -4665,7 +4664,7 @@ class PlayState extends MusicBeatState
 			switch (curStep)
 			{
 				case 943:
-					backgroundVideo('assets/videos/bendy/1.5', true);
+					backgroundVideo('bendy/1.5', true);
 					dadGroup.visible = true;
 
 					remove(dadGroup);
@@ -4698,7 +4697,7 @@ class PlayState extends MusicBeatState
 					add(boyfriendGroup);
 
 					boyfriend.x = 1200;
-					boyfriend.y = -300;
+					boyfriend.y = -1300;
 					dad.x = 25;
 					dad.y = 175;
 				case 1209:
