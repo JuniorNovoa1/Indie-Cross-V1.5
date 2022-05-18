@@ -93,22 +93,46 @@ class FreeplaySelect extends MusicBeatState
 		{
 			story.alpha = 1.0;
 			extras.alpha = 0.6;
-			nightmare.alpha = 0.6;
-			nightmarelocked.alpha = 0.6;
+			if (!NightmareUnlocked)
+			{
+				nightmare.alpha = 0.0;
+				nightmarelocked.alpha = 0.6;
+			}
+			else
+			{
+				nightmare.alpha = 0.0;
+				nightmarelocked.alpha = 0.6;
+			}
 		}
 		else if (SelectionWeek == 1)
 		{
 			story.alpha = 0.6;
 			extras.alpha = 1.0;
-			nightmare.alpha = 0.6;
-			nightmarelocked.alpha = 0.6;
+			if (!NightmareUnlocked)
+			{
+				nightmare.alpha = 0.0;
+				nightmarelocked.alpha = 0.6;
+			}
+			else
+			{
+				nightmare.alpha = 0.0;
+				nightmarelocked.alpha = 0.6;
+			}
 		}
 		else if (SelectionWeek == 2)// && !NightmareUnlocked)
 		{
 			story.alpha = 0.6;
 			extras.alpha = 0.6;
-			nightmare.alpha = 0.6;
-			nightmarelocked.alpha = 1.0;
+			if (!NightmareUnlocked)
+			{
+				nightmare.alpha = 0.0;
+				nightmarelocked.alpha = 1.0;
+			}
+			else
+			{
+				nightmare.alpha = 1.0;
+				nightmarelocked.alpha = 0.0;
+			}
 		}
 		/*
 		else if (SelectionWeek == 2 && NightmareUnlocked)
@@ -147,21 +171,31 @@ class FreeplaySelect extends MusicBeatState
 	{
         if (NoSpam = false)
 		{
-			FlxG.sound.play(Paths.sound('confirmMenu'));
 			NoSpam = true;
 		}
 
 		if (SelectionWeek == 0)
 		{
+			FlxG.sound.play(Paths.sound('confirmMenu'));
 			MusicBeatState.switchState(new FreeplayMain());
+			NoSpam = false;
 		}
 		else if (SelectionWeek == 1)
 		{
-            MusicBeatState.switchState(new BonusSongsSelection());
+			FlxG.sound.play(Paths.sound('confirmMenu'));
+            MusicBeatState.switchState(new FreeplayBonus());
+			NoSpam = false;
 		}
-		else if (SelectionWeek == 2)
+		else if (SelectionWeek == 2 && NightmareUnlocked)
 		{
-			MusicBeatState.switchState(new NightmareSelection());
+			FlxG.sound.play(Paths.sound('confirmMenu'));
+			MusicBeatState.switchState(new FreeplayNightmare());
+			NoSpam = false;
+		}
+		else
+		{
+			FlxG.sound.play(Paths.sound('cancelMenu'));
+			NoSpam = false;
 		}
 	}
 

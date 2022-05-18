@@ -24,9 +24,9 @@ import sys.FileSystem;
 
 using StringTools;
 
-class BonusSongsSelection extends MusicBeatState
+class FreeplayNightmare extends MusicBeatState
 {
-	var songs:Array<SongMetadata2> = [];
+	var songs:Array<SongMetadata3> = [];
 
 	var selector:FlxText;
 	private static var curSelected:Int = 0;
@@ -101,11 +101,9 @@ class BonusSongsSelection extends MusicBeatState
 			}
 		}*/
 
-		addSong('satanic-funkin', 1, 'devil', FlxColor.fromRGB(146, 113, 253));
-		addSong('bonedoggle', 1, 'papyrus', FlxColor.fromRGB(146, 113, 253)); //bad-to-the-bone if you killed sans (TO BE DONE...)
-		addSong('bad-to-the-bone', 1, 'papyrus', FlxColor.fromRGB(146, 113, 253));
-		addSong('ritual', 1, 'sammy', FlxColor.fromRGB(146, 113, 253));
-		addSong('freaky-machine', 1, 'dad', FlxColor.fromRGB(146, 113, 253));
+		addSong('devils-gambit', 1, 'cupheadP3', FlxColor.fromRGB(146, 113, 253));
+		addSong('bad-time', 1, 'sansP2', FlxColor.fromRGB(146, 113, 253));
+		addSong('despair', 1, 'bendyP2', FlxColor.fromRGB(146, 113, 253));
 
 		bg = new FlxSprite().loadGraphic(Paths.image('BG'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
@@ -220,7 +218,7 @@ class BonusSongsSelection extends MusicBeatState
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int)
 	{
-		songs.push(new SongMetadata2(songName, weekNum, songCharacter, color));
+		songs.push(new SongMetadata3(songName, weekNum, songCharacter, color));
 	}
 
 	function weekIsLocked(name:String):Bool {
@@ -567,7 +565,7 @@ class BonusSongsSelection extends MusicBeatState
 	}
 }
 
-class SongMetadata2
+class SongMetadata3
 {
 	public var songName:String = "";
 	public var week:Int = 0;
