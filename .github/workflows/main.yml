@@ -42,6 +42,9 @@ jobs:
           haxelib install flixel-ui
           haxelib install flixel-addons
           haxelib install tjson
+          haxelib git tentools https://github.com/TentaRJ/tentools.git
+          haxelib git systools https://github.com/haya3218/systools
+          haxelib run lime rebuild systools linux
           haxelib install hxjsonast
           haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
           haxelib install hscript
@@ -82,6 +85,9 @@ jobs:
           haxelib install flixel-ui
           haxelib install flixel-addons
           haxelib install tjson
+          haxelib git tentools https://github.com/TentaRJ/tentools.git
+          haxelib git systools https://github.com/haya3218/systools
+          haxelib run lime rebuild systools windows
           haxelib install hxjsonast
           haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
           haxelib install hscript 
