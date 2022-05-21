@@ -46,6 +46,7 @@ jobs:
           haxelib git systools https://github.com/haya3218/systools
           haxelib git extension-webm https://github.com/KadeDev/extension-webm
           haxelib run lime rebuild systools linux
+          sudo apt-get g++-multilib gcc-multilib
           haxelib run lime rebuild extension-webm linux
           haxelib install hxjsonast
           haxelib git linc_luajit https://github.com/AndreiRudenko/linc_luajit
