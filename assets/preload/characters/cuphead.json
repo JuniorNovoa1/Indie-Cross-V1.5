@@ -1,70 +1,70 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				142,
 				-9
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 24,
-			"name": "Left",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Left"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-59,
 				-31
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 24,
-			"name": "Down",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "Down"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-7,
 				88
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 24,
-			"name": "Up",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "Up"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-38,
 				-13
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 24,
-			"name": "Right",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "Right"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 24,
-			"name": "Cuphead_s",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "Cuphead_s"
 		},
 		{
+			"loop": false,
 			"offsets": [
 				238,
 				115
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "hit",
-			"loop": false,
-			"name": "Hurt"
+			"fps": 24,
+			"name": "Hurt",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
@@ -73,12 +73,12 @@
 		20,
 		350
 	],
-	"healthicon": "cup",
+	"healthicon": "cupheadP1",
 	"flip_x": false,
 	"healthbar_colors": [
-		255,
-		255,
-		255
+		171,
+		22,
+		74
 	],
 	"camera_position": [
 		0,

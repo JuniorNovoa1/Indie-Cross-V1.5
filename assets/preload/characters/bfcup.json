@@ -136,7 +136,7 @@
 	"no_antialiasing": false,
 	"image": "characters/BoyFriend_Cuphead",
 	"position": [
-		0,
+		100,
 		350
 	],
 	"healthicon": "bf",
@@ -147,8 +147,8 @@
 		209
 	],
 	"camera_position": [
-		380,
-		-170
+		500,
+		50
 	],
 	"sing_duration": 4,
 	"scale": 1

@@ -4,6 +4,8 @@ import flixel.FlxG;
 import flixel.util.FlxSave;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
+import GameJolt.GameJoltAPI;
+import GameJolt;
 import Controls;
 
 class ClientPrefs {
@@ -138,6 +140,9 @@ class ClientPrefs {
 	}
 
 	public static function loadPrefs() {
+		GameJoltAPI.connect();
+		GameJoltAPI.authDaUser(FlxG.save.data.gjUser, FlxG.save.data.gjToken);
+
 		if(FlxG.save.data.downScroll != null) {
 			downScroll = FlxG.save.data.downScroll;
 		}

@@ -252,6 +252,8 @@ class PlayState extends MusicBeatState
 	public var girlfriendCameraOffset:Array<Float> = null;
 
 	//attacking
+	var attackEnabled:Bool = false;
+	var attackbutton:FlxSprite;
 	var ParryNoteHit:Bool = false;
 	var canAttack:Bool = false;
 	var attacked:Bool = false;
@@ -259,6 +261,8 @@ class PlayState extends MusicBeatState
 	var AttackRightKey:Array<FlxKey>;
 
 	//Dodging
+	var dodgeEnabled:Bool = false;
+	var dodgebutton:FlxSprite;
 	var DodgeKey:Array<FlxKey>;
 	var canDodge:Bool = false;
 	var dodging:Bool = false;
@@ -393,33 +397,41 @@ class PlayState extends MusicBeatState
 		detailsPausedText = "Paused - " + detailsText;
 		#end
 
-		AttackLeftKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('attack_left'));
-		AttackRightKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('attack_right'));
-		DodgeKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_dodge'));
-
-        #if desktop
+		#if desktop
 		if (SONG.song == 'Snake-Eyes')
 		{
+			attackEnabled = false;
+			dodgeEnabled = false;
 	        SongCreator = 'Mike Geno - ';
 		}
 		else if (SONG.song == 'Technicolor-Tussle')
 		{
+			attackEnabled = true;
+			dodgeEnabled = true;
 			SongCreator = 'BLVKARROT - ';
 		}
 		else if (SONG.song == 'Knockout')
 		{
+			attackEnabled = true;
+			dodgeEnabled = true;
 			SongCreator = 'Orenji Music - '; 
 		}
 		else if (SONG.song == 'Whoopee')
 		{
+			attackEnabled = false;
+			dodgeEnabled = true;
 			SongCreator = 'YingYang48 & Saster - ' ;
 		}
 		else if (SONG.song == 'Sansational')
 		{
+			attackEnabled = true;
+			dodgeEnabled = true;
 			SongCreator = 'Tenzubushi - ';
 		}
 		else if (SONG.song == 'Final-Stretch')
 		{
+			attackEnabled = false;
+			dodgeEnabled = false;
 			SongCreator = 'Saru - ';
 		}
 
@@ -427,6 +439,42 @@ class PlayState extends MusicBeatState
 
 		Application.current.window.title = 'Indie Cross - ' + SongCreator + SONG.song + TitleDifficulty; //song names lollll
 		#end
+
+		AttackLeftKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('attack_left'));
+		AttackRightKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('attack_right'));
+		DodgeKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_dodge'));
+		if (attackEnabled)
+		{
+			canAttack = true;
+
+			attackbutton = new FlxSprite(25, 250);
+			attackbutton.frames = Paths.getSparrowAtlas('Notmobilegameanymore', 'shared');
+			attackbutton.animation.addByPrefix('cooldown', "AttackNA instance 1", 24, false);
+			attackbutton.animation.addByPrefix('clicked', "Attack Click instance 1", 24, false);
+			attackbutton.animation.addByPrefix('canUse', "Attack instance 1", 24, false);
+			attackbutton.animation.play('canUse');
+			attackbutton.antialiasing = ClientPrefs.globalAntialiasing;
+			attackbutton.scale.set(0.65, 0.65);
+			attackbutton.updateHitbox();
+			add(attackbutton);
+			attackbutton.cameras = [camHUD2];
+		}
+
+		if (dodgeEnabled)
+		{
+			canDodge = true;
+
+			dodgebutton = new FlxSprite(25, 350);
+			dodgebutton.frames = Paths.getSparrowAtlas('Notmobilegameanymore', 'shared');
+			dodgebutton.animation.addByPrefix('clicked', "Dodge click instance 1", 24, false);
+			dodgebutton.animation.addByPrefix('canUse', "Dodge instance 1", 24, false);
+			dodgebutton.animation.play('canUse');
+			dodgebutton.antialiasing = ClientPrefs.globalAntialiasing;
+			dodgebutton.scale.set(0.65, 0.65);
+			dodgebutton.updateHitbox();
+			add(dodgebutton);
+			dodgebutton.cameras = [camHUD2];
+		}
 
 		GameOverSubstate.resetVariables();
 		var songName:String = Paths.formatToSongPath(SONG.song);
@@ -643,8 +691,8 @@ class PlayState extends MusicBeatState
 					var cupshid:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('Grainshit', 'cup'));
 					cupshid = new FlxSprite();
 					cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
-					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
-					cupshid.animation.play('idle');
+					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 24, true);
+					cupshid.animation.play('cupGrain');
 					cupshid.antialiasing = ClientPrefs.globalAntialiasing;
 					cupshid.screenCenter();
 					add(cupshid);
@@ -676,26 +724,29 @@ class PlayState extends MusicBeatState
 				{
 					var cuprain:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRAINLayer01', 'cup'));
 					cuprain.frames = Paths.getSparrowAtlas('NewRainLayer01', 'cup');
-					cuprain.animation.addByPrefix('NewRainLayer01', 'cup', 2);
+					cuprain.animation.addByPrefix('idle', 'RainFirstlayer instance 1', 24, true);
 					cuprain.animation.play('idle');
 					cuprain.antialiasing = ClientPrefs.globalAntialiasing;
 					cuprain.screenCenter();
 					cuprain.updateHitbox();
 					add(cuprain);
+					cuprain.cameras = [camHUD2];
 					
 					var cuprain2:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRainLayer02', 'cup'));
 					cuprain2.frames = Paths.getSparrowAtlas('NewRainLayer02', 'cup');
-					cuprain2.animation.addByPrefix('NewRainLayer02', 'cup', 4);
+					cuprain2.animation.addByPrefix('idle', 'RainFirstlayer instance 1000', 24, true);
 					cuprain2.animation.play('idle');
 					cuprain2.antialiasing = ClientPrefs.globalAntialiasing;
 					cuprain2.screenCenter();
 					cuprain2.updateHitbox();
 					add(cuprain2);
+					cuprain2.cameras = [camHUD2];
 					
 					var cupshid:FlxSprite;
 					cupshid = new FlxSprite();
 					cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
-					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
+					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 24, true);
+					cupshid.animation.play('cupGrain');
 					cupshid.antialiasing = ClientPrefs.globalAntialiasing;
 					cupshid.screenCenter();
 					add(cupshid);
@@ -2361,43 +2412,42 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.anyJustPressed(AttackLeftKey) && canAttack)
 		{
-		    boyfriend.playAnim('attack', true);
-			ParryNoteHit = false;
-			canAttack = false;
-			attacked = true;
-
-			new FlxTimer().start(3, function(tmr:FlxTimer)
+			if (cupheadsong)
 			{
-				attacked = false;
-				canAttack = true;
-			});
+				BFattackCup();
+			}
 		}
 
 		if (FlxG.keys.anyJustPressed(AttackRightKey) && canAttack)
 		{
-			boyfriend.playAnim('attack', true);
-			ParryNoteHit = false;
-			canAttack = false;
-			attacked = true;
-
-			new FlxTimer().start(3, function(tmr:FlxTimer)
+			if (cupheadsong)
 			{
-				attacked = false;
-				canAttack = true;
-			});
+				BFattackCup();
+			}
+			else if (sanssong)
+			{
+			    BFattackSans();
+			}
+			else if (bendysong)
+			{
+				BFattackBendy();
+			}
 		}
 
 		if (FlxG.keys.anyJustPressed(DodgeKey) && canDodge)
 		{
-			dodging = true;
-			//boyfriend.nonanimated = true;
-			//boyfriend.animation.finishCallback = function(a:String)
-			new FlxTimer().start(0.75, function(tmr:FlxTimer)
+			if (cupheadsong)
 			{
-				//boyfriend.nonanimated = false;
-				dodging = false;
-				canDodge = false;
-			});
+				BFdodgeCup();
+			}
+			else if (sanssong)
+			{
+				BFdodgeSans();
+			}
+			else if (bendysong)
+			{
+				BFdodgeBendy();
+			}
 		}
 
 		/*
@@ -4508,12 +4558,154 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function CupAttack()
+	function BFattackCup()
 	{
-        //do later lol
+		boyfriend.playAnim('attack', true);
+		dad.playAnim('hit', true);
+		boyfriend.nonanimated = true;
+		dad.nonanimated = true;
+		health += 0.475;
+		new FlxTimer().start(0.4, function(tmr:FlxTimer)
+		{
+			FlxG.sound.play(Paths.sound('hurt', 'cup'));
+		});
+		attackbutton.animation.play('clicked');
+		canAttack = false;
+		attacked = true;
+
+		new FlxTimer().start(0.45, function(tmr:FlxTimer)
+		{
+			dad.nonanimated = false;
+			boyfriend.nonanimated = false;
+		});
+
+		attackbutton.animation.play('cooldown');
+		new FlxTimer().start(6, function(tmr:FlxTimer)
+		{
+			attackbutton.animation.play('canUse');
+			boyfriend.nonanimated = false;
+			dad.nonanimated = false;
+			attacked = false;
+			canAttack = true;
+		});
 	}
 
-	function SansDodge()
+	function BFattackSans()
+	{
+		boyfriend.playAnim('attack', true);
+		dad.playAnim('hurt', true);
+		boyfriend.nonanimated = true;
+		dad.nonanimated = true;
+		health += 0.475;
+		attackbutton.animation.play('clicked');
+		canAttack = false;
+		attacked = true;
+
+		new FlxTimer().start(0.45, function(tmr:FlxTimer)
+		{
+			dad.nonanimated = false;
+			boyfriend.nonanimated = false;
+		});
+	
+		attackbutton.animation.play('cooldown');
+		new FlxTimer().start(6, function(tmr:FlxTimer)
+		{
+			attackbutton.animation.play('canUse');
+			boyfriend.nonanimated = false;
+			dad.nonanimated = false;
+			attacked = false;
+			canAttack = true;
+		});
+	}
+
+	function BFattackBendy()
+	{
+		if (FlxG.keys.anyJustPressed(AttackLeftKey))
+	    {
+			boyfriend.playAnim('attackL', true);
+		}
+		else if (FlxG.keys.anyJustPressed(AttackRightKey))
+		{
+			boyfriend.playAnim('attackR', true);
+		}
+		boyfriend.nonanimated = true;
+		attackbutton.animation.play('clicked');
+		canAttack = false;
+		attacked = true;
+	
+		new FlxTimer().start(0.45, function(tmr:FlxTimer)
+		{
+			boyfriend.nonanimated = false;
+		});
+
+		attackbutton.animation.play('cooldown');
+		new FlxTimer().start(6, function(tmr:FlxTimer)
+		{
+			attackbutton.animation.play('canUse');
+			boyfriend.nonanimated = false;
+			attacked = false;
+			canAttack = true;
+		});
+	}
+
+	function BFdodgeCup()
+	{
+		boyfriend.playAnim('dodge', true);
+		boyfriend.nonanimated = true;
+		new FlxTimer().start(0.1, function(tmr:FlxTimer)
+		{
+			FlxG.sound.play(Paths.sound('dodge', 'cup'));
+		});
+		dodgebutton.animation.play('clicked');
+		dodging = true;
+		boyfriend.nonanimated = true;
+
+		new FlxTimer().start(0.45, function(tmr:FlxTimer)
+		{
+			dad.nonanimated = false;
+			boyfriend.nonanimated = false;
+		});
+
+		//boyfriend.animation.finishCallback = function(a:String)
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		{
+			boyfriend.nonanimated = false;
+			dodgebutton.animation.play('canUse');
+			dodging = false;
+			canDodge = true;
+		});
+	}
+
+	function BFdodgeSans()
+	{
+		dodgebutton.animation.play('clicked');
+		dodging = true;
+		//boyfriend.animation.finishCallback = function(a:String)
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		{
+			dodgebutton.animation.play('canUse');
+			dodging = false;
+			canDodge = true;
+		});
+	}
+
+	function BFdodgeBendy()
+	{
+		boyfriend.playAnim('dodge', true);
+		boyfriend.nonanimated = true;
+		dodgebutton.animation.play('clicked');
+		dodging = true;
+		//boyfriend.animation.finishCallback = function(a:String)
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		{
+			boyfriend.nonanimated = false;
+			dodgebutton.animation.play('canUse');
+			dodging = false;
+			canDodge = true;
+		});
+	}
+
+	function SansDodgeMechanic()
 	{
 		var BonePopup:FlxSprite;
 		var BoneDodge:FlxSprite;
@@ -4524,6 +4716,7 @@ class PlayState extends MusicBeatState
 		BonePopup.antialiasing = ClientPrefs.globalAntialiasing;
 		BonePopup.animation.play('BonePopup');
 		//BonePopup.scale.set(0.75, 0.75);
+		BonePopup.scrollFactor.set(0, 0);
 		BonePopup.updateHitbox();
 		BonePopup.cameras = [camHUD2];
 		add(BonePopup);
@@ -4533,6 +4726,7 @@ class PlayState extends MusicBeatState
 		BoneMiss.animation.addByPrefix('DodgeMiss', "Bones boi instance 1", 24, false);
 		BoneMiss.antialiasing = ClientPrefs.globalAntialiasing;
 		//BoneMiss.scale.set(0.75, 0.75);
+		BoneMiss.scrollFactor.set(0, 0);
 		BoneMiss.updateHitbox();
 		BoneMiss.cameras = [camHUD2];
 		BoneMiss.visible = false;
@@ -4543,6 +4737,7 @@ class PlayState extends MusicBeatState
 		BoneDodge.animation.addByPrefix('Dodge', "Dodge instance 1", 24, false);
 		BoneDodge.antialiasing = ClientPrefs.globalAntialiasing;
 		//BoneDodge.scale.set(0.75, 0.75);
+		BoneDodge.scrollFactor.set(0, 0);
 		BoneDodge.updateHitbox();
 		BoneDodge.cameras = [camHUD2];
 		BoneDodge.visible = false;
@@ -4718,7 +4913,9 @@ class PlayState extends MusicBeatState
 		    switch (curStep)
 			{
 				case 2:
-					SansDodge();
+					SansDodgeMechanic();
+				case 8:
+					SansDodgeMechanic();
 			}
 		}
 
