@@ -640,14 +640,14 @@ class PlayState extends MusicBeatState
 
 				if (!ClientPrefs.lowQuality)
 				{
-					var cupshid:FlxSprite;
+					var cupshid:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('Grainshit', 'cup'));
 					cupshid = new FlxSprite();
 					cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
 					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 7, false);
+					cupshid.animation.play('idle');
 					cupshid.antialiasing = ClientPrefs.globalAntialiasing;
 					cupshid.screenCenter();
 					add(cupshid);
-					cupshid.cameras = [camHUD2];
 				}
 
             case 'cuphead-p2':
