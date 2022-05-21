@@ -111,6 +111,13 @@ class Note extends FlxSprite
 						missHealth = 0.3;
 					}
 					hitCausesMiss = true;
+				case 'Parry Note':
+				    ignoreNote = mustPress;
+				    reloadNote('PARRY');
+				    colorSwap.hue = 0;
+				    colorSwap.saturation = 0;
+				    colorSwap.brightness = 0;
+				hitCausesMiss = true;
 				case 'No Animation':
 					noAnimation = true;
 				case 'GF Sing':
