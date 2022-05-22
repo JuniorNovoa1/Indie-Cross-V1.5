@@ -74,10 +74,9 @@ class Startup extends MusicBeatState
 		trace("caching music...");
 
 		// TODO: Get the song list from OpenFlAssets.
-		music = Paths.listSongsToCache();
 		#end
 
-		toBeDone = Lambda.count(images) + Lambda.count(music);
+		toBeDone = Lambda.count(images);
 
 		var bar = new FlxBar(10, FlxG.height - 50, FlxBarFillDirection.LEFT_TO_RIGHT, FlxG.width, 40, null, "done", 0, toBeDone);
 		bar.color = FlxColor.PURPLE;
