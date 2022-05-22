@@ -254,7 +254,6 @@ class PlayState extends MusicBeatState
 	//attacking
 	var attackEnabled:Bool = false;
 	var attackbutton:FlxSprite;
-	var ParryNoteHit:Bool = false;
 	var canAttack:Bool = false;
 	var attacked:Bool = false;
 	var AttackLeftKey:Array<FlxKey>;
@@ -2405,9 +2404,9 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 
-		if (ParryNoteHit)//notetype == 'Parry Note' && goodNoteHit)
+		if (cupheadsong && canAttack)
 		{
-			canAttack = true;
+			attackbutton.animation.play('canUse');
 		}
 
 		if (FlxG.keys.anyJustPressed(AttackLeftKey) && canAttack)
@@ -4232,7 +4231,7 @@ class PlayState extends MusicBeatState
 			if(cpuControlled && (note.ignoreNote || note.hitCausesMiss)) return;
 
 			if(note.hitCausesMiss) {
-				noteMiss(note);
+				//noteMiss(note);
 				if(!note.noteSplashDisabled && !note.isSustainNote) {
 					spawnNoteSplashOnNote(note);
 				}
@@ -4251,7 +4250,7 @@ class PlayState extends MusicBeatState
 						InkCurrentlyOnScreen = true;
 					case 'Parry Note':
 						FlxG.sound.play(Paths.sound('parry', 'cup'));
-						ParryNoteHit = true;
+						canAttack = true;
 				}
 				
 				note.wasGoodHit = true;
@@ -4561,15 +4560,14 @@ class PlayState extends MusicBeatState
 	function BFattackCup()
 	{
 		boyfriend.playAnim('attack', true);
-		dad.playAnim('hit', true);
 		boyfriend.nonanimated = true;
-		dad.nonanimated = true;
-		health += 0.475;
-		new FlxTimer().start(0.4, function(tmr:FlxTimer)
+		new FlxTimer().start(0.45, function(tmr:FlxTimer)
 		{
+			health += 0.475;
+			dad.playAnim('hit', true);
+			dad.nonanimated = true;
 			FlxG.sound.play(Paths.sound('hurt', 'cup'));
 		});
-		attackbutton.animation.play('clicked');
 		canAttack = false;
 		attacked = true;
 
@@ -4577,16 +4575,7 @@ class PlayState extends MusicBeatState
 		{
 			dad.nonanimated = false;
 			boyfriend.nonanimated = false;
-		});
-
-		attackbutton.animation.play('cooldown');
-		new FlxTimer().start(6, function(tmr:FlxTimer)
-		{
-			attackbutton.animation.play('canUse');
-			boyfriend.nonanimated = false;
-			dad.nonanimated = false;
 			attacked = false;
-			canAttack = true;
 		});
 	}
 
@@ -4660,7 +4649,7 @@ class PlayState extends MusicBeatState
 		dodging = true;
 		boyfriend.nonanimated = true;
 
-		new FlxTimer().start(0.45, function(tmr:FlxTimer)
+		new FlxTimer().start(0.35, function(tmr:FlxTimer)
 		{
 			dad.nonanimated = false;
 			boyfriend.nonanimated = false;
@@ -4680,11 +4669,13 @@ class PlayState extends MusicBeatState
 	{
 		dodgebutton.animation.play('clicked');
 		dodging = true;
+		miss = false;
 		//boyfriend.animation.finishCallback = function(a:String)
 		new FlxTimer().start(0.75, function(tmr:FlxTimer)
 		{
 			dodgebutton.animation.play('canUse');
 			dodging = false;
+			miss = true;
 			canDodge = true;
 		});
 	}

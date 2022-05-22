@@ -117,7 +117,7 @@ class Note extends FlxSprite
 				    colorSwap.hue = 0;
 				    colorSwap.saturation = 0;
 				    colorSwap.brightness = 0;
-				hitCausesMiss = true;
+				    hitCausesMiss = true;
 				case 'No Animation':
 					noAnimation = true;
 				case 'GF Sing':
