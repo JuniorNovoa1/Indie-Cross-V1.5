@@ -118,6 +118,25 @@ class Note extends FlxSprite
 				    colorSwap.saturation = 0;
 				    colorSwap.brightness = 0;
 				    hitCausesMiss = true;
+				case 'ink Note':
+					ignoreNote = mustPress;
+				    reloadNote('INK');
+				    colorSwap.hue = 0;
+				    colorSwap.saturation = 0;
+				    colorSwap.brightness = 0;
+				    hitCausesMiss = true;
+				case 'Blue Bone Note':
+				    ignoreNote = mustPress;
+					reloadNote('BBONE');
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					hitCausesMiss = true;
+					if(isSustainNote) {
+					   missHealth = 0;
+				    } else {
+					    missHealth = 99999999999;
+				    }
 				case 'No Animation':
 					noAnimation = true;
 				case 'GF Sing':

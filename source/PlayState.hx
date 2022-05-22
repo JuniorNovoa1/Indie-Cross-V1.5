@@ -285,6 +285,7 @@ class PlayState extends MusicBeatState
 	var InkOnScreen:Int = 0;
 	var InkCurrentlyOnScreen:Bool = false;
 
+
 	//healthbar shit
 	public static var cupheadsong:Bool = false;
 	var sanssong:Bool = false;
@@ -4251,6 +4252,8 @@ class PlayState extends MusicBeatState
 					case 'Parry Note':
 						FlxG.sound.play(Paths.sound('parry', 'cup'));
 						canAttack = true;
+					case 'Blue Bone Note':
+						FlxG.sound.play(Paths.sound('ping', 'sans'));	
 				}
 				
 				note.wasGoodHit = true;
