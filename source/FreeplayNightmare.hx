@@ -64,6 +64,8 @@ class FreeplayNightmare extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
+		cache(); //so it caches songs
+
 		for (i in 0...WeekData.weeksList.length) {
 			if(weekIsLocked(WeekData.weeksList[i])) continue;
 
@@ -433,6 +435,27 @@ class FreeplayNightmare extends MusicBeatState
 			vocals.destroy();
 		}
 		vocals = null;
+	}
+
+	var music = [];
+	function cache()
+	{	
+		for (i in music)
+		{
+			var inst = Paths.inst(i);
+			if (Paths.doesSoundAssetExist(inst))
+			{
+				FlxG.sound.cache(inst);
+			}
+	
+			var voices = Paths.voices(i);
+			if (Paths.doesSoundAssetExist(voices))
+			{
+				FlxG.sound.cache(voices);
+			}
+		}
+	
+		trace("Finished caching...");
 	}
 
 	function changeDiff(change:Int = 0)

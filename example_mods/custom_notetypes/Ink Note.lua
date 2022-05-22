@@ -1,14 +1,15 @@
 function onCreate()
 	--Iterate over all notes
 	for i = 0, getProperty('unspawnNotes.length')-1 do
-		--Check if the note is an Instakill Note
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Ink Note' then
-			setPropertyFromGroup('unspawnNotes', i, 'texture', 'INK_assets');
-
-				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); --Miss has no penalties
+			setPropertyFromGroup('unspawnNotes',i,'noAnimation',true) --Check if the note on the chart is a Bullet Note
+			setPropertyFromGroup('unspawnNotes', i, 'texture', 'INKNOTE_assets'); --Change texture
+			setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'noteSplashes')
+			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') then --Doesn't let Dad/Opponent notes get ignored
+				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); --Miss has penalties
+			end
 		end
 	end
-	--debugPrint('Script started!')
 end
 
 -- Function called when you hit a note (after note hit calculations)
@@ -18,7 +19,14 @@ end
 -- isSustainNote: If it's a hold note, can be either true or false
 function goodNoteHit(id, noteData, noteType, isSustainNote)
 	if noteType == 'Ink Note' then
-		setProperty('health', getProperty('health') - 0.5); 
-		playSound('inked')
+		-- put something here if you want
+	end
+end
+
+-- Called after the note miss calculations
+-- Player missed a note by letting it go offscreen
+function noteMiss(id, noteData, noteType, isSustainNote)
+	if noteType == 'Ink Note' then
+		-- put something here if you want
 	end
 end

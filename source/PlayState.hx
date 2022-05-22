@@ -277,11 +277,17 @@ class PlayState extends MusicBeatState
 	//bendy cutscene
 	public static var bendyaftercutscene:Bool = false;
 
+	//CupHead Stuff
+	var cuprain:FlxSprite;
+	var thirdpersonrain:FlxSprite;
+	var cupshid:FlxSprite;
+
 	//bendy sprites
 	var musicbox:FlxSprite;
 	var light:FlxSprite;
 	var sammy:FlxSprite;
 	var Ink:FlxSprite;
+	var InkTimer:Int = 3;
 	var InkOnScreen:Int = 0;
 	var InkCurrentlyOnScreen:Bool = false;
 
@@ -291,8 +297,6 @@ class PlayState extends MusicBeatState
 	var sanssong:Bool = false;
 	var bendysong:Bool = false;
 
-	//CupHead Stuff
-	
 	#if desktop
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -688,14 +692,14 @@ class PlayState extends MusicBeatState
 
 				if (!ClientPrefs.lowQuality)
 				{
-					var cupshid:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('Grainshit', 'cup'));
-					cupshid = new FlxSprite();
+					cupshid = new FlxSprite(0, 0);
 					cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
 					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 24, true);
 					cupshid.animation.play('cupGrain');
 					cupshid.antialiasing = ClientPrefs.globalAntialiasing;
 					cupshid.screenCenter();
 					add(cupshid);
+					cupshid.cameras = [camHUD2];
 				}
 
             case 'cuphead-p2':
@@ -722,8 +726,8 @@ class PlayState extends MusicBeatState
 
 				if (!ClientPrefs.lowQuality)
 				{
-					var cuprain:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRAINLayer01', 'cup'));
-					cuprain.frames = Paths.getSparrowAtlas('NewRainLayer01', 'cup');
+					cuprain = new FlxSprite(0, 0);
+					cuprain.frames = Paths.getSparrowAtlas('NewRAINLayer01', 'cup');
 					cuprain.animation.addByPrefix('idle', 'RainFirstlayer instance 1', 24, true);
 					cuprain.animation.play('idle');
 					cuprain.antialiasing = ClientPrefs.globalAntialiasing;
@@ -732,9 +736,9 @@ class PlayState extends MusicBeatState
 					add(cuprain);
 					cuprain.cameras = [camHUD2];
 					
-					var thirdpersonrain:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRainLayer02', 'cup'));
+					thirdpersonrain = new FlxSprite(0, 0);
 					thirdpersonrain.frames = Paths.getSparrowAtlas('NewRainLayer02', 'cup');
-					thirdpersonrain.animation.addByPrefix('rain', 'RainFirstlayer instance 1000', 24, true);
+					thirdpersonrain.animation.addByPrefix('rain', 'RainSecondlayer instance 1', 24, true);
 					thirdpersonrain.animation.play('rain');
 					thirdpersonrain.antialiasing = ClientPrefs.globalAntialiasing;
 					thirdpersonrain.screenCenter();
@@ -742,8 +746,7 @@ class PlayState extends MusicBeatState
 					add(thirdpersonrain);
 					thirdpersonrain.cameras = [camHUD2];
 					
-					var cupshid:FlxSprite;
-					cupshid = new FlxSprite();
+					cupshid = new FlxSprite(0, 0);
 					cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
 					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 24, true);
 					cupshid.animation.play('cupGrain');
@@ -1160,7 +1163,17 @@ class PlayState extends MusicBeatState
 		}
 		if(ClientPrefs.downScroll) healthBarBG.y = 0.11 * FlxG.height;
 
-		if (bendysong || cupheadsong) //location again
+		if (cupheadsong)
+		{
+			healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y - 20, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height + 16), this,
+			'health', 0, 2);
+		}
+		else if (sanssong)
+		{
+			healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 12, LEFT_TO_RIGHT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
+			'health', 0, 2);
+		}
+		else if (bendysong) //location again
 		{
 			healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y - 100, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);	
@@ -1176,18 +1189,30 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 		healthBar.antialiasing = ClientPrefs.globalAntialiasing;
 
-		if (bendysong || cupheadsong) //scale
+		if (cupheadsong)
 		{
-            healthBar.scale.set(0.85, 0.25); //x then y lol
+			healthBar.scale.set(0.95, 0.5); //x then y lol
+		}
+		else if (sanssong)
+		{
+			healthBar.scale.set(0.85, 1.25); //x then y lol
+		}
+		else if (bendysong) //scale
+		{
+			healthBar.scale.set(0.85, 0.25); //x then y lol
 		}
 		add(healthBar);
 		add(healthBarBG);
 		healthBarBG.sprTracker = healthBar;
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		if (bendysong || cupheadsong) //icon for player
+		if (bendysong) //icon for player
 		{
 			iconP1.y = healthBar.y + 8;
+		}
+		else if (cupheadsong)
+		{
+			iconP1.y = healthBar.y - 40;
 		}
 		else
 		{
@@ -1199,9 +1224,13 @@ class PlayState extends MusicBeatState
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
-		if (bendysong || cupheadsong) //icon for enemy
+		if (bendysong) //icon for enemy
 		{
 			iconP2.y = healthBar.y + 8;
+		}
+		else if (cupheadsong)
+		{
+			iconP2.y = healthBar.y - 56;
 		}
 		else
 		{
@@ -1212,6 +1241,12 @@ class PlayState extends MusicBeatState
 		iconP2.antialiasing = ClientPrefs.globalAntialiasing;
 		add(iconP2);
 		reloadHealthBarColors();
+
+		if (sanssong)
+		{
+			iconP1.visible = false;
+			iconP2.visible = false;
+		}
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 36, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -2450,12 +2485,13 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		/*
 		if (InkOnScreen == 1)
 		{
 			remove(Ink);
 			Ink = new FlxSprite().loadGraphic(Paths.image('Damage01', 'bendy'));
 			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.scrollFactor.set(0, 0);
+			Ink.cameras = [camHUD2];
 			Ink.screenCenter();
 			add(Ink);
 		}
@@ -2464,6 +2500,8 @@ class PlayState extends MusicBeatState
 			remove(Ink);
 			Ink = new FlxSprite().loadGraphic(Paths.image('Damage02', 'bendy'));
 			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.scrollFactor.set(0, 0);
+			Ink.cameras = [camHUD2];
 			Ink.screenCenter();
 			add(Ink);
 		}
@@ -2472,6 +2510,8 @@ class PlayState extends MusicBeatState
 			remove(Ink);
 			Ink = new FlxSprite().loadGraphic(Paths.image('Damage03', 'bendy'));
 			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.scrollFactor.set(0, 0);
+			Ink.cameras = [camHUD2];
 			Ink.screenCenter();
 			add(Ink);
 		}
@@ -2480,17 +2520,20 @@ class PlayState extends MusicBeatState
 			remove(Ink);
 			Ink = new FlxSprite().loadGraphic(Paths.image('Damage04', 'bendy'));
 			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.scrollFactor.set(0, 0);
+			Ink.cameras = [camHUD2];
 			Ink.screenCenter();
 			add(Ink);
 		}
 
 		if (InkCurrentlyOnScreen)
 		{
-			new FlxTimer().start(2.5, function(tmr:FlxTimer)
+			new FlxTimer().start(InkTimer, function(tmr:FlxTimer)
 			{
-				FlxTween.tween(Ink, {alpha: 0}, 0.5);
-				new FlxTimer().start(0.51, function(tmr:FlxTimer)
+				FlxTween.tween(Ink, {alpha: 0}, 1);
+				new FlxTimer().start(1.1, function(tmr:FlxTimer)
 				{
+					remove(Ink);
 					InkOnScreen = 0;
 					InkCurrentlyOnScreen = false;
 				});
@@ -2501,7 +2544,6 @@ class PlayState extends MusicBeatState
 	    {
 			health = 0;
 		}
-		*/
 
 		callOnLuas('onUpdate', [elapsed]);
 
@@ -4229,6 +4271,8 @@ class PlayState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
 			}
 
+			var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
+
 			if(cpuControlled && (note.ignoreNote || note.hitCausesMiss)) return;
 
 			if(note.hitCausesMiss) {
@@ -4246,10 +4290,12 @@ class PlayState extends MusicBeatState
 							boyfriend.specialAnim = true;
 						}
 					case 'Ink Note':
+						boyfriend.playAnim(animToPlay, true);
 					    InkOnScreen += 1;
 						FlxG.sound.play(Paths.sound('inked', 'bendy'));
 						InkCurrentlyOnScreen = true;
 					case 'Parry Note':
+						boyfriend.playAnim(animToPlay, true);
 						FlxG.sound.play(Paths.sound('parry', 'cup'));
 						canAttack = true;
 					case 'Blue Bone Note':

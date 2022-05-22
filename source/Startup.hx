@@ -40,10 +40,11 @@ class Startup extends MusicBeatState
 
 	var loaded = false;
 
+	var VideoPlaying = false;
+
 	public static var bitmapData:Map<String, FlxGraphic>;
 
 	var images = [];
-	var music = [];
 	var charts = [];
 
 	override function create()
@@ -99,7 +100,7 @@ class Startup extends MusicBeatState
 
 	override function update(elapsed)
 	{
-		if (FlxG.keys.justPressed.ENTER)
+		if (FlxG.keys.justPressed.ENTER && VideoPlaying)
 		{
 			FlxG.sound.music.stop();
 			//GlobalVideo.get().clearPause();
@@ -115,7 +116,7 @@ class Startup extends MusicBeatState
 	}
 
 	public function Video(source:String, sound:Bool) // for background videos and its edited kade engine 1.18 code lol
-	{		
+	{  
 		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
 		var str1:String = "WEBM SHIT";
 		// WebmPlayer.SKIP_STEP_LIMIT = 90;
@@ -155,6 +156,8 @@ class Startup extends MusicBeatState
 		videoSprite.antialiasing = ClientPrefs.globalAntialiasing;
 		videoSprite.screenCenter();
 		add(videoSprite);
+
+		VideoPlaying = true;
 		
 		trace('ITS PLAYING NOW!!!!!!');
 		
@@ -177,23 +180,6 @@ class Startup extends MusicBeatState
 			//var graph = FlxGraphic.fromBitmapData(data);
 			//graph.persist = true;
 			//bitmapData.set(replaced);
-			done++;
-		}
-
-		for (i in music)
-		{
-			var inst = Paths.inst(i);
-			if (Paths.doesSoundAssetExist(inst))
-			{
-				FlxG.sound.cache(inst);
-			}
-
-			var voices = Paths.voices(i);
-			if (Paths.doesSoundAssetExist(voices))
-			{
-				FlxG.sound.cache(voices);
-			}
-
 			done++;
 		}
 
