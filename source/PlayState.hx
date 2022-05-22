@@ -731,15 +731,15 @@ class PlayState extends MusicBeatState
 					add(cuprain);
 					cuprain.cameras = [camHUD2];
 					
-					var cuprain2:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRainLayer02', 'cup'));
-					cuprain2.frames = Paths.getSparrowAtlas('NewRainLayer02', 'cup');
-					cuprain2.animation.addByPrefix('idle', 'RainFirstlayer instance 1000', 24, true);
-					cuprain2.animation.play('idle');
-					cuprain2.antialiasing = ClientPrefs.globalAntialiasing;
-					cuprain2.screenCenter();
-					cuprain2.updateHitbox();
-					add(cuprain2);
-					cuprain2.cameras = [camHUD2];
+					var thirdpersonrain:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NewRainLayer02', 'cup'));
+					thirdpersonrain.frames = Paths.getSparrowAtlas('NewRainLayer02', 'cup');
+					thirdpersonrain.animation.addByPrefix('rain', 'RainFirstlayer instance 1000', 24, true);
+					thirdpersonrain.animation.play('rain');
+					thirdpersonrain.antialiasing = ClientPrefs.globalAntialiasing;
+					thirdpersonrain.screenCenter();
+					thirdpersonrain.updateHitbox();
+					add(thirdpersonrain);
+					thirdpersonrain.cameras = [camHUD2];
 					
 					var cupshid:FlxSprite;
 					cupshid = new FlxSprite();
