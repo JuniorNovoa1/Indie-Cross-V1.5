@@ -37,6 +37,7 @@ class Startup extends MusicBeatState
 	public var playingDathing = false;
 	public var videoSprite:FlxSprite;
 	public var camHUD2:FlxCamera;
+	var music:Array<String>;
 
 	var loaded = false;
 
