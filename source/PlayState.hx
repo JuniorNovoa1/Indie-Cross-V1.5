@@ -4620,7 +4620,7 @@ class PlayState extends MusicBeatState
 	{
 		boyfriend.playAnim('attack', true);
 		boyfriend.nonanimated = true;
-		new FlxTimer().start(0.45, function(tmr:FlxTimer)
+		new FlxTimer().start(0.4, function(tmr:FlxTimer)
 		{
 			health += 0.475;
 			dad.playAnim('hit', true);
