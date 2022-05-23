@@ -8,7 +8,9 @@ import lime.app.Application;
 import Section.SwagSection;
 import Song.SwagSong;
 //WEBM
+#if sys
 import webm.WebmPlayer;
+#end
 //no more webm
 import WiggleEffect.WiggleEffectType;
 import flixel.effects.FlxFlicker;
@@ -3588,6 +3590,35 @@ class PlayState extends MusicBeatState
 				campaignScore += songScore;
 				campaignMisses += songMisses;
 
+				if (SONG.song == 'Knockout')
+				{
+					FlxG.save.data.CupBeaten = true;
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/4.webm", new StoryMenuState()));
+				}
+				else if (SONG.song == 'final-stretch' && CoolUtil.difficultyString() == 'HARD')
+				{
+					FlxG.save.data.SansBeaten = true;
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/4.webm", new StoryMenuState()));
+				}
+				else if (SONG.song == 'burning-in-hell' && CoolUtil.difficultyString() == 'HARD')
+				{
+					FlxG.save.data.SansBeaten2 = true;
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/4b.webm", new StoryMenuState()));
+				}
+				else if (SONG.song == 'nightmare-run' && CoolUtil.difficultyString() == 'HARD')
+				{
+					FlxG.save.data.BendyBeaten = true;
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/5.webm", new StoryMenuState()));
+				}
+				else if (SONG.song == 'last-reel' && CoolUtil.difficultyString() == 'EASY' || CoolUtil.difficultyString() == 'NORMAL')
+				{
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/4ez.webm", new StoryMenuState()));
+				}
+				else
+				{
+					MusicBeatState.switchState(new StoryMenuState());
+				}
+
 				storyPlaylist.remove(storyPlaylist[0]);
 
 				if (storyPlaylist.length <= 0)
@@ -3597,27 +3628,6 @@ class PlayState extends MusicBeatState
 					cancelMusicFadeTween();
 					if(FlxTransitionableState.skipNextTransIn) {
 						CustomFadeTransition.nextCamera = null;
-					}
-
-					if (SONG.song == 'Knockout')
-					{
-						LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/4.webm", new StoryMenuState()));
-					}
-					else if (SONG.song == 'final-stretch' && CoolUtil.difficultyString() == 'HARD')
-					{
-						LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/4.webm", new StoryMenuState()));
-					}
-					else if (SONG.song == 'nightmare-run' && CoolUtil.difficultyString() == 'HARD')
-					{
-						LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/5.webm", new StoryMenuState()));
-					}
-					else if (SONG.song == 'last-reel' && CoolUtil.difficultyString() == 'EASY' || CoolUtil.difficultyString() == 'NORMAL')
-					{
-						LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/4ez.webm", new StoryMenuState()));
-					}
-					else
-					{
-						MusicBeatState.switchState(new StoryMenuState());
 					}
 
 					// if ()
@@ -4839,6 +4849,7 @@ class PlayState extends MusicBeatState
 
 	public function backgroundVideo(source:String, sound:Bool) // for background videos and its edited kade engine 1.18 code lol
 	{
+		#if sys
 		useVideo = true;
 	
 		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
@@ -4884,6 +4895,7 @@ class PlayState extends MusicBeatState
 		trace('ITS PLAYING NOW!!!!!!');
 	
 		webmHandler.resume();
+		#end
 	}
 
 	var lastStepHit:Int = -1;

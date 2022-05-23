@@ -1,15 +1,19 @@
 package;
 
 import lime.app.Application;
+#if desktop
 import Discord.DiscordClient;
+#end
 import openfl.display.BitmapData;
 import openfl.utils.Assets as OpenFlAssets;
 import flixel.ui.FlxBar;
 import haxe.Exception;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+#if desktop
 import sys.FileSystem;
 import sys.io.File;
+#end
 import flixel.FlxG;
 import flixel.FlxCamera;
 import flixel.FlxSprite;
@@ -104,9 +108,11 @@ class Startup extends MusicBeatState
 		{
 			FlxG.sound.music.stop();
 			//GlobalVideo.get().clearPause();
+			#if desktop
 			GlobalVideo.get().stop();
 			GlobalVideo.get().hide();
 			remove(videoSprite);
+			#end
 			//remove(tmr);
 			FlxG.switchState(new TitleState());
 			//LoadingState.loadAndSwitchState(new TitleState());
@@ -117,6 +123,7 @@ class Startup extends MusicBeatState
 
 	public function Video(source:String, sound:Bool) // for background videos and its edited kade engine 1.18 code lol
 	{  
+		#if desktop
 		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
 		var str1:String = "WEBM SHIT";
 		// WebmPlayer.SKIP_STEP_LIMIT = 90;
@@ -162,6 +169,9 @@ class Startup extends MusicBeatState
 		trace('ITS PLAYING NOW!!!!!!');
 		
 		webmHandler.resume();
+		#else
+		VideoPlaying = true;
+		#end
 	}
 
 	function cache()
@@ -195,9 +205,11 @@ class Startup extends MusicBeatState
 		{
 			FlxG.sound.music.stop();
 			//GlobalVideo.get().clearPause();
+			#if desktop
 			GlobalVideo.get().stop();
 			GlobalVideo.get().hide();
 			remove(videoSprite);
+			#end
 			//remove(tmr);
 			FlxG.switchState(new TitleState());
 		});

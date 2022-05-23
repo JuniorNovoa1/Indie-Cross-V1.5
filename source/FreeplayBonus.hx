@@ -103,11 +103,31 @@ class FreeplayBonus extends MusicBeatState
 			}
 		}*/
 
-		addSong('satanic-funkin', 1, 'devil', FlxColor.fromRGB(146, 113, 253));
-		addSong('bonedoggle', 1, 'papyrus', FlxColor.fromRGB(146, 113, 253)); //bad-to-the-bone if you killed sans (TO BE DONE...)
-		addSong('bad-to-the-bone', 1, 'papyrus', FlxColor.fromRGB(146, 113, 253));
-		addSong('ritual', 1, 'sammy', FlxColor.fromRGB(146, 113, 253));
-		addSong('freaky-machine', 1, 'dad', FlxColor.fromRGB(146, 113, 253));
+		if (!FlxG.save.data.CupBeaten && !FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2 && !FlxG.save.data.BendyBeaten)
+		{
+		    addSong('tutorial', 1, 'gf', FlxColor.fromRGB(146, 113, 253)); //to prevent crash lol
+		}
+
+		if (FlxG.save.data.CupBeaten)
+		{
+			addSong('satanic-funkin', 1, 'devil', FlxColor.fromRGB(146, 113, 253));
+		}
+
+		if (FlxG.save.data.SansBeaten)
+		{
+			addSong('bonedoggle', 1, 'papyrus', FlxColor.fromRGB(146, 113, 253)); //bad-to-the-bone if you killed sans (TO BE DONE...) (it is done lol)
+		}
+
+		if (FlxG.save.data.SansBeaten2)
+		{
+			addSong('bad-to-the-bone', 1, 'papyrus', FlxColor.fromRGB(146, 113, 253));
+		}
+
+		if (FlxG.save.data.BendyBeaten)
+		{
+			addSong('ritual', 1, 'sammy', FlxColor.fromRGB(146, 113, 253));
+			addSong('freaky-machine', 1, 'dad', FlxColor.fromRGB(146, 113, 253));
+		}
 
 		bg = new FlxSprite().loadGraphic(Paths.image('BG'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;

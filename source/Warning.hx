@@ -1,15 +1,19 @@
 package;
 
 import lime.app.Application;
+#if desktop
 import Discord.DiscordClient;
+#end
 import openfl.display.BitmapData;
 import openfl.utils.Assets as OpenFlAssets;
 import flixel.ui.FlxBar;
 import haxe.Exception;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+#if desktop
 import sys.FileSystem;
 import sys.io.File;
+#end
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;

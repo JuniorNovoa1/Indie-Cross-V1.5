@@ -192,6 +192,10 @@ class MainMenuState extends MusicBeatState
 
 		// NG.core.calls.event.logEvent('swag').send();
 
+		#if html5
+		FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		#end
+		
 		changeItem();
 
 		super.create();

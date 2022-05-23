@@ -103,19 +103,39 @@ class FreeplayMain extends MusicBeatState
 			}
 		}*/
 
+		if (!FlxG.save.data.CupBeaten && !FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2 && !FlxG.save.data.BendyBeaten)
+		{
+			addSong('snake-eyes', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253)); //to prevent crash lol
+		}
 		//cuphead
-		addSong('snake-eyes', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253));
-		addSong('technicolor-tussle', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253));
-		addSong('knockout', 1, 'cupheadP2', FlxColor.fromRGB(146, 113, 253));
+		if (FlxG.save.data.CupBeaten)
+		{
+			addSong('snake-eyes', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253));
+			addSong('technicolor-tussle', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253));
+			addSong('knockout', 1, 'cupheadP2', FlxColor.fromRGB(146, 113, 253));
+		}
         //sans
-		addSong('whoopee', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
-		addSong('sansational', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
-		addSong('final-stretch', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
+		if (FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2)
+		{
+			addSong('whoopee', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
+			addSong('sansational', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
+			addSong('final-stretch', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
+		}
+		else if (FlxG.save.data.SansBeaten2) 		//sans 2
+		{
+			addSong('whoopee', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
+			addSong('sansational', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
+			addSong('burning-in-hell', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
+			addSong('final-stretch', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
+		}
 		//bendy
-		addSong('imminent-demise', 1, 'dad', FlxColor.fromRGB(146, 113, 253));
-		addSong('terrible-sin', 1, 'bendyP1', FlxColor.fromRGB(146, 113, 253));
-		addSong('last-reel', 1, 'bendyP1', FlxColor.fromRGB(146, 113, 253));
-		addSong('nightmare-run', 1, 'bendyP1', FlxColor.fromRGB(146, 113, 253));
+		if (FlxG.save.data.BendyBeaten)
+		{
+			addSong('imminent-demise', 1, 'dad', FlxColor.fromRGB(146, 113, 253));
+			addSong('terrible-sin', 1, 'bendyP1', FlxColor.fromRGB(146, 113, 253));
+			addSong('last-reel', 1, 'bendyP1', FlxColor.fromRGB(146, 113, 253));
+			addSong('nightmare-run', 1, 'bendyP1', FlxColor.fromRGB(146, 113, 253));		
+		}
 
 		bg = new FlxSprite().loadGraphic(Paths.image('BG'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
