@@ -50,6 +50,8 @@ class FreeplayBonus extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	public static var Debug:Bool = false;
+
 	override function create()
 	{
 		Paths.clearStoredMemory();
@@ -62,6 +64,10 @@ class FreeplayBonus extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
+		#end
+
+		#if debug
+		Debug = true;
 		#end
 
 		cache(); //so it caches songs
@@ -103,27 +109,27 @@ class FreeplayBonus extends MusicBeatState
 			}
 		}*/
 
-		if (!FlxG.save.data.CupBeaten && !FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2 && !FlxG.save.data.BendyBeaten)
+		if (!FlxG.save.data.CupBeaten && !FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2 && !FlxG.save.data.BendyBeaten && !Debug)
 		{
 		    addSong('tutorial', 1, 'gf', FlxColor.fromRGB(146, 113, 253)); //to prevent crash lol
 		}
 
-		if (FlxG.save.data.CupBeaten)
+		if (FlxG.save.data.CupBeaten || Debug)
 		{
 			addSong('satanic-funkin', 1, 'devil', FlxColor.fromRGB(146, 113, 253));
 		}
 
-		if (FlxG.save.data.SansBeaten)
+		if (FlxG.save.data.SansBeaten || Debug)
 		{
 			addSong('bonedoggle', 1, 'papyrus', FlxColor.fromRGB(146, 113, 253)); //bad-to-the-bone if you killed sans (TO BE DONE...) (it is done lol)
 		}
 
-		if (FlxG.save.data.SansBeaten2)
+		if (FlxG.save.data.SansBeaten2 || Debug)
 		{
 			addSong('bad-to-the-bone', 1, 'papyrus', FlxColor.fromRGB(146, 113, 253));
 		}
 
-		if (FlxG.save.data.BendyBeaten)
+		if (FlxG.save.data.BendyBeaten || Debug)
 		{
 			addSong('ritual', 1, 'sammy', FlxColor.fromRGB(146, 113, 253));
 			addSong('freaky-machine', 1, 'dad', FlxColor.fromRGB(146, 113, 253));

@@ -50,6 +50,8 @@ class FreeplayNightmare extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	public static var Debug:Bool = false;
+
 	override function create()
 	{
 		Paths.clearStoredMemory();
@@ -62,6 +64,10 @@ class FreeplayNightmare extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
+		#end
+
+		#if debug
+		Debug = true;
 		#end
 
 		cache(); //so it caches songs
@@ -103,9 +109,20 @@ class FreeplayNightmare extends MusicBeatState
 			}
 		}*/
 
-		addSong('devils-gambit', 1, 'cupheadP3', FlxColor.fromRGB(146, 113, 253));
-		addSong('bad-time', 1, 'sansP2', FlxColor.fromRGB(146, 113, 253));
-		addSong('despair', 1, 'bendyP2', FlxColor.fromRGB(146, 113, 253));
+		if (FlxG.save.data.CupBeaten || Debug)
+		{
+			addSong('devils-gambit', 1, 'cupheadP3', FlxColor.fromRGB(146, 113, 253));
+		}
+
+		if (FlxG.save.data.SansBeaten2 || Debug)
+		{
+			addSong('bad-time', 1, 'sansP2', FlxColor.fromRGB(146, 113, 253));
+		}
+
+		if (FlxG.save.data.BendyBeaten || Debug)
+		{
+			addSong('despair', 1, 'bendyP2', FlxColor.fromRGB(146, 113, 253));
+		}
 
 		bg = new FlxSprite().loadGraphic(Paths.image('BG'));
 		bg.antialiasing = ClientPrefs.globalAntialiasing;

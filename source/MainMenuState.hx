@@ -48,6 +48,13 @@ class MainMenuState extends MusicBeatState
 	var menuSketch:FlxSprite;
 	var bg:FlxSprite;	
 
+	var U = false;
+	var N = false;
+	var L = false;
+	var O = false;
+	var C = false;
+	var K = false;
+
 	override function create()
 	{
 		#if desktop
@@ -208,6 +215,44 @@ class MainMenuState extends MusicBeatState
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
+		}
+
+		if (FlxG.keys.justPressed.U)
+		{
+			U = true;
+		}
+
+		if (FlxG.keys.justPressed.N)
+		{
+			N = true;
+		}
+
+		if (FlxG.keys.justPressed.L)
+		{
+			L = true;
+		}
+
+		if (FlxG.keys.justPressed.O)
+		{
+			O = true;
+		}
+
+		if (FlxG.keys.justPressed.C)
+		{
+			C = true;
+		}
+
+		if (FlxG.keys.justPressed.K)
+		{
+			K = true;
+		}
+
+		if (U && N && L && O && C && K)
+		{
+			FreeplaySelect.Debug = true;
+			FreeplayMain.Debug = true;
+			FreeplayBonus.Debug = true;
+			FreeplayNightmare.Debug = true;
 		}
 
 		if (!selectedSomethin)

@@ -41,7 +41,6 @@ class Startup extends MusicBeatState
 	public var playingDathing = false;
 	public var videoSprite:FlxSprite;
 	public var camHUD2:FlxCamera;
-	var music:Array<String>;
 
 	var loaded = false;
 
@@ -50,6 +49,7 @@ class Startup extends MusicBeatState
 	public static var bitmapData:Map<String, FlxGraphic>;
 
 	var images = [];
+	var music = [];
 	var charts = [];
 
 	override function create()
@@ -78,6 +78,23 @@ class Startup extends MusicBeatState
 
 		trace("caching music...");
 
+		for (i in music)
+		{
+			var inst = Paths.inst(i);
+			if (Paths.doesSoundAssetExist(inst))
+			{
+				FlxG.sound.cache(inst);
+			}
+		
+			var voices = Paths.voices(i);
+			if (Paths.doesSoundAssetExist(voices))
+			{
+				FlxG.sound.cache(voices);
+			}
+	    }
+		
+		trace("Finished caching...");
+
 		// TODO: Get the song list from OpenFlAssets.
 		#end
 
@@ -97,6 +114,8 @@ class Startup extends MusicBeatState
 		});
 		#end
 
+		//penis
+
 		super.create();
 	}
 
@@ -104,14 +123,14 @@ class Startup extends MusicBeatState
 
 	override function update(elapsed)
 	{
-		if (FlxG.keys.justPressed.ENTER && VideoPlaying)
+		if (FlxG.keys.justPressed.ENTER)// && VideoPlaying)
 		{
-			FlxG.sound.music.stop();
+			//FlxG.sound.music.stop();
 			//GlobalVideo.get().clearPause();
 			#if desktop
-			GlobalVideo.get().stop();
-			GlobalVideo.get().hide();
-			remove(videoSprite);
+			//GlobalVideo.get().stop();
+			//GlobalVideo.get().hide();
+			//remove(videoSprite);
 			#end
 			//remove(tmr);
 			FlxG.switchState(new TitleState());
@@ -121,9 +140,11 @@ class Startup extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	public function Video(source:String, sound:Bool) // for background videos and its edited kade engine 1.18 code lol
+	public function Video():Void // for background videos and its edited kade engine 1.18 code lol
 	{  
 		#if desktop
+		useVideo = true;
+
 		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
 		var str1:String = "WEBM SHIT";
 		// WebmPlayer.SKIP_STEP_LIMIT = 90;
@@ -131,17 +152,17 @@ class Startup extends MusicBeatState
 		webmHandler.source(ourSource);
 		webmHandler.makePlayer();
 		webmHandler.webm.name = str1;
-		
+
 		GlobalVideo.setWebm(webmHandler);
-		
-		GlobalVideo.get().source('assets/videos/' + source + '.webm');
+
+		GlobalVideo.get().source('assets/videos/credits/intro.webm');
 		GlobalVideo.get().clearPause();
 		if (GlobalVideo.isWebm)
 		{
 			GlobalVideo.get().updatePlayer();
 		}
 		GlobalVideo.get().show();
-		
+
 		if (GlobalVideo.isWebm)
 		{
 			GlobalVideo.get().restart();
@@ -150,11 +171,8 @@ class Startup extends MusicBeatState
 		{
 			GlobalVideo.get().play();
 		}
-		
-		if (sound)
-		{
-			FlxG.sound.playMusic(Paths.sound(source));
-		}
+
+		FlxG.sound.playMusic(Paths.sound('credits/intro'));
 	
 		var data = webmHandler.webm.bitmapData;
 		videoSprite = new FlxSprite(-470, -30).loadGraphic(data);
@@ -163,12 +181,11 @@ class Startup extends MusicBeatState
 		videoSprite.antialiasing = ClientPrefs.globalAntialiasing;
 		videoSprite.screenCenter();
 		add(videoSprite);
-
-		VideoPlaying = true;
 		
 		trace('ITS PLAYING NOW!!!!!!');
 		
 		webmHandler.resume();
+		//VideoPlaying = true;
 		#else
 		VideoPlaying = true;
 		#end
@@ -200,8 +217,8 @@ class Startup extends MusicBeatState
 		trace(OpenFlAssets.cache.hasBitmapData('GF_assets'));
 		#end
 		//LoadingState.loadAndSwitchState(new VideoState("assets/videos/start&end/intro.webm", new TitleState()));
-		Video('credits/intro', true); //did this since what i did above just crashes the game :/
-		new FlxTimer().start(60, function(tmr:FlxTimer)
+		//Video(); //did this since what i did above just crashes the game :/
+		new FlxTimer().start(60.0, function(tmr:FlxTimer)
 		{
 			FlxG.sound.music.stop();
 			//GlobalVideo.get().clearPause();

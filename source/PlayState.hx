@@ -280,9 +280,22 @@ class PlayState extends MusicBeatState
 	public static var bendyaftercutscene:Bool = false;
 
 	//CupHead Stuff
+	var CupShoot:FlxSprite;
+	var CupShootFX:FlxSprite;
+	var CupShooting1:Bool = false;
+	var CupShooting2:Bool = false;
+	var GreenShootTMR:Float = 0.0;
+	var CupFX:FlxSprite;
+	var CupBullshit:FlxSprite;
+	var CupShoot2:FlxSprite;
+	var CupShoot22:FlxSprite;
+	var CupShoot23:FlxSprite;
+	var The_Thing:FlxSprite; //loading screen
+	var Wallop:FlxSprite;
 	var cuprain:FlxSprite;
 	var thirdpersonrain:FlxSprite;
 	var cupshid:FlxSprite;
+	var CupCard:FlxSprite;
 
 	//bendy sprites
 	var musicbox:FlxSprite;
@@ -451,7 +464,23 @@ class PlayState extends MusicBeatState
 		DodgeKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_dodge'));
 		if (attackEnabled)
 		{
-			canAttack = true;
+			//canAttack = true;
+
+			if (cupheadsong)
+			{
+				CupCard = new FlxSprite(-200, 150);
+				CupCard.frames = Paths.getSparrowAtlas('Cardcrap', 'cup');
+				CupCard.animation.addByPrefix('CardFilling', "Card Filled instance 1", 1, false);
+				CupCard.animation.addByPrefix('NormalPopup', "Card Normal Pop out instance 1", 24, false);
+				CupCard.animation.addByPrefix('ParryPopup', "PARRY Card Pop out instance 1", 24, false);
+				CupCard.animation.addByPrefix('CardUsed', "Card Used instance 10", 24, false);
+				//CupCard.animation.play('CardFilling');
+				CupCard.antialiasing = ClientPrefs.globalAntialiasing;
+				CupCard.scale.set(1.5, 1.5);
+				CupCard.updateHitbox();
+				add(CupCard);
+				CupCard.cameras = [camHUD2];
+			}
 
 			attackbutton = new FlxSprite(25, 250);
 			attackbutton.frames = Paths.getSparrowAtlas('Notmobilegameanymore', 'shared');
@@ -1316,6 +1345,15 @@ class PlayState extends MusicBeatState
 			}
 		}
 		#end
+
+		if (cupheadsong)
+		{
+			new FlxTimer().start(4.9, function(tmr:FlxTimer)
+			{
+				remove(The_Thing);
+				remove(Wallop);
+			});
+		}
 		
 		var daSong:String = Paths.formatToSongPath(curSong);
 		if (isStoryMode && !seenCutscene)
@@ -1836,80 +1874,104 @@ class PlayState extends MusicBeatState
 					antialias = false;
 				}
 
-				// head bopping for bg characters on Mall
-				if(curStage == 'mall') {
-					if(!ClientPrefs.lowQuality)
-						upperBoppers.dance(true);
-	
-					bottomBoppers.dance(true);
-					santa.dance(true);
-				}
-
-				switch (swagCounter)
+				if (cupheadsong)
 				{
-					case 0:
-						FlxG.sound.play(Paths.sound('intro3' + introSoundsSuffix), 0.6);
-					case 1:
-						countdownReady = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
-						countdownReady.scrollFactor.set();
-						countdownReady.updateHitbox();
-
-						if (PlayState.isPixelStage)
-							countdownReady.setGraphicSize(Std.int(countdownReady.width * daPixelZoom));
-
-						countdownReady.screenCenter();
-						countdownReady.antialiasing = antialias;
-						add(countdownReady);
-						FlxTween.tween(countdownReady, {/*y: countdownReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
-							ease: FlxEase.cubeInOut,
-							onComplete: function(twn:FlxTween)
-							{
-								remove(countdownReady);
-								countdownReady.destroy();
-							}
-						});
-						FlxG.sound.play(Paths.sound('intro2' + introSoundsSuffix), 0.6);
-					case 2:
-						countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
-						countdownSet.scrollFactor.set();
-
-						if (PlayState.isPixelStage)
-							countdownSet.setGraphicSize(Std.int(countdownSet.width * daPixelZoom));
-
-						countdownSet.screenCenter();
-						countdownSet.antialiasing = antialias;
-						add(countdownSet);
-						FlxTween.tween(countdownSet, {/*y: countdownSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
-							ease: FlxEase.cubeInOut,
-							onComplete: function(twn:FlxTween)
-							{
-								remove(countdownSet);
-								countdownSet.destroy();
-							}
-						});
-						FlxG.sound.play(Paths.sound('intro1' + introSoundsSuffix), 0.6);
-					case 3:
-						countdownGo = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
-						countdownGo.scrollFactor.set();
-
-						if (PlayState.isPixelStage)
-							countdownGo.setGraphicSize(Std.int(countdownGo.width * daPixelZoom));
-
-						countdownGo.updateHitbox();
-
-						countdownGo.screenCenter();
-						countdownGo.antialiasing = antialias;
-						add(countdownGo);
-						FlxTween.tween(countdownGo, {/*y: countdownGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
-							ease: FlxEase.cubeInOut,
-							onComplete: function(twn:FlxTween)
-							{
-								remove(countdownGo);
-								countdownGo.destroy();
-							}
-						});
-						FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
-					case 4:
+					switch (swagCounter)
+					{
+						case 0:
+							The_Thing = new FlxSprite(0, 0); //how did this take me 2 hours to figure out
+							The_Thing.frames = Paths.getSparrowAtlas('the_thing2.0', 'cup');
+							The_Thing.animation.addByPrefix('load', 'BOO instance 1', 20, false);
+							The_Thing.antialiasing = ClientPrefs.globalAntialiasing;
+							The_Thing.scale.set(1.25, 1.25);
+							The_Thing.screenCenter();
+							add(The_Thing);
+							The_Thing.cameras = [camHUD2];
+	
+							The_Thing.animation.play('load');
+							FlxG.sound.play(Paths.sound('boing', 'cup'));
+						case 2:
+							FlxG.sound.play(Paths.soundRandom('intros/normal/', 0, 4, 'cup'));
+	
+							Wallop = new FlxSprite(0, 0);
+							Wallop.frames = Paths.getSparrowAtlas('ready_wallop', 'cup');
+							Wallop.animation.addByPrefix('Wallop', "Ready? WALLOP!0", 24, false);
+							Wallop.animation.play('Wallop');
+							Wallop.antialiasing = ClientPrefs.globalAntialiasing;
+							Wallop.screenCenter();
+							Wallop.updateHitbox();
+							add(Wallop);
+							Wallop.cameras = [camHUD2];
+					}
+				}
+				else
+				{
+					switch (swagCounter)
+					{
+						case 0:
+							FlxG.sound.play(Paths.sound('intro3' + introSoundsSuffix), 0.6);
+						case 1:
+							countdownReady = new FlxSprite().loadGraphic(Paths.image(introAlts[0]));
+							countdownReady.scrollFactor.set();
+							countdownReady.updateHitbox();
+	
+							if (PlayState.isPixelStage)
+								countdownReady.setGraphicSize(Std.int(countdownReady.width * daPixelZoom));
+	
+							countdownReady.screenCenter();
+							countdownReady.antialiasing = antialias;
+							add(countdownReady);
+							FlxTween.tween(countdownReady, {/*y: countdownReady.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+								ease: FlxEase.cubeInOut,
+								onComplete: function(twn:FlxTween)
+								{
+									remove(countdownReady);
+									countdownReady.destroy();
+								}
+							});
+							FlxG.sound.play(Paths.sound('intro2' + introSoundsSuffix), 0.6);
+						case 2:
+							countdownSet = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
+							countdownSet.scrollFactor.set();
+	
+							if (PlayState.isPixelStage)
+								countdownSet.setGraphicSize(Std.int(countdownSet.width * daPixelZoom));
+	
+							countdownSet.screenCenter();
+							countdownSet.antialiasing = antialias;
+							add(countdownSet);
+							FlxTween.tween(countdownSet, {/*y: countdownSet.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+								ease: FlxEase.cubeInOut,
+								onComplete: function(twn:FlxTween)
+								{
+									remove(countdownSet);
+									countdownSet.destroy();
+								}
+							});
+							FlxG.sound.play(Paths.sound('intro1' + introSoundsSuffix), 0.6);
+						case 3:
+							countdownGo = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
+							countdownGo.scrollFactor.set();
+	
+							if (PlayState.isPixelStage)
+								countdownGo.setGraphicSize(Std.int(countdownGo.width * daPixelZoom));
+	
+							countdownGo.updateHitbox();
+	
+							countdownGo.screenCenter();
+							countdownGo.antialiasing = antialias;
+							add(countdownGo);
+							FlxTween.tween(countdownGo, {/*y: countdownGo.y + 100,*/ alpha: 0}, Conductor.crochet / 1000, {
+								ease: FlxEase.cubeInOut,
+								onComplete: function(twn:FlxTween)
+								{
+									remove(countdownGo);
+									countdownGo.destroy();
+								}
+							});
+							FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
+						case 4:
+					}
 				}
 
 				notes.forEachAlive(function(note:Note) {
@@ -2441,6 +2503,52 @@ class PlayState extends MusicBeatState
 		{
 			iconP1.swapOldIcon();
 		}*/
+
+		/* //this broke the cooldown for attacking!!!!!
+		if (cupheadsong && attackEnabled)
+		{
+			new FlxTimer().start(60, function(tmr:FlxTimer)
+			{
+				canAttack = true;
+				//CupCard.animation.play('NormalPopup');
+			});
+		}
+		*/
+
+		if (CupShooting1)
+		{
+			health -= 0.0035;
+
+			if (attacked)
+			{
+				dad.playAnim('hit', true);
+				dad.nonanimated = true;
+		
+				new FlxTimer().start(0.25, function(tmr:FlxTimer)
+				{
+					dad.playAnim('idle', false);
+					dad.nonanimated = false;
+				});
+
+				remove(CupShootFX);
+				remove(CupShoot);
+				CupShooting1 = false;
+			}
+		}
+
+		if (CupShooting2)
+		{
+			health -= 0.0015;
+			
+			new FlxTimer().start(GreenShootTMR, function(tmr:FlxTimer)
+			{
+				dad.nonanimated = false;
+				remove(CupShoot2);
+				remove(CupShoot22);
+				remove(CupShoot23);
+				CupShooting2 = false;
+			});
+		}
 
 		if (cupheadsong && canAttack)
 		{
@@ -3411,6 +3519,12 @@ class PlayState extends MusicBeatState
 						}
 					});
 				}
+			case 'Cuphead Dodge':
+				CupDodgeMechanic();
+			case 'Cuphead Shoot':
+				CupShootMechanic1();
+			case 'Cuphead Shoot 2':
+				CupShootMechanic2(Std.parseFloat(value1));
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
@@ -3552,8 +3666,7 @@ class PlayState extends MusicBeatState
 		if(achievementObj != null) {
 			return;
 		} else {
-			var achieve:String = checkForAchievement(['week1_nomiss', 'week2_nomiss', 'week3_nomiss', 'week4_nomiss',
-				'week5_nomiss', 'week6_nomiss', 'week7_nomiss', 'ur_bad',
+			var achieve:String = checkForAchievement(['cup_nomiss', 'sans_nomiss', 'bendy_nomiss', 'ur_bad',
 				'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
 
 			if(achieve != null) {
@@ -4306,6 +4419,7 @@ class PlayState extends MusicBeatState
 						InkCurrentlyOnScreen = true;
 					case 'Parry Note':
 						boyfriend.playAnim(animToPlay, true);
+						//CupCard.animation.play('ParryPopup');
 						FlxG.sound.play(Paths.sound('parry', 'cup'));
 						canAttack = true;
 					case 'Blue Bone Note':
@@ -4618,10 +4732,12 @@ class PlayState extends MusicBeatState
 
 	function BFattackCup()
 	{
+		//CupCard.animation.play('CardUsed');
 		boyfriend.playAnim('attack', true);
 		boyfriend.nonanimated = true;
 		new FlxTimer().start(0.4, function(tmr:FlxTimer)
 		{
+			//CupCard.animation.play('CardFilling');
 			health += 0.475;
 			dad.playAnim('hit', true);
 			dad.nonanimated = true;
@@ -4708,16 +4824,15 @@ class PlayState extends MusicBeatState
 		dodging = true;
 		boyfriend.nonanimated = true;
 
-		new FlxTimer().start(0.35, function(tmr:FlxTimer)
+		new FlxTimer().start(0.7, function(tmr:FlxTimer)
 		{
 			dad.nonanimated = false;
 			boyfriend.nonanimated = false;
 		});
 
 		//boyfriend.animation.finishCallback = function(a:String)
-		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			boyfriend.nonanimated = false;
 			dodgebutton.animation.play('canUse');
 			dodging = false;
 			canDodge = true;
@@ -4753,6 +4868,116 @@ class PlayState extends MusicBeatState
 			dodging = false;
 			canDodge = true;
 		});
+	}
+
+	function CupDodgeMechanic()
+	{
+		FlxG.sound.play(Paths.sound('pre_shoot', 'cup'));
+
+		CupFX = new FlxSprite(-600, 175);
+		CupFX.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
+		CupFX.animation.addByPrefix('FX', "BurstFX instance 1", 24, false);
+		CupFX.animation.play('FX');
+		CupFX.antialiasing = ClientPrefs.globalAntialiasing;
+		CupFX.scrollFactor.set(0.9, 0.9);
+		CupFX.cameras = [camHUD];
+		add(CupFX);
+		FlxTween.tween(CupFX, { x:5000, y:175 }, 3.75, { type: FlxTween.ONESHOT });
+
+		CupBullshit = new FlxSprite(-600, 175);
+		CupBullshit.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
+		CupBullshit.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, false);
+		CupBullshit.animation.play('Shoot');
+		CupBullshit.antialiasing = ClientPrefs.globalAntialiasing;
+		CupBullshit.scrollFactor.set(0.9, 0.9);
+		CupBullshit.cameras = [camHUD];
+		add(CupBullshit);
+		FlxTween.tween(CupBullshit, { x:5000, y:175 }, 3.75, { type: FlxTween.ONESHOT });
+		
+		dad.playAnim('boom', true);
+		dad.nonanimated = true;
+
+		new FlxTimer().start(0.25, function(tmr:FlxTimer)
+		{
+			FlxG.sound.play(Paths.sound('shoot', 'cup'));
+			dad.nonanimated = false;
+		});
+			
+		new FlxTimer().start(0.35, function(tmr:FlxTimer)
+		{
+			if (dodging && !miss && !cpuControlled)
+			{
+				canDodge = false;
+			}
+			else if (!dodging && !cpuControlled)
+			{
+				health = 0;
+				canDodge = false;
+			}
+		
+			if (cpuControlled) //don't worry i got yall botplay users! -Junior
+			{
+				canDodge = false;
+			}
+		});
+	}
+
+	function CupShootMechanic1()
+	{	
+		CupShootFX = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
+		CupShootFX.frames = Paths.getSparrowAtlas('bull/Cupheadshoot', 'cup');
+		CupShootFX.animation.addByPrefix('FX', "BulletFlashFX instance 1", 30, true);
+		CupShootFX.animation.play('FX');
+		CupShootFX.antialiasing = ClientPrefs.globalAntialiasing;
+		CupShootFX.scrollFactor.set(0.9, 0.9);
+		add(CupShootFX);
+
+		CupShoot = new FlxSprite(925, 700); //for offsets i recommend going by hundreds
+		CupShoot.frames = Paths.getSparrowAtlas('bull/Cupheadshoot', 'cup');
+		CupShoot.animation.addByPrefix('Bullet', "BulletFX_H-Tween_03 instance 1", 30, true);
+		CupShoot.animation.play('Bullet');
+		CupShoot.antialiasing = ClientPrefs.globalAntialiasing;
+		CupShoot.scrollFactor.set(0.9, 0.9);
+		add(CupShoot);
+			
+		dad.playAnim('hadokenROUND', false);
+		dad.nonanimated = true;
+
+		CupShooting1 = true;
+	}
+
+	function CupShootMechanic2(timer:Float)
+	{
+		CupShoot2 = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
+		CupShoot2.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
+		CupShoot2.animation.addByPrefix('ShootGreen', "GreenShit01 instance 1", 30, true);
+		CupShoot2.animation.play('ShootGreen');
+		CupShoot2.antialiasing = ClientPrefs.globalAntialiasing;
+		CupShoot2.scrollFactor.set(0.9, 0.9);
+		add(CupShoot2);
+
+		CupShoot22 = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
+		CupShoot22.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
+		CupShoot22.animation.addByPrefix('ShootGreen', "GreenShit02 instance 1", 30, true);
+		CupShoot22.animation.play('ShootGreen');
+		CupShoot22.antialiasing = ClientPrefs.globalAntialiasing;
+		CupShoot22.scrollFactor.set(0.9, 0.9);
+		add(CupShoot22);
+
+		CupShoot23 = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
+		CupShoot23.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
+		CupShoot23.animation.addByPrefix('ShootGreen', "Greenshit03 instance 1", 30, true);
+		CupShoot23.animation.play('ShootGreen');
+		CupShoot23.antialiasing = ClientPrefs.globalAntialiasing;
+		CupShoot23.scrollFactor.set(0.9, 0.9);
+		add(CupShoot23);
+
+		GreenShootTMR = timer;
+
+		dad.playAnim('hadokenROUND', false);
+		dad.nonanimated = true;
+	
+		CupShooting2 = true;
 	}
 
 	function SansDodgeMechanic()
@@ -4826,6 +5051,7 @@ class PlayState extends MusicBeatState
 				BoneMiss.animation.play('DodgeMiss');
 				BoneDodge.visible = true;
 				BoneDodge.animation.play('Dodge');
+				FlxG.sound.play(Paths.sound('dodge', 'sans'));
 				canDodge = false;
 			}
 		});
@@ -4913,6 +5139,35 @@ class PlayState extends MusicBeatState
 		}
 
 		lastStepHit = curStep;
+
+		if (curSong == 'Knockout')
+		{
+			switch (curStep)
+		    {
+				/* //no need to hardcode anymore since i made them an event lol
+				case 142:
+					CupDodgeMechanic();
+				case 200:
+					CupShootMechanic1();
+				case 220:
+					CupShootMechanic2(5);
+				case 243:
+					CupShootMechanic2(14);
+				case 398:
+					CupDodgeMechanic();
+				case 501:
+					CupDodgeMechanic();
+				case 646:
+					CupDodgeMechanic();
+				case 771:
+					CupDodgeMechanic();
+				case 1171:
+					CupDodgeMechanic();
+				case 1597:
+					CupDodgeMechanic();
+				*/ //no need to hardcode anymore since i made them an event lol
+			}
+		}
 
 		if (curSong == 'imminent-demise')
 		{
@@ -5202,26 +5457,18 @@ class PlayState extends MusicBeatState
 				var unlock:Bool = false;
 				switch(achievementName)
 				{
-					case 'week1_nomiss' | 'week2_nomiss' | 'week3_nomiss' | 'week4_nomiss' | 'week5_nomiss' | 'week6_nomiss' | 'week7_nomiss':
+					case 'cup_nomiss' | 'sans_nomiss' | 'bendy_nomiss':
 						if(isStoryMode && campaignMisses + songMisses < 1 && CoolUtil.difficultyString() == 'HARD' && storyPlaylist.length <= 1 && !changedDifficulty && !usedPractice)
 						{
 							var weekName:String = WeekData.getWeekFileName();
 							switch(weekName) //I know this is a lot of duplicated code, but it's easier readable and you can add weeks with different names than the achievement tag
 							{
-								case 'week1':
-									if(achievementName == 'week1_nomiss') unlock = true;
-								case 'week2':
-									if(achievementName == 'week2_nomiss') unlock = true;
-								case 'week3':
-									if(achievementName == 'week3_nomiss') unlock = true;
-								case 'week4':
-									if(achievementName == 'week4_nomiss') unlock = true;
-								case 'week5':
-									if(achievementName == 'week5_nomiss') unlock = true;
-								case 'week6':
-									if(achievementName == 'week6_nomiss') unlock = true;
-								case 'week7':
-									if(achievementName == 'week7_nomiss') unlock = true;
+								case 'cuphead':
+									if(achievementName == 'cup_nomiss') unlock = true;
+								case 'sans':
+									if(achievementName == 'sans_nomiss') unlock = true;
+								case 'bendy':
+									if(achievementName == 'bendy_nomiss') unlock = true;
 							}
 						}
 					case 'ur_bad':

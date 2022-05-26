@@ -50,6 +50,8 @@ class FreeplayState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 
+	public static var Debug:Bool = false;
+
 	override function create()
 	{
 		Paths.clearStoredMemory();
@@ -62,6 +64,10 @@ class FreeplayState extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
+		#end
+
+		#if debug
+		Debug = true;
 		#end
 
 		for (i in 0...WeekData.weeksList.length) {

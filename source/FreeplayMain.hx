@@ -40,7 +40,7 @@ class FreeplayMain extends MusicBeatState
 	var lerpRating:Float = 0;
 	var intendedScore:Int = 0;
 	var intendedRating:Float = 0;
-
+	
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
 
@@ -49,6 +49,8 @@ class FreeplayMain extends MusicBeatState
 	var bg:FlxSprite;
 	var intendedColor:Int;
 	var colorTween:FlxTween;
+
+	public static var Debug:Bool = false;
 
 	override function create()
 	{
@@ -62,6 +64,10 @@ class FreeplayMain extends MusicBeatState
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
+		#end
+
+		#if debug
+		Debug = true;
 		#end
 
 		cache(); //so it caches songs
@@ -103,25 +109,25 @@ class FreeplayMain extends MusicBeatState
 			}
 		}*/
 
-		if (!FlxG.save.data.CupBeaten && !FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2 && !FlxG.save.data.BendyBeaten)
+		if (!FlxG.save.data.CupBeaten && !FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2 && !FlxG.save.data.BendyBeaten && !Debug)
 		{
 			addSong('snake-eyes', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253)); //to prevent crash lol
 		}
 		//cuphead
-		if (FlxG.save.data.CupBeaten)
+		if (FlxG.save.data.CupBeaten || Debug)
 		{
 			addSong('snake-eyes', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253));
 			addSong('technicolor-tussle', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253));
 			addSong('knockout', 1, 'cupheadP2', FlxColor.fromRGB(146, 113, 253));
 		}
         //sans
-		if (FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2)
+		if (FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2 || Debug)
 		{
 			addSong('whoopee', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
 			addSong('sansational', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
 			addSong('final-stretch', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
 		}
-		else if (FlxG.save.data.SansBeaten2) 		//sans 2
+		else if (FlxG.save.data.SansBeaten2 || Debug) //sans 2
 		{
 			addSong('whoopee', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
 			addSong('sansational', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
@@ -129,7 +135,7 @@ class FreeplayMain extends MusicBeatState
 			addSong('final-stretch', 1, 'sans', FlxColor.fromRGB(146, 113, 253));
 		}
 		//bendy
-		if (FlxG.save.data.BendyBeaten)
+		if (FlxG.save.data.BendyBeaten || Debug)
 		{
 			addSong('imminent-demise', 1, 'dad', FlxColor.fromRGB(146, 113, 253));
 			addSong('terrible-sin', 1, 'bendyP1', FlxColor.fromRGB(146, 113, 253));

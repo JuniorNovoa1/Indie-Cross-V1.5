@@ -32,6 +32,9 @@ using StringTools;
 
 class FreeplaySelect extends MusicBeatState
 {
+	//so u can play when in debug mode
+	public static var Debug:Bool = false;
+
 	//sprites
 	var bg:FlxSprite;
 	var story:FlxSprite;
@@ -75,6 +78,10 @@ class FreeplaySelect extends MusicBeatState
 		nightmarelocked.scale.set(0.7, 0.7);
 		add(nightmarelocked);
 
+		#if debug
+		Debug = true;
+		#end
+
 		changeSelection();
 
 		super.create();
@@ -89,7 +96,7 @@ class FreeplaySelect extends MusicBeatState
 			FlxG.save.data.NightmareUnlocked = true;
 		}
 
-		if (NightmareUnlocked)
+		if (NightmareUnlocked || Debug)
 		{
 			nightmare.visible = true;
 		}
@@ -102,37 +109,37 @@ class FreeplaySelect extends MusicBeatState
 		{
 			story.alpha = 1.0;
 			extras.alpha = 0.6;
-			if (!NightmareUnlocked)
+			if (!NightmareUnlocked && !Debug)
 			{
 				nightmare.alpha = 0.0;
 				nightmarelocked.alpha = 0.6;
 			}
 			else
 			{
-				nightmare.alpha = 0.0;
-				nightmarelocked.alpha = 0.6;
+				nightmare.alpha = 0.6;
+				nightmarelocked.alpha = 0.0;
 			}
 		}
 		else if (SelectionWeek == 1)
 		{
 			story.alpha = 0.6;
 			extras.alpha = 1.0;
-			if (!NightmareUnlocked)
+			if (!NightmareUnlocked && !Debug)
 			{
 				nightmare.alpha = 0.0;
 				nightmarelocked.alpha = 0.6;
 			}
 			else
 			{
-				nightmare.alpha = 0.0;
-				nightmarelocked.alpha = 0.6;
+				nightmare.alpha = 0.6;
+				nightmarelocked.alpha = 0.0;
 			}
 		}
 		else if (SelectionWeek == 2)// && !NightmareUnlocked)
 		{
 			story.alpha = 0.6;
 			extras.alpha = 0.6;
-			if (!NightmareUnlocked)
+			if (!NightmareUnlocked && !Debug)
 			{
 				nightmare.alpha = 0.0;
 				nightmarelocked.alpha = 1.0;
@@ -195,7 +202,7 @@ class FreeplaySelect extends MusicBeatState
             MusicBeatState.switchState(new FreeplayBonus());
 			NoSpam = false;
 		}
-		else if (SelectionWeek == 2 && NightmareUnlocked)
+		else if (SelectionWeek == 2 && NightmareUnlocked || Debug)
 		{
 			FlxG.sound.play(Paths.sound('confirmMenu'));
 			MusicBeatState.switchState(new FreeplayNightmare());
