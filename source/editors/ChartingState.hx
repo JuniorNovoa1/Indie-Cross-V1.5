@@ -86,9 +86,9 @@ class ChartingState extends MusicBeatState
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
-		['Cuphead Dodge', "Value 1: Useless \nValue 2: Useless"],
+		['Cuphead Dodge', "Value 1: How much time you have to dodge (0.35 is used if blank) \nValue 2: Useless"],
 		['Cuphead Shoot', "Value 1: Useless \nValue 2: Useless"],
-		['Cuphead Shoot 2', "Value 1: Time the green bullet's last. \nValue 2: Useless"]
+		['Cuphead Shoot 2', "Value 1: Time the green bullet's last. \nValue 2: Which bullet's to use. (1: ur mom, 2: ur mom, 3: ur mom)"]
 	];
 
 	var _file:FileReference;

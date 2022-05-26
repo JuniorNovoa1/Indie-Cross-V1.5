@@ -284,6 +284,7 @@ class PlayState extends MusicBeatState
 	var CupShootFX:FlxSprite;
 	var CupShooting1:Bool = false;
 	var CupShooting2:Bool = false;
+	var CupheadDodgeTime:Float = 0.0;
 	var GreenShootTMR:Float = 0.0;
 	var CupFX:FlxSprite;
 	var CupBullshit:FlxSprite;
@@ -416,7 +417,6 @@ class PlayState extends MusicBeatState
 		detailsPausedText = "Paused - " + detailsText;
 		#end
 
-		#if desktop
 		if (SONG.song == 'Snake-Eyes')
 		{
 			attackEnabled = false;
@@ -426,7 +426,7 @@ class PlayState extends MusicBeatState
 		else if (SONG.song == 'Technicolor-Tussle')
 		{
 			attackEnabled = true;
-			dodgeEnabled = true;
+			dodgeEnabled = false;
 			SongCreator = 'BLVKARROT - ';
 		}
 		else if (SONG.song == 'Knockout')
@@ -443,8 +443,8 @@ class PlayState extends MusicBeatState
 		}
 		else if (SONG.song == 'Sansational')
 		{
-			attackEnabled = true;
-			dodgeEnabled = true;
+			attackEnabled = false;
+			dodgeEnabled = false;
 			SongCreator = 'Tenzubushi - ';
 		}
 		else if (SONG.song == 'Final-Stretch')
@@ -454,6 +454,7 @@ class PlayState extends MusicBeatState
 			SongCreator = 'Saru - ';
 		}
 
+		#if desktop
 		TitleDifficulty = ' [' + CoolUtil.difficultyString() + ']';
 
 		Application.current.window.title = 'Indie Cross - ' + SongCreator + SONG.song + TitleDifficulty; //song names lollll
@@ -2517,7 +2518,7 @@ class PlayState extends MusicBeatState
 
 		if (CupShooting1)
 		{
-			health -= 0.0035;
+			health -= 0.00425;
 
 			if (attacked)
 			{
@@ -2538,11 +2539,14 @@ class PlayState extends MusicBeatState
 
 		if (CupShooting2)
 		{
-			health -= 0.0015;
+			health -= 0.00215;
 			
 			new FlxTimer().start(GreenShootTMR, function(tmr:FlxTimer)
 			{
 				dad.nonanimated = false;
+				CupShoot2.visible = false;
+				CupShoot22.visible = false;
+				CupShoot23.visible = false;
 				remove(CupShoot2);
 				remove(CupShoot22);
 				remove(CupShoot23);
@@ -2638,7 +2642,8 @@ class PlayState extends MusicBeatState
 
 		if (InkCurrentlyOnScreen)
 		{
-			new FlxTimer().start(InkTimer, function(tmr:FlxTimer)
+			//new FlxTimer().start(InkTimer, function(tmr:FlxTimer)
+			new FlxTimer().start(3, function(tmr:FlxTimer)
 			{
 				FlxTween.tween(Ink, {alpha: 0}, 1);
 				new FlxTimer().start(1.1, function(tmr:FlxTimer)
@@ -3520,11 +3525,11 @@ class PlayState extends MusicBeatState
 					});
 				}
 			case 'Cuphead Dodge':
-				CupDodgeMechanic();
+				CupDodgeMechanic(Std.parseFloat(value1));
 			case 'Cuphead Shoot':
 				CupShootMechanic1();
 			case 'Cuphead Shoot 2':
-				CupShootMechanic2(Std.parseFloat(value1));
+				CupShootMechanic2(Std.parseFloat(value1), Std.parseFloat(value2));
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
@@ -4870,7 +4875,7 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	function CupDodgeMechanic()
+	function CupDodgeMechanic(timer:Float)
 	{
 		FlxG.sound.play(Paths.sound('pre_shoot', 'cup'));
 
@@ -4882,7 +4887,7 @@ class PlayState extends MusicBeatState
 		CupFX.scrollFactor.set(0.9, 0.9);
 		CupFX.cameras = [camHUD];
 		add(CupFX);
-		FlxTween.tween(CupFX, { x:5000, y:175 }, 3.75, { type: FlxTween.ONESHOT });
+		FlxTween.tween(CupFX, { x:5000, y:175 }, 3.5, { type: FlxTween.ONESHOT });
 
 		CupBullshit = new FlxSprite(-600, 175);
 		CupBullshit.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
@@ -4892,7 +4897,7 @@ class PlayState extends MusicBeatState
 		CupBullshit.scrollFactor.set(0.9, 0.9);
 		CupBullshit.cameras = [camHUD];
 		add(CupBullshit);
-		FlxTween.tween(CupBullshit, { x:5000, y:175 }, 3.75, { type: FlxTween.ONESHOT });
+		FlxTween.tween(CupBullshit, { x:5000, y:175 }, 3.5, { type: FlxTween.ONESHOT });
 		
 		dad.playAnim('boom', true);
 		dad.nonanimated = true;
@@ -4902,8 +4907,14 @@ class PlayState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('shoot', 'cup'));
 			dad.nonanimated = false;
 		});
+
+		if (CupheadDodgeTime == 0.0)
+		{
+			CupheadDodgeTime = 0.35;
+		}
+		CupheadDodgeTime = timer;
 			
-		new FlxTimer().start(0.35, function(tmr:FlxTimer)
+		new FlxTimer().start(CupheadDodgeTime, function(tmr:FlxTimer)
 		{
 			if (dodging && !miss && !cpuControlled)
 			{
@@ -4946,31 +4957,41 @@ class PlayState extends MusicBeatState
 		CupShooting1 = true;
 	}
 
-	function CupShootMechanic2(timer:Float)
+	function CupShootMechanic2(timer:Float, toUse:Float)
 	{
 		CupShoot2 = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
 		CupShoot2.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
 		CupShoot2.animation.addByPrefix('ShootGreen', "GreenShit01 instance 1", 30, true);
-		CupShoot2.animation.play('ShootGreen');
 		CupShoot2.antialiasing = ClientPrefs.globalAntialiasing;
 		CupShoot2.scrollFactor.set(0.9, 0.9);
-		add(CupShoot2);
 
 		CupShoot22 = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
 		CupShoot22.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
 		CupShoot22.animation.addByPrefix('ShootGreen', "GreenShit02 instance 1", 30, true);
-		CupShoot22.animation.play('ShootGreen');
 		CupShoot22.antialiasing = ClientPrefs.globalAntialiasing;
 		CupShoot22.scrollFactor.set(0.9, 0.9);
-		add(CupShoot22);
 
 		CupShoot23 = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
 		CupShoot23.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
 		CupShoot23.animation.addByPrefix('ShootGreen', "Greenshit03 instance 1", 30, true);
-		CupShoot23.animation.play('ShootGreen');
 		CupShoot23.antialiasing = ClientPrefs.globalAntialiasing;
 		CupShoot23.scrollFactor.set(0.9, 0.9);
-		add(CupShoot23);
+
+		if (toUse == 1)
+		{
+			CupShoot2.animation.play('ShootGreen');
+			add(CupShoot2);
+		}
+		else if (toUse == 2)
+		{
+			CupShoot22.animation.play('ShootGreen');
+			add(CupShoot22);
+		}
+		else if (toUse == 3)
+		{
+			CupShoot23.animation.play('ShootGreen');
+			add(CupShoot23);
+		}
 
 		GreenShootTMR = timer;
 
