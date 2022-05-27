@@ -78,7 +78,7 @@
 			"name": "Ouch"
 		},
 		{
-			"loop": false,
+			"loop": true,
 			"offsets": [
 				25,
 				0

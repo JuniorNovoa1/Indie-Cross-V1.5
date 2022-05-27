@@ -481,6 +481,29 @@ class PlayState extends MusicBeatState
 				CupCard.updateHitbox();
 				add(CupCard);
 				CupCard.cameras = [camHUD2];
+
+				//so no lag!!!!
+				CupFX = new FlxSprite(-600, 175);
+				CupFX.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
+				CupFX.animation.addByPrefix('FX', "BurstFX instance 1", 24, false);
+				CupFX.animation.play('FX');
+				CupFX.antialiasing = ClientPrefs.globalAntialiasing;
+				CupFX.scrollFactor.set(0.9, 0.9);
+				CupFX.cameras = [camHUD];
+				add(CupFX);
+				FlxTween.tween(CupFX, { x:5000, y:175 }, 3.5, { type: FlxTween.ONESHOT });
+				CupFX.visible = false;
+		
+				CupBullshit = new FlxSprite(-600, 175);
+				CupBullshit.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
+				CupBullshit.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, false);
+				CupBullshit.animation.play('Shoot');
+				CupBullshit.antialiasing = ClientPrefs.globalAntialiasing;
+				CupBullshit.scrollFactor.set(0.9, 0.9);
+				CupBullshit.cameras = [camHUD];
+				add(CupBullshit);
+				FlxTween.tween(CupBullshit, { x:5000, y:175 }, 3.5, { type: FlxTween.ONESHOT });
+				CupBullshit.visible = false;
 			}
 
 			attackbutton = new FlxSprite(25, 250);
@@ -1892,7 +1915,14 @@ class PlayState extends MusicBeatState
 							The_Thing.animation.play('load');
 							FlxG.sound.play(Paths.sound('boing', 'cup'));
 						case 2:
-							FlxG.sound.play(Paths.soundRandom('intros/normal/', 0, 4, 'cup'));
+							if (SONG.song != 'Knockout')
+							{
+								FlxG.sound.play(Paths.sound('intros/normal/0', 'cup'));
+							}
+							else if (SONG.song == 'Knockout')
+							{
+								FlxG.sound.play(Paths.sound('intros/angry/0', 'cup'));
+							}
 	
 							Wallop = new FlxSprite(0, 0);
 							Wallop.frames = Paths.getSparrowAtlas('ready_wallop', 'cup');
@@ -2520,6 +2550,11 @@ class PlayState extends MusicBeatState
 		{
 			health -= 0.00425;
 
+			if (cpuControlled) //don't worry i got yall botplay users! -Junior
+			{
+				BFattackCup();
+			}
+
 			if (attacked)
 			{
 				dad.playAnim('hit', true);
@@ -2539,11 +2574,10 @@ class PlayState extends MusicBeatState
 
 		if (CupShooting2)
 		{
-			health -= 0.00215;
+			health -= 0.002;
 			
 			new FlxTimer().start(GreenShootTMR, function(tmr:FlxTimer)
 			{
-				dad.nonanimated = false;
 				CupShoot2.visible = false;
 				CupShoot22.visible = false;
 				CupShoot23.visible = false;
@@ -2559,7 +2593,7 @@ class PlayState extends MusicBeatState
 			attackbutton.animation.play('canUse');
 		}
 
-		if (FlxG.keys.anyJustPressed(AttackLeftKey) && canAttack)
+		if (FlxG.keys.anyJustPressed(AttackLeftKey) && canAttack && !cpuControlled)
 		{
 			if (cupheadsong)
 			{
@@ -2567,7 +2601,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (FlxG.keys.anyJustPressed(AttackRightKey) && canAttack)
+		if (FlxG.keys.anyJustPressed(AttackRightKey) && canAttack && !cpuControlled)
 		{
 			if (cupheadsong)
 			{
@@ -2583,7 +2617,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (FlxG.keys.anyJustPressed(DodgeKey) && canDodge)
+		if (FlxG.keys.anyJustPressed(DodgeKey) && canDodge && !cpuControlled)
 		{
 			if (cupheadsong)
 			{
@@ -4908,6 +4942,11 @@ class PlayState extends MusicBeatState
 			dad.nonanimated = false;
 		});
 
+		if (cpuControlled)
+		{
+			BFdodgeCup();
+		}
+
 		if (CupheadDodgeTime == 0.0)
 		{
 			CupheadDodgeTime = 0.35;
@@ -4935,7 +4974,7 @@ class PlayState extends MusicBeatState
 
 	function CupShootMechanic1()
 	{	
-		CupShootFX = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
+		CupShootFX = new FlxSprite(950, 800); //for offsets i recommend going by hundreds
 		CupShootFX.frames = Paths.getSparrowAtlas('bull/Cupheadshoot', 'cup');
 		CupShootFX.animation.addByPrefix('FX', "BulletFlashFX instance 1", 30, true);
 		CupShootFX.animation.play('FX');
@@ -4994,9 +5033,6 @@ class PlayState extends MusicBeatState
 		}
 
 		GreenShootTMR = timer;
-
-		dad.playAnim('hadokenROUND', false);
-		dad.nonanimated = true;
 	
 		CupShooting2 = true;
 	}
