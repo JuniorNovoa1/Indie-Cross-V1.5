@@ -36,7 +36,7 @@ class GameOverCuphead extends MusicBeatSubstate
 		super();
 
 		dathing2 = new FlxSprite(x - 300, y + 200);
-		dathing2.frames = Paths.getSparrowAtlas('stages/cup/GameOver/BF_Ghost');
+		dathing2.frames = Paths.getSparrowAtlas('GameOver/BF_Ghost', 'cup');
 		dathing2.animation.addByPrefix('cupshid', 'thrtr instance 1', 24, false);
 		dathing2.antialiasing = ClientPrefs.globalAntialiasing;
 		dathing2.animation.play('cupshid', true);
@@ -46,20 +46,20 @@ class GameOverCuphead extends MusicBeatSubstate
 		blackShits.scrollFactor.set();
 		blackShits.alpha = 0.7;
 
-		var cupforeg:FlxSprite = new FlxSprite(x - 500, y).loadGraphic(Paths.image('stages/cup/GameOver/death'));
+		var cupforeg:FlxSprite = new FlxSprite(x - 500, y).loadGraphic(Paths.image('GameOver/death', 'cup'));
 		cupforeg.updateHitbox();
 		cupforeg.antialiasing = ClientPrefs.globalAntialiasing;
 		cupforeg.scrollFactor.set(1, 1);
 		cupforeg.active = false;
 		
 		dathing = new FlxSprite(x - 410, y - 300);
-		dathing.frames = Paths.getSparrowAtlas('stages/cup/GameOver/run');
+		dathing.frames = Paths.getSparrowAtlas('GameOver/run' , 'cup');
 		dathing.animation.addByPrefix('correHijoDePut', 'bf run');
 		dathing.antialiasing = true;
 		dathing.animation.play('correHijoDePut', true);
 		dathing.angle -= 4;
 
-		var hola:FlxSprite = new FlxSprite(x - 370, y - 300).loadGraphic(Paths.image('stages/cup/GameOver/cuphead_death'));
+		var hola:FlxSprite = new FlxSprite(x - 370, y - 300).loadGraphic(Paths.image('GameOver/cuphead_death', 'cup'));
 		hola.updateHitbox();
 		hola.antialiasing = ClientPrefs.globalAntialiasing;
 		hola.scrollFactor.set(1, 1);
@@ -84,7 +84,7 @@ class GameOverCuphead extends MusicBeatSubstate
 			FlxTween.tween(hola, {alpha: 1}, 1);
 		});
 
-		new FlxTimer().start(1, function(tmr:FlxTimer) //THIS CODE IS A MESS!!!! -peppy (creator of this code) also penis
+		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
 			FlxTween.angle(hola, -18, -10, 0.6, {ease: FlxEase.smoothStepInOut});
 		});
@@ -100,7 +100,7 @@ class GameOverCuphead extends MusicBeatSubstate
 		for (i in 0...optionsidk.length)
 		{
 			lmao = new FlxSprite(570, 400 + (i * 60));
-			lmao.frames = Paths.getSparrowAtlas('stages/cup/GameOver/buttons');
+			lmao.frames = Paths.getSparrowAtlas('cup/GameOver/buttons');
 			if (optionsidk[i] == "menu")
 			{
 				lmao.x -= 55;
