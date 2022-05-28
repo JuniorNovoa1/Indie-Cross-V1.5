@@ -66,6 +66,9 @@ import DialogueBoxPsych;
 import sys.FileSystem;
 #end
 
+import GameJolt.GameJoltAPI;
+import GameJolt;
+
 using StringTools;
 
 class PlayState extends MusicBeatState
