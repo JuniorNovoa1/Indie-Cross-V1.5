@@ -30,7 +30,7 @@ class Achievements {
 	public static function unlockAchievement(name:String):Void {
 		FlxG.log.add('Completed achievement "' + name +'"');
 		achievementsMap.set(name, true);
-		FlxG.sound.play(Paths.sound('achievement'));
+		//FlxG.sound.play(Paths.sound('achievement'));
 	}
 
 	public static function isAchievementUnlocked(name:String) {

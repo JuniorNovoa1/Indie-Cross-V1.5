@@ -25,11 +25,14 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
 
+import GameJolt.GameJoltAPI;
+import GameJolt;
+
 using StringTools;
 
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Controls', 'Graphics', 'Visuals and UI', 'Gameplay', 'Adjust Delay and Combo'];
+	var options:Array<String> = ['Controls', 'Graphics', 'Visuals and UI', 'Gameplay', 'Gamejolt', 'Adjust Delay and Combo'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -59,6 +62,9 @@ class OptionsState extends MusicBeatState
 			case 'Gameplay':
 				persistentUpdate = false;
 				openSubState(new options.GameplaySettingsSubState());
+			case 'Gamejolt':
+				persistentUpdate = false;
+				LoadingState.loadAndSwitchState(new GameJoltLogin());
 			case 'Adjust Delay and Combo':
 				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
 		}

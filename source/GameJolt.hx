@@ -420,7 +420,7 @@ class GameJoltLogin extends MusicBeatSubstate
 
         Conductor.changeBPM(102);
 
-        var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
+        var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('gamejolt/Background'));
 		bg.setGraphicSize(FlxG.width);
 		bg.antialiasing = true;
 		bg.updateHitbox();
@@ -430,12 +430,12 @@ class GameJoltLogin extends MusicBeatSubstate
 		add(bg);
 
         charBop = new FlxSprite(FlxG.width - 400, 250);
-		charBop.frames = Paths.getSparrowAtlas('characters/BOYFRIEND', 'shared');
-		charBop.animation.addByPrefix('idle', 'BF idle dance', 24, false);
-        charBop.animation.addByPrefix('loggedin', 'BF HEY', 24, false);
-        charBop.setGraphicSize(Std.int(charBop.width * 1.4));
+		charBop.frames = Paths.getSparrowAtlas('gamejolt/BF');
+		charBop.animation.addByPrefix('idle', 'BF  instance 1', 24, false);
+        charBop.animation.addByPrefix('loggedin', 'BF  instance 1', 24, false);
+        charBop.scale.set(1, 1);
 		charBop.antialiasing = true;
-        charBop.flipX = false;
+        charBop.flipX = true;
 		add(charBop);
 
         gamejoltText1 = new FlxText(0, 25, 0, "GameJolt + FNF Integration", 16);

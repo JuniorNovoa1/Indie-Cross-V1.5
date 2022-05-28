@@ -289,6 +289,8 @@ class PlayState extends MusicBeatState
 	var CupFX:FlxSprite;
 	var CupBullshit:FlxSprite;
 	var CupBullshit2:FlxSprite;
+	var MugmanBullshit:FlxSprite;
+	var AnKnockout:FlxSprite;
 	var CupShoot2:FlxSprite;
 	var CupShoot22:FlxSprite;
 	var CupShoot23:FlxSprite;
@@ -3569,7 +3571,7 @@ class PlayState extends MusicBeatState
 					});
 				}
 			case 'Cuphead Dodge':
-				CupDodgeMechanic(Std.parseFloat(value1));
+				CupDodgeMechanic(Std.parseFloat(value1), value2);
 			case 'Cuphead Dodge 2':
 				CupDodgeMechanic2();
 			case 'Cuphead Shoot':
@@ -4921,7 +4923,7 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	function CupDodgeMechanic(timer:Float)
+	function CupDodgeMechanic(timer:Float, mugman:String)
 	{
 		FlxG.sound.play(Paths.sound('pre_shoot', 'cup'));
 
@@ -4959,14 +4961,21 @@ class PlayState extends MusicBeatState
 			BFdodgeCup();
 		}
 
-		if (CupheadDodgeTime == 0.0)
+		if (timer == 0.0)
 		{
+			timer = 0.35;
 			CupheadDodgeTime = 0.35;
 		}
-		CupheadDodgeTime = timer;
-			
-		new FlxTimer().start(CupheadDodgeTime, function(tmr:FlxTimer)
+		//CupheadDodgeTime = timer;
+        //there was no need for this lmao
+
+		if (mugman == "true")
 		{
+            MugmanShit();
+		}
+			
+		new FlxTimer().start(timer, function(tmr:FlxTimer)
+		{				
 			if (dodging && !miss && !cpuControlled)
 			{
 				canDodge = false;
@@ -4976,11 +4985,44 @@ class PlayState extends MusicBeatState
 				health = 0;
 				canDodge = false;
 			}
-		
+	
 			if (cpuControlled) //don't worry i got yall botplay users! -Junior
 			{
 				canDodge = false;
 			}
+		});
+	}
+
+	function MugmanShit()
+	{
+		MugmanBullshit = new FlxSprite(BF_X +50, DAD_Y +275);
+		MugmanBullshit.frames = Paths.getSparrowAtlas('characters/Mugman Fucking dies', 'shared');
+		MugmanBullshit.animation.addByPrefix('walk', "Mugman instance 1", 24, false);
+		MugmanBullshit.animation.addByPrefix('bodied', "MUGMANDEAD YES instance 1", 24, false);
+		MugmanBullshit.animation.play('walk');
+		MugmanBullshit.antialiasing = ClientPrefs.globalAntialiasing;
+		MugmanBullshit.scrollFactor.set(0.9, 0.9);
+		add(MugmanBullshit);
+
+		new FlxTimer().start(0.3, function(tmr:FlxTimer)
+		{
+			MugmanBullshit.animation.play('bodied');
+
+			AnKnockout = new FlxSprite(0, 0);
+			AnKnockout.frames = Paths.getSparrowAtlas('knock', 'cup');
+			AnKnockout.animation.addByPrefix('knockout', "A KNOCKOUT!", 24, false);
+			AnKnockout.animation.play('knockout');
+			AnKnockout.antialiasing = ClientPrefs.globalAntialiasing;
+			AnKnockout.screenCenter();
+			AnKnockout.cameras = [camHUD2];
+			add(AnKnockout);
+	
+			FlxG.sound.play(Paths.sound('knockout', 'cup'));
+		});
+
+		new FlxTimer().start(0.4, function(tmr:FlxTimer)
+		{
+			remove(AnKnockout);
 		});
 	}
 
@@ -4994,7 +5036,7 @@ class PlayState extends MusicBeatState
 		CupBullshit2.scrollFactor.set(0.9, 0.9);
 		CupBullshit2.scale.set(1.25, 1.25);
 		add(CupBullshit2);
-		FlxTween.tween(CupBullshit2, { x:2000, y:DAD_Y +350 }, 1);
+		FlxTween.tween(CupBullshit2, { x:2100, y:DAD_Y +350 }, 0.75);
 			
 		dad.playAnim('boom', true);
 		dad.nonanimated = true;
@@ -5004,12 +5046,12 @@ class PlayState extends MusicBeatState
 			dad.nonanimated = false;
 		});
 	
-		new FlxTimer().start(3.5, function(tmr:FlxTimer)
+		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { x:-5000, y:DAD_Y +350 }, 6, { type: FlxTween.ONESHOT });
+			FlxTween.tween(CupBullshit2, { x:-5000, y:DAD_Y +350 }, 5.75, { type: FlxTween.ONESHOT });
 		});
 				
-		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		new FlxTimer().start(0.35, function(tmr:FlxTimer)
 		{
 			if (cpuControlled)
 			{
@@ -5032,7 +5074,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 
-		new FlxTimer().start(3.35, function(tmr:FlxTimer)
+		new FlxTimer().start(1.2, function(tmr:FlxTimer)
 		{
 			if (cpuControlled)
 			{
@@ -5082,35 +5124,35 @@ class PlayState extends MusicBeatState
 
 	function CupShootMechanic2(timer:Float, toUse:Float)
 	{
-		CupShoot2 = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
+		CupShoot2 = new FlxSprite(DAD_X, DAD_Y); //for offsets i recommend going by hundreds
 		CupShoot2.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
 		CupShoot2.animation.addByPrefix('ShootGreen', "GreenShit01 instance 1", 30, true);
 		CupShoot2.antialiasing = ClientPrefs.globalAntialiasing;
 		CupShoot2.scrollFactor.set(0.9, 0.9);
 
-		CupShoot22 = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
+		CupShoot22 = new FlxSprite(DAD_X, DAD_Y); //for offsets i recommend going by hundreds
 		CupShoot22.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
 		CupShoot22.animation.addByPrefix('ShootGreen', "GreenShit02 instance 1", 30, true);
 		CupShoot22.antialiasing = ClientPrefs.globalAntialiasing;
 		CupShoot22.scrollFactor.set(0.9, 0.9);
 
-		CupShoot23 = new FlxSprite(900, 900); //for offsets i recommend going by hundreds
+		CupShoot23 = new FlxSprite(DAD_X, DAD_Y); //for offsets i recommend going by hundreds
 		CupShoot23.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
 		CupShoot23.animation.addByPrefix('ShootGreen', "Greenshit03 instance 1", 30, true);
 		CupShoot23.antialiasing = ClientPrefs.globalAntialiasing;
 		CupShoot23.scrollFactor.set(0.9, 0.9);
 
-		if (toUse == 1)
+		if (toUse == 0)
 		{
 			CupShoot2.animation.play('ShootGreen');
 			add(CupShoot2);
 		}
-		else if (toUse == 2)
+		else if (toUse == 1)
 		{
 			CupShoot22.animation.play('ShootGreen');
 			add(CupShoot22);
 		}
-		else if (toUse == 3)
+		else if (toUse == 2)
 		{
 			CupShoot23.animation.play('ShootGreen');
 			add(CupShoot23);
@@ -5605,11 +5647,23 @@ class PlayState extends MusicBeatState
 							switch(weekName) //I know this is a lot of duplicated code, but it's easier readable and you can add weeks with different names than the achievement tag
 							{
 								case 'cuphead':
-									if(achievementName == 'cup_nomiss') unlock = true;
+									if(achievementName == 'cup_nomiss')
+									{
+										GameJoltAPI.getTrophy(162860);
+										unlock = true;
+									}
 								case 'sans':
-									if(achievementName == 'sans_nomiss') unlock = true;
+									if(achievementName == 'sans_nomiss')
+									{
+										GameJoltAPI.getTrophy(162861);
+										unlock = true;
+									}
 								case 'bendy':
-									if(achievementName == 'bendy_nomiss') unlock = true;
+									if(achievementName == 'bendy_nomiss')
+									{
+										GameJoltAPI.getTrophy(162862);
+										unlock = true;
+									}
 							}
 						}
 					case 'ur_bad':
