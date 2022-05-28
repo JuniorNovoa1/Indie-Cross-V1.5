@@ -137,7 +137,7 @@ class Startup extends MusicBeatState
 			//LoadingState.loadAndSwitchState(new TitleState());
 		}
 
-		FlxG.switchState(new TitleState());
+		FlxG.switchState(new TitleState()); //needed due to you having to press enter
 
 		super.update(elapsed);
 	}
