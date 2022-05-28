@@ -3168,7 +3168,16 @@ class PlayState extends MusicBeatState
 				for (timer in modchartTimers) {
 					timer.active = true;
 				}
-				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollowPos.x, camFollowPos.y));
+				
+				if (cupheadsong)
+				{
+					openSubState(new GameOverCuphead(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1]));
+					//MusicBeatState.switchState(new GameOverCuphead);
+				}
+				else
+				{
+					openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x - boyfriend.positionArray[0], boyfriend.getScreenPosition().y - boyfriend.positionArray[1], camFollowPos.x, camFollowPos.y));
+				}
 
 				// MusicBeatState.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 				
@@ -4921,7 +4930,7 @@ class PlayState extends MusicBeatState
 		CupFX.scrollFactor.set(0.9, 0.9);
 		CupFX.cameras = [camHUD];
 		add(CupFX);
-		FlxTween.tween(CupFX, { x:5000, y:175 }, 3.5, { type: FlxTween.ONESHOT });
+		FlxTween.tween(CupFX, { x:5000, y:175 }, 3.25, { type: FlxTween.ONESHOT });
 
 		CupBullshit = new FlxSprite(-600, 175);
 		CupBullshit.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
@@ -4931,7 +4940,7 @@ class PlayState extends MusicBeatState
 		CupBullshit.scrollFactor.set(0.9, 0.9);
 		CupBullshit.cameras = [camHUD];
 		add(CupBullshit);
-		FlxTween.tween(CupBullshit, { x:5000, y:175 }, 3.5, { type: FlxTween.ONESHOT });
+		FlxTween.tween(CupBullshit, { x:5000, y:175 }, 3.25, { type: FlxTween.ONESHOT });
 		
 		dad.playAnim('boom', true);
 		dad.nonanimated = true;
