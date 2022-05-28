@@ -6,7 +6,7 @@ function onCreate()
 			setPropertyFromGroup('unspawnNotes', i, 'texture', 'INKNOTE_assets'); --Change texture
 			setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'noteSplashes')
 			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') then --Doesn't let Dad/Opponent notes get ignored
-				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); --Miss has penalties
+				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', false); --Miss has penalties
 			end
 		end
 	end

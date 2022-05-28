@@ -87,6 +87,7 @@ class ChartingState extends MusicBeatState
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
 		['Cuphead Dodge', "Value 1: How much time you have to dodge (0.35 is used if blank) \nValue 2: Useless"],
+		['Cuphead Dodge 2', "Value 1: Useless \nValue 2: Useless"],
 		['Cuphead Shoot', "Value 1: Useless \nValue 2: Useless"],
 		['Cuphead Shoot 2', "Value 1: Time the green bullet's last. \nValue 2: Which bullet's to use. (1: ur mom, 2: ur mom, 3: ur mom)"]
 	];

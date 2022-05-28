@@ -288,6 +288,7 @@ class PlayState extends MusicBeatState
 	var GreenShootTMR:Float = 0.0;
 	var CupFX:FlxSprite;
 	var CupBullshit:FlxSprite;
+	var CupBullshit2:FlxSprite;
 	var CupShoot2:FlxSprite;
 	var CupShoot22:FlxSprite;
 	var CupShoot23:FlxSprite;
@@ -3569,6 +3570,8 @@ class PlayState extends MusicBeatState
 				}
 			case 'Cuphead Dodge':
 				CupDodgeMechanic(Std.parseFloat(value1));
+			case 'Cuphead Dodge 2':
+				CupDodgeMechanic2();
 			case 'Cuphead Shoot':
 				CupShootMechanic1();
 			case 'Cuphead Shoot 2':
@@ -4879,7 +4882,7 @@ class PlayState extends MusicBeatState
 		});
 
 		//boyfriend.animation.finishCallback = function(a:String)
-		new FlxTimer().start(1, function(tmr:FlxTimer)
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
 		{
 			dodgebutton.animation.play('canUse');
 			dodging = false;
@@ -4974,6 +4977,78 @@ class PlayState extends MusicBeatState
 				canDodge = false;
 			}
 		
+			if (cpuControlled) //don't worry i got yall botplay users! -Junior
+			{
+				canDodge = false;
+			}
+		});
+	}
+
+	function CupDodgeMechanic2()
+	{	
+		CupBullshit2 = new FlxSprite(DAD_X, DAD_Y +350);
+		CupBullshit2.frames = Paths.getSparrowAtlas('bull/Roundabout', 'cup');
+		CupBullshit2.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, true);
+		CupBullshit2.animation.play('Shoot');
+		CupBullshit2.antialiasing = ClientPrefs.globalAntialiasing;
+		CupBullshit2.scrollFactor.set(0.9, 0.9);
+		CupBullshit2.scale.set(1.25, 1.25);
+		add(CupBullshit2);
+		FlxTween.tween(CupBullshit2, { x:2000, y:DAD_Y +350 }, 1);
+			
+		dad.playAnim('boom', true);
+		dad.nonanimated = true;
+
+		new FlxTimer().start(0.25, function(tmr:FlxTimer)
+		{
+			dad.nonanimated = false;
+		});
+	
+		new FlxTimer().start(3.5, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { x:-5000, y:DAD_Y +350 }, 6, { type: FlxTween.ONESHOT });
+		});
+				
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		{
+			if (cpuControlled)
+			{
+				BFdodgeCup();
+			}
+
+			if (dodging && !miss && !cpuControlled)
+			{
+				canDodge = false;
+			}
+			else if (!dodging && !cpuControlled)
+			{
+				health = 0;
+				canDodge = false;
+			}
+			
+			if (cpuControlled) //don't worry i got yall botplay users! -Junior
+			{
+				canDodge = false;
+			}
+		});
+
+		new FlxTimer().start(3.35, function(tmr:FlxTimer)
+		{
+			if (cpuControlled)
+			{
+				BFdodgeCup();
+			}
+
+			if (dodging && !miss && !cpuControlled)
+			{
+				canDodge = false;
+			}
+			else if (!dodging && !cpuControlled)
+			{
+				health = 0;
+				canDodge = false;
+			}
+				
 			if (cpuControlled) //don't worry i got yall botplay users! -Junior
 			{
 				canDodge = false;
