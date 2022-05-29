@@ -65,6 +65,7 @@ import DialogueBoxPsych;
 #if sys
 import sys.FileSystem;
 #end
+import vlc.VideoHandler;
 
 import GameJolt.GameJoltAPI;
 import GameJolt;
@@ -5007,7 +5008,7 @@ class PlayState extends MusicBeatState
 		MugmanBullshit.scrollFactor.set(0.9, 0.9);
 		add(MugmanBullshit);
 
-		new FlxTimer().start(0.3, function(tmr:FlxTimer)
+		new FlxTimer().start(0.4, function(tmr:FlxTimer)
 		{
 			MugmanBullshit.animation.play('bodied');
 
@@ -5023,7 +5024,7 @@ class PlayState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('knockout', 'cup'));
 		});
 
-		new FlxTimer().start(0.4, function(tmr:FlxTimer)
+		new FlxTimer().start(0.6, function(tmr:FlxTimer)
 		{
 			remove(AnKnockout);
 		});
@@ -5031,7 +5032,7 @@ class PlayState extends MusicBeatState
 
 	function CupDodgeMechanic2()
 	{	
-		CupBullshit2 = new FlxSprite(DAD_X, DAD_Y +350);
+		CupBullshit2 = new FlxSprite(DAD_X, DAD_Y +300);
 		CupBullshit2.frames = Paths.getSparrowAtlas('bull/Roundabout', 'cup');
 		CupBullshit2.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, true);
 		CupBullshit2.animation.play('Shoot');
@@ -5039,7 +5040,11 @@ class PlayState extends MusicBeatState
 		CupBullshit2.scrollFactor.set(0.9, 0.9);
 		CupBullshit2.scale.set(1.25, 1.25);
 		add(CupBullshit2);
-		FlxTween.tween(CupBullshit2, { x:2100, y:DAD_Y +350 }, 0.75);
+		FlxTween.tween(CupBullshit2, { x:2100 }, 0.75);
+
+		BullshitCupTween();
+
+		//i can't figure out how the fuck to make it go up and down
 			
 		dad.playAnim('boom', true);
 		dad.nonanimated = true;
@@ -5051,10 +5056,10 @@ class PlayState extends MusicBeatState
 	
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { x:-5000, y:DAD_Y +350 }, 5.75, { type: FlxTween.ONESHOT });
+			FlxTween.tween(CupBullshit2, { x:-5000 }, 5.75, { type: FlxTween.ONESHOT });
 		});
 				
-		new FlxTimer().start(0.35, function(tmr:FlxTimer)
+		new FlxTimer().start(0.375, function(tmr:FlxTimer)
 		{
 			if (cpuControlled)
 			{
@@ -5099,6 +5104,31 @@ class PlayState extends MusicBeatState
 				canDodge = false;
 			}
 		});
+	}
+
+	function BullshitCupTween()
+	{
+		FlxTween.tween(CupBullshit2, { y:DAD_Y +400 }, 0.75);
+
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.75);
+		});
+
+		new FlxTimer().start(1.5, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +400 }, 0.75);
+		});
+
+		new FlxTimer().start(2.25, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.75);
+		});
+
+		new FlxTimer().start(3.0, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +400 }, 0.75);
+		});	
 	}
 
 	function CupShootMechanic1()
@@ -5325,35 +5355,6 @@ class PlayState extends MusicBeatState
 		}
 
 		lastStepHit = curStep;
-
-		if (curSong == 'Knockout')
-		{
-			switch (curStep)
-		    {
-				/* //no need to hardcode anymore since i made them an event lol
-				case 142:
-					CupDodgeMechanic();
-				case 200:
-					CupShootMechanic1();
-				case 220:
-					CupShootMechanic2(5);
-				case 243:
-					CupShootMechanic2(14);
-				case 398:
-					CupDodgeMechanic();
-				case 501:
-					CupDodgeMechanic();
-				case 646:
-					CupDodgeMechanic();
-				case 771:
-					CupDodgeMechanic();
-				case 1171:
-					CupDodgeMechanic();
-				case 1597:
-					CupDodgeMechanic();
-				*/ //no need to hardcode anymore since i made them an event lol
-			}
-		}
 
 		if (curSong == 'imminent-demise')
 		{
