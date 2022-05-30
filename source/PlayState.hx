@@ -65,7 +65,6 @@ import DialogueBoxPsych;
 #if sys
 import sys.FileSystem;
 #end
-import vlc.VideoHandler;
 
 import GameJolt.GameJoltAPI;
 import GameJolt;
