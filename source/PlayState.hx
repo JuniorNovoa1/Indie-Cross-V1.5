@@ -297,6 +297,7 @@ class PlayState extends MusicBeatState
 	var CupShoot2:FlxSprite;
 	var CupShoot22:FlxSprite;
 	var CupShoot23:FlxSprite;
+	var ableTosaveMugman:Bool = false;
 	var The_Thing:FlxSprite; //loading screen
 	var Wallop:FlxSprite;
 	var cuprain:FlxSprite;
@@ -2552,6 +2553,21 @@ class PlayState extends MusicBeatState
 		}
 		*/
 
+		if (ableTosaveMugman)
+		{
+			if (health == 0)
+			{
+				var achieve:String = checkForAchievement(['died_for_mugman']);
+				startAchievement(achieve);
+				GameJoltAPI.getTrophy(162857);
+			}
+		}
+
+		if (health == 0.1 && SONG.song == 'Despair')
+		{
+			DespairDEATH();
+		}
+
 		if (CupShooting1)
 		{
 			health -= 0.00425;
@@ -4470,6 +4486,7 @@ class PlayState extends MusicBeatState
 						}
 					case 'Ink Note':
 						boyfriend.playAnim(animToPlay, true);
+						hitINKnote();
 					    InkOnScreen += 1;
 						FlxG.sound.play(Paths.sound('inked', 'bendy'));
 						InkCurrentlyOnScreen = true;
@@ -4479,6 +4496,7 @@ class PlayState extends MusicBeatState
 						FlxG.sound.play(Paths.sound('parry', 'cup'));
 						canAttack = true;
 					case 'Blue Bone Note':
+						hitBONEnote();
 						FlxG.sound.play(Paths.sound('ping', 'sans'));	
 				}
 				
@@ -4714,6 +4732,48 @@ class PlayState extends MusicBeatState
 			FlxTween.tween(halloweenWhite, {alpha: 0.5}, 0.075);
 			FlxTween.tween(halloweenWhite, {alpha: 0}, 0.25, {startDelay: 0.15});
 		}
+	}
+
+	function hitBONEnote():Void
+	{
+		Achievements.BonenoteHits++;
+		FlxG.save.data.BonenoteHits = Achievements.BonenoteHits;
+		var achieve:String = checkForAchievement(['hit_bone_notes']);
+		if (achieve != null) {
+			startAchievement(achieve);
+		} else {
+			FlxG.save.flush();
+		}
+		trace('Bone note hits: ' + Achievements.BonenoteHits);
+		FlxG.log.add('Bone note hits: ' + Achievements.BonenoteHits);
+	}
+
+	function hitINKnote():Void
+	{
+		Achievements.InknoteHits++;
+		FlxG.save.data.InknoteHits = Achievements.InknoteHits;
+		var achieve:String = checkForAchievement(['hit_ink_notes']);
+		if (achieve != null) {
+			startAchievement(achieve);
+		} else {
+			FlxG.save.flush();
+		}
+		trace('Ink note hits: ' + Achievements.InknoteHits);
+		FlxG.log.add('Ink note hits: ' + Achievements.InknoteHits);
+	}
+
+	function DespairDEATH():Void
+	{
+		Achievements.despairDEAD++;
+		FlxG.save.data.despairDEAD = Achievements.despairDEAD;
+		var achieve:String = checkForAchievement(['dead_bozo']);
+		if (achieve != null) {
+			startAchievement(achieve);
+		} else {
+			FlxG.save.flush();
+		}
+		trace('Despair deaths: ' + Achievements.despairDEAD);
+		FlxG.log.add('despair deaths: ' + Achievements.despairDEAD);
 	}
 
 	function killHenchmen():Void
@@ -4964,29 +5024,25 @@ class PlayState extends MusicBeatState
 			BFdodgeCup();
 		}
 
-		if (timer == 0.0)
-		{
-			timer = 0.35;
-			CupheadDodgeTime = 0.35;
-		}
-		//CupheadDodgeTime = timer;
-        //there was no need for this lmao
-
 		if (mugman == "true")
 		{
             MugmanShit();
 		}
 			
-		new FlxTimer().start(timer, function(tmr:FlxTimer)
+		new FlxTimer().start(0.35, function(tmr:FlxTimer)
 		{				
-			if (dodging && !miss && !cpuControlled)
+			if (dodging && !cpuControlled)
 			{
-				canDodge = false;
+				//dodging = false;
+				trace('dodged');
 			}
-			else if (!dodging && !cpuControlled)
+
+			if (!dodging && !cpuControlled)
 			{
-				health = 0;
-				canDodge = false;
+				//dodging = false;
+				trace('missed dodge');
+				health -= 0.625;
+				boyfriend.playAnim('hurt');
 			}
 	
 			if (cpuControlled) //don't worry i got yall botplay users! -Junior
@@ -4998,7 +5054,9 @@ class PlayState extends MusicBeatState
 
 	function MugmanShit()
 	{
-		MugmanBullshit = new FlxSprite(BF_X +50, DAD_Y +275);
+		ableTosaveMugman = true;
+
+		MugmanBullshit = new FlxSprite(BF_X +15, DAD_Y +275);
 		MugmanBullshit.frames = Paths.getSparrowAtlas('characters/Mugman Fucking dies', 'shared');
 		MugmanBullshit.animation.addByPrefix('walk', "Mugman instance 1", 24, false);
 		MugmanBullshit.animation.addByPrefix('bodied', "MUGMANDEAD YES instance 1", 24, false);
@@ -5007,7 +5065,7 @@ class PlayState extends MusicBeatState
 		MugmanBullshit.scrollFactor.set(0.9, 0.9);
 		add(MugmanBullshit);
 
-		new FlxTimer().start(0.4, function(tmr:FlxTimer)
+		new FlxTimer().start(0.425, function(tmr:FlxTimer)
 		{
 			MugmanBullshit.animation.play('bodied');
 
@@ -5023,7 +5081,7 @@ class PlayState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('knockout', 'cup'));
 		});
 
-		new FlxTimer().start(0.6, function(tmr:FlxTimer)
+		new FlxTimer().start(1.35, function(tmr:FlxTimer)
 		{
 			remove(AnKnockout);
 		});
@@ -5107,26 +5165,41 @@ class PlayState extends MusicBeatState
 
 	function BullshitCupTween()
 	{
-		FlxTween.tween(CupBullshit2, { y:DAD_Y +400 }, 0.75);
+		FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.35);
 
-		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		new FlxTimer().start(0.35, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.75);
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.35);
+		});
+
+		new FlxTimer().start(0.70, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.35);
+		});
+
+		new FlxTimer().start(1.15, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.35);
 		});
 
 		new FlxTimer().start(1.5, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +400 }, 0.75);
-		});
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.35);
+		});	
 
-		new FlxTimer().start(2.25, function(tmr:FlxTimer)
+		new FlxTimer().start(1.85, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.75);
-		});
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.35);
+		});	
 
-		new FlxTimer().start(3.0, function(tmr:FlxTimer)
+		new FlxTimer().start(2.2, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +400 }, 0.75);
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.35);
+		});	
+
+		new FlxTimer().start(2.55, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.35);
 		});	
 	}
 
@@ -5669,6 +5742,10 @@ class PlayState extends MusicBeatState
 									}
 							}
 						}
+					case 'died_for_papyrus':
+						if(health == 0 && SONG.song == 'Bonedoggle' || SONG.song == 'Bad-To-The-Bone') {
+							unlock = true;
+						}
 					case 'ur_bad':
 						if(ratingPercent < 0.2 && !practiceMode) {
 							unlock = true;
@@ -5677,8 +5754,19 @@ class PlayState extends MusicBeatState
 						if(ratingPercent >= 1 && !usedPractice) {
 							unlock = true;
 						}
-					case 'roadkill_enthusiast':
-						if(Achievements.henchmenDeath >= 100) {
+					case 'hit_bone_notes':
+						if(Achievements.BonenoteHits >= 50) {
+							GameJoltAPI.getTrophy(162851);
+							unlock = true;
+						}
+					case 'hit_ink_notes':
+						if(Achievements.InknoteHits >= 50) {
+							GameJoltAPI.getTrophy(162852);
+							unlock = true;
+						}
+					case 'dead_bozo':
+					    if(Achievements.despairDEAD >= 50) {
+							GameJoltAPI.getTrophy(162853);
 							unlock = true;
 						}
 					case 'oversinging':

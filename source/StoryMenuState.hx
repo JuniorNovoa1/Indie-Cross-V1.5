@@ -476,6 +476,7 @@ class StoryMenuState extends MusicBeatState
 				{
 					The_Thing.visible = true;
 					The_Thing.animation.play('load');
+					FlxTween.tween(The_Thing, { x: 0, y: 0 }, { type: FlxTween.BACKWARD }); //this shit doesn't even work
 					FlxG.sound.play(Paths.sound('boing', 'cup'));
 				}
 

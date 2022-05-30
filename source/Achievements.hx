@@ -12,6 +12,11 @@ using StringTools;
 class Achievements {
 	public static var achievementsStuff:Array<Dynamic> = [ //Name, Description, Achievement save tag, Hidden achievement
 		["Freaky on a Friday Night",	"Play on a Friday... Night.",						'friday_night_play',	 true],
+		["Unworthy",	                "Hit 50 blue bone notes",						    'hit_bone_notes',	    false],
+		["Unworthy II",	                "Hit 50 ink notes",						            'hit_ink_notes',	    false],
+		["Unworthy III",	            "Die on despair 50 times",						    'dead_bozo',	        false],
+		["Captured!",	                "Lose to Papyrus on purpose",						'died_for_papyrus',	    false],
+		["Take One For The Team",	    "Die protecting mugman",						    'died_for_mugman',	    false],
 		["The Legendary Chalice",		"FC the entire Cuphead week on Hard.",				'cup_nomiss',			false],
 		["Determination",				"FC the entire Sans week on Hard.",				    'sans_nomiss',			false],
 		["Bring Home the Bacon",		"FC the entire Ink Demon week on Hard.",			'bendy_nomiss',			false],
@@ -27,6 +32,9 @@ class Achievements {
 	public static var achievementsMap:Map<String, Bool> = new Map<String, Bool>();
 
 	public static var henchmenDeath:Int = 0;
+	public static var BonenoteHits:Int = 0;
+    public static var InknoteHits:Int = 0;
+	public static var despairDEAD:Int = 0;
 	public static function unlockAchievement(name:String):Void {
 		FlxG.log.add('Completed achievement "' + name +'"');
 		achievementsMap.set(name, true);
@@ -61,8 +69,25 @@ class Achievements {
 					achievementsMap.set(savedStuff[i], true);
 				}
 			}
-			if(henchmenDeath == 0 && FlxG.save.data.henchmenDeath != null) {
+			
+			if(henchmenDeath == 0 && FlxG.save.data.henchmenDeath != null) 
+			{
 				henchmenDeath = FlxG.save.data.henchmenDeath;
+			}
+
+			if(BonenoteHits == 0 && FlxG.save.data.BonenoteHits != null)
+			{
+				BonenoteHits = FlxG.save.data.BonenoteHits;
+			}
+
+			if(InknoteHits == 0 && FlxG.save.data.InknoteHits != null)
+			{
+				InknoteHits = FlxG.save.data.InknoteHits;
+			}
+
+			if(despairDEAD == 0 && FlxG.save.data.despairDEAD != null)
+			{
+				despairDEAD = FlxG.save.data.despairDEAD;
 			}
 		}
 
@@ -99,11 +124,9 @@ class AttachedAchievement extends FlxSprite {
 
 	public function reloadAchievementImage() {
 		if(Achievements.isAchievementUnlocked(tag)) {
-			loadGraphic(Paths.image('achievementgrid'), true, 150, 150);
-			animation.add('icon', [Achievements.getAchievementIndex(tag)], 0, false, false);
-			animation.play('icon');
+			loadGraphic(Paths.image('achievements/' + tag));
 		} else {
-			loadGraphic(Paths.image('lockedachievement'));
+			loadGraphic(Paths.image('achievements/lockedachievement'));
 		}
 		scale.set(0.7, 0.7);
 		updateHitbox();
@@ -129,9 +152,7 @@ class AchievementObject extends FlxSpriteGroup {
 		var achievementBG:FlxSprite = new FlxSprite(60, 50).makeGraphic(420, 120, FlxColor.BLACK);
 		achievementBG.scrollFactor.set();
 
-		var achievementIcon:FlxSprite = new FlxSprite(achievementBG.x + 10, achievementBG.y + 10).loadGraphic(Paths.image('achievementgrid'), true, 150, 150);
-		achievementIcon.animation.add('icon', [id], 0, false, false);
-		achievementIcon.animation.play('icon');
+		var achievementIcon:FlxSprite = new FlxSprite(achievementBG.x + 10, achievementBG.y + 10).loadGraphic(Paths.image('achievements/' + name));
 		achievementIcon.scrollFactor.set();
 		achievementIcon.setGraphicSize(Std.int(achievementIcon.width * (2 / 3)));
 		achievementIcon.updateHitbox();
