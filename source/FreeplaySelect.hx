@@ -91,12 +91,12 @@ class FreeplaySelect extends MusicBeatState
 	{
 		NightmareUnlocked = FlxG.save.data.NightmareUnlocked;
 
-		if (FlxG.save.data.CupBeaten && FlxG.save.data.SansBeaten2 && FlxG.save.data.BendyBeaten)
+		if (FlxG.save.data.CupBeaten || FlxG.save.data.SansBeaten2 || FlxG.save.data.BendyBeaten)
 		{
 			FlxG.save.data.NightmareUnlocked = true;
 		}
 
-		if (NightmareUnlocked || Debug)
+		if (NightmareUnlocked || Debug )
 		{
 			nightmare.visible = true;
 		}
@@ -202,7 +202,7 @@ class FreeplaySelect extends MusicBeatState
             MusicBeatState.switchState(new FreeplayBonus());
 			NoSpam = false;
 		}
-		else if (SelectionWeek == 2 && NightmareUnlocked || Debug)
+		else if (SelectionWeek == 2 && NightmareUnlocked || Debug || FlxG.save.data.CupBeaten || FlxG.save.data.SansBeaten || FlxG.save.data.SansBeaten2 || FlxG.save.data.BendyBeaten)
 		{
 			FlxG.sound.play(Paths.sound('confirmMenu'));
 			MusicBeatState.switchState(new FreeplayNightmare());

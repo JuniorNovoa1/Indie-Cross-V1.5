@@ -62,8 +62,13 @@ import Achievements;
 import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
+import openfl.events.IOErrorEvent;
+import openfl.events.Event;
+import openfl.net.FileReference;
+import openfl.utils.Dictionary;
 #if sys
 import sys.FileSystem;
+import sys.io.File;
 #end
 
 import GameJolt.GameJoltAPI;
@@ -294,10 +299,8 @@ class PlayState extends MusicBeatState
 	var CupBullshit2:FlxSprite;
 	var MugmanBullshit:FlxSprite;
 	var AnKnockout:FlxSprite;
-	var CupShoot2:FlxSprite;
-	var CupShoot22:FlxSprite;
-	var CupShoot23:FlxSprite;
-	var ableTosaveMugman:Bool = false;
+	var CupShootGREEN:FlxSprite;
+	public static var ableTosaveMugman:Bool = false;
 	var The_Thing:FlxSprite; //loading screen
 	var Wallop:FlxSprite;
 	var cuprain:FlxSprite;
@@ -488,29 +491,6 @@ class PlayState extends MusicBeatState
 				CupCard.updateHitbox();
 				add(CupCard);
 				CupCard.cameras = [camHUD2];
-
-				//so no lag!!!!
-				CupFX = new FlxSprite(-600, 175);
-				CupFX.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
-				CupFX.animation.addByPrefix('FX', "BurstFX instance 1", 24, false);
-				CupFX.animation.play('FX');
-				CupFX.antialiasing = ClientPrefs.globalAntialiasing;
-				CupFX.scrollFactor.set(0.9, 0.9);
-				CupFX.cameras = [camHUD];
-				add(CupFX);
-				FlxTween.tween(CupFX, { x:5000, y:175 }, 3.5, { type: FlxTween.ONESHOT });
-				CupFX.visible = false;
-		
-				CupBullshit = new FlxSprite(-600, 175);
-				CupBullshit.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
-				CupBullshit.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, false);
-				CupBullshit.animation.play('Shoot');
-				CupBullshit.antialiasing = ClientPrefs.globalAntialiasing;
-				CupBullshit.scrollFactor.set(0.9, 0.9);
-				CupBullshit.cameras = [camHUD];
-				add(CupBullshit);
-				FlxTween.tween(CupBullshit, { x:5000, y:175 }, 3.5, { type: FlxTween.ONESHOT });
-				CupBullshit.visible = false;
 			}
 
 			attackbutton = new FlxSprite(25, 250);
@@ -755,8 +735,8 @@ class PlayState extends MusicBeatState
 				if (!ClientPrefs.lowQuality)
 				{
 					cupshid = new FlxSprite(0, 0);
-					cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
-					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 24, true);
+					cupshid.frames = Paths.getSparrowAtlas('CUpheqdshid', 'cup');
+					cupshid.animation.addByPrefix('cupGrain', 'Cupheadshit_gif instance 1', 24, true);
 					cupshid.animation.play('cupGrain');
 					cupshid.antialiasing = ClientPrefs.globalAntialiasing;
 					cupshid.screenCenter();
@@ -809,8 +789,8 @@ class PlayState extends MusicBeatState
 					thirdpersonrain.cameras = [camHUD2];
 					
 					cupshid = new FlxSprite(0, 0);
-					cupshid.frames = Paths.getSparrowAtlas('Grainshit', 'cup');
-					cupshid.animation.addByPrefix('cupGrain', 'Geain instance 1', 24, true);
+					cupshid.frames = Paths.getSparrowAtlas('CUpheqdshid', 'cup');
+					cupshid.animation.addByPrefix('cupGrain', 'Cupheadshit_gif instance 1', 24, true);
 					cupshid.animation.play('cupGrain');
 					cupshid.antialiasing = ClientPrefs.globalAntialiasing;
 					cupshid.screenCenter();
@@ -2553,16 +2533,6 @@ class PlayState extends MusicBeatState
 		}
 		*/
 
-		if (ableTosaveMugman)
-		{
-			if (health == 0)
-			{
-				var achieve:String = checkForAchievement(['died_for_mugman']);
-				startAchievement(achieve);
-				GameJoltAPI.getTrophy(162857);
-			}
-		}
-
 		if (health == 0.1 && SONG.song == 'Despair')
 		{
 			DespairDEATH();
@@ -2596,18 +2566,16 @@ class PlayState extends MusicBeatState
 
 		if (CupShooting2)
 		{
-			health -= 0.002;
-			
+			health -= 0.0015;
+			CupShooting2 = false;
+			/*
 			new FlxTimer().start(GreenShootTMR, function(tmr:FlxTimer)
 			{
-				CupShoot2.visible = false;
-				CupShoot22.visible = false;
-				CupShoot23.visible = false;
-				remove(CupShoot2);
-				remove(CupShoot22);
-				remove(CupShoot23);
+				CupShootGREEN.visible = false;
+				remove(CupShootGREEN);
 				CupShooting2 = false;
 			});
+			*/
 		}
 
 		if (cupheadsong && canAttack)
@@ -3174,6 +3142,11 @@ class PlayState extends MusicBeatState
 		{
 			var ret:Dynamic = callOnLuas('onGameOver', []);
 			if(ret != FunkinLua.Function_Stop) {
+				if (ableTosaveMugman)
+				{
+					startAchievement('died_for_mugman', 162857);
+				}
+
 				boyfriend.stunned = true;
 				deathCounter++;
 
@@ -3596,7 +3569,7 @@ class PlayState extends MusicBeatState
 			case 'Cuphead Shoot':
 				CupShootMechanic1();
 			case 'Cuphead Shoot 2':
-				CupShootMechanic2(Std.parseFloat(value1), Std.parseFloat(value2));
+				CupShootMechanic2();
 		}
 		callOnLuas('onEvent', [eventName, value1, value2]);
 	}
@@ -3738,11 +3711,11 @@ class PlayState extends MusicBeatState
 		if(achievementObj != null) {
 			return;
 		} else {
-			var achieve:String = checkForAchievement(['cup_nomiss', 'sans_nomiss', 'bendy_nomiss', 'ur_bad',
+			var achieve:String = checkForAchievement(['cup_nomiss', 'sans_nomiss', 'bendy_nomiss', 'hit_bone_notes', 'hit_ink_notes', 'dead_bozo',  'died_for_papyrus',  'died_for_mugman', 'ur_bad',
 				'ur_good', 'hype', 'two_keys', 'toastie', 'debugger']);
 
 			if(achieve != null) {
-				startAchievement(achieve);
+				startAchievement(achieve, 0);
 				return;
 			}
 		}
@@ -3762,6 +3735,23 @@ class PlayState extends MusicBeatState
 				if(Math.isNaN(percent)) percent = 0;
 				Highscore.saveScore(SONG.song, songScore, storyDifficulty, percent);
 				#end
+
+				#if desktop
+				var time = Date.now().getTime();
+				var cheated:String = "you aren't supposed to see this";
+
+				if (cpuControlled || practiceMode || chartingMode)
+				{
+					cheated = "true";
+				}
+				else
+				{
+					cheated = "false";
+				}
+
+				File.saveContent("assets/score/" + SONG.song + " at " + time + ".txt", " Song Score: " + songScore + "\n Percentage: " + Highscore.floorDecimal(ratingPercent * 100, 2) + "%" + "\n Note Hits: " + songHits + "\n Note Misses: " + songMisses + "\n Cheated: " + cheated);
+				trace("saved score: assets/score/" + SONG.song + " at " + time + ".txt", " Song Score: " + songScore + "\n Percentage: " + Highscore.floorDecimal(ratingPercent * 100, 2) + "%" + "\n Note Hits: " + songHits + "\n Note Misses: " + songMisses + "\n Cheated: " + cheated);
+				#end
 			}
 
 			if (chartingMode)
@@ -3777,31 +3767,46 @@ class PlayState extends MusicBeatState
 
 				if (SONG.song == 'Knockout')
 				{
-					FlxG.save.data.CupBeaten = true;
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/4.webm", new StoryMenuState()));
+					if (CoolUtil.difficultyString() == 'HARD')
+					{
+						FlxG.save.data.CupBeaten = true;
+						NightmareAwakened.CupNightmare = true;
+					}
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/4.webm", new NightmareAwakened()));
 				}
 				else if (SONG.song == 'final-stretch' && CoolUtil.difficultyString() == 'HARD')
 				{
-					FlxG.save.data.SansBeaten = true;
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/4.webm", new StoryMenuState()));
+					if (CoolUtil.difficultyString() == 'HARD')
+					{
+						FlxG.save.data.SansBeaten = true;
+					}
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/4.webm", new NightmareAwakened()));
 				}
 				else if (SONG.song == 'burning-in-hell' && CoolUtil.difficultyString() == 'HARD')
 				{
-					FlxG.save.data.SansBeaten2 = true;
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/4b.webm", new StoryMenuState()));
+					if (CoolUtil.difficultyString() == 'HARD')
+					{
+						FlxG.save.data.SansBeaten2 = true;
+						NightmareAwakened.SansNightmare = true;
+					}
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/4b.webm", new NightmareAwakened()));
 				}
 				else if (SONG.song == 'nightmare-run' && CoolUtil.difficultyString() == 'HARD')
 				{
-					FlxG.save.data.BendyBeaten = true;
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/5.webm", new StoryMenuState()));
+					if (CoolUtil.difficultyString() == 'HARD')
+					{
+						FlxG.save.data.BendyBeaten = true;
+						NightmareAwakened.BendyNightmare = true;
+					}
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/5.webm", new NightmareAwakened()));
 				}
 				else if (SONG.song == 'last-reel' && CoolUtil.difficultyString() == 'EASY' || CoolUtil.difficultyString() == 'NORMAL')
 				{
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/4ez.webm", new StoryMenuState()));
+					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/4ez.webm", new NightmareAwakened()));
 				}
 				else
 				{
-					MusicBeatState.switchState(new StoryMenuState());
+					MusicBeatState.switchState(new NightmareAwakened());
 				}
 
 				storyPlaylist.remove(storyPlaylist[0]);
@@ -3885,7 +3890,9 @@ class PlayState extends MusicBeatState
 
 	#if ACHIEVEMENTS_ALLOWED
 	var achievementObj:AchievementObject = null;
-	function startAchievement(achieve:String) {
+	function startAchievement(achieve:String, thropy:Int)
+	{
+		GameJoltAPI.getTrophy(thropy);
 		achievementObj = new AchievementObject(achieve, camOther);
 		achievementObj.onFinish = achievementEnd;
 		add(achievementObj);
@@ -4289,7 +4296,7 @@ class PlayState extends MusicBeatState
 				#if ACHIEVEMENTS_ALLOWED
 				var achieve:String = checkForAchievement(['oversinging']);
 				if (achieve != null) {
-					startAchievement(achieve);
+					startAchievement(achieve, 0);
 				}
 				#end
 			}
@@ -4740,7 +4747,7 @@ class PlayState extends MusicBeatState
 		FlxG.save.data.BonenoteHits = Achievements.BonenoteHits;
 		var achieve:String = checkForAchievement(['hit_bone_notes']);
 		if (achieve != null) {
-			startAchievement(achieve);
+			startAchievement(achieve, 0);
 		} else {
 			FlxG.save.flush();
 		}
@@ -4754,7 +4761,7 @@ class PlayState extends MusicBeatState
 		FlxG.save.data.InknoteHits = Achievements.InknoteHits;
 		var achieve:String = checkForAchievement(['hit_ink_notes']);
 		if (achieve != null) {
-			startAchievement(achieve);
+			startAchievement(achieve, 0);
 		} else {
 			FlxG.save.flush();
 		}
@@ -4768,7 +4775,7 @@ class PlayState extends MusicBeatState
 		FlxG.save.data.despairDEAD = Achievements.despairDEAD;
 		var achieve:String = checkForAchievement(['dead_bozo']);
 		if (achieve != null) {
-			startAchievement(achieve);
+			startAchievement(achieve, 0);
 		} else {
 			FlxG.save.flush();
 		}
@@ -4792,7 +4799,7 @@ class PlayState extends MusicBeatState
 				FlxG.save.data.henchmenDeath = Achievements.henchmenDeath;
 				var achieve:String = checkForAchievement(['roadkill_enthusiast']);
 				if (achieve != null) {
-					startAchievement(achieve);
+					startAchievement(achieve, 0);
 				} else {
 					FlxG.save.flush();
 				}
@@ -5065,8 +5072,9 @@ class PlayState extends MusicBeatState
 		MugmanBullshit.scrollFactor.set(0.9, 0.9);
 		add(MugmanBullshit);
 
-		new FlxTimer().start(0.425, function(tmr:FlxTimer)
+		new FlxTimer().start(0.55, function(tmr:FlxTimer)
 		{
+			ableTosaveMugman = false;
 			MugmanBullshit.animation.play('bodied');
 
 			AnKnockout = new FlxSprite(0, 0);
@@ -5081,7 +5089,7 @@ class PlayState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('knockout', 'cup'));
 		});
 
-		new FlxTimer().start(1.35, function(tmr:FlxTimer)
+		new FlxTimer().start(1.45, function(tmr:FlxTimer)
 		{
 			remove(AnKnockout);
 		});
@@ -5227,45 +5235,21 @@ class PlayState extends MusicBeatState
 		CupShooting1 = true;
 	}
 
-	function CupShootMechanic2(timer:Float, toUse:Float)
+	function CupShootMechanic2()
 	{
-		CupShoot2 = new FlxSprite(DAD_X, DAD_Y); //for offsets i recommend going by hundreds
-		CupShoot2.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
-		CupShoot2.animation.addByPrefix('ShootGreen', "GreenShit01 instance 1", 30, true);
-		CupShoot2.antialiasing = ClientPrefs.globalAntialiasing;
-		CupShoot2.scrollFactor.set(0.9, 0.9);
+		CupShootGREEN = new FlxSprite(DAD_X +200, DAD_Y +325); //for offsets i recommend going by hundreds
+		CupShootGREEN.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
+		CupShootGREEN.animation.addByPrefix('ShootGreen', "Greenshit0", 30, false);
+		CupShootGREEN.antialiasing = ClientPrefs.globalAntialiasing;
+		CupShootGREEN.scrollFactor.set(0.9, 0.9);
 
-		CupShoot22 = new FlxSprite(DAD_X, DAD_Y); //for offsets i recommend going by hundreds
-		CupShoot22.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
-		CupShoot22.animation.addByPrefix('ShootGreen', "GreenShit02 instance 1", 30, true);
-		CupShoot22.antialiasing = ClientPrefs.globalAntialiasing;
-		CupShoot22.scrollFactor.set(0.9, 0.9);
-
-		CupShoot23 = new FlxSprite(DAD_X, DAD_Y); //for offsets i recommend going by hundreds
-		CupShoot23.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
-		CupShoot23.animation.addByPrefix('ShootGreen', "Greenshit03 instance 1", 30, true);
-		CupShoot23.antialiasing = ClientPrefs.globalAntialiasing;
-		CupShoot23.scrollFactor.set(0.9, 0.9);
-
-		if (toUse == 0)
+		new FlxTimer().start(0.15, function(tmr:FlxTimer)
 		{
-			CupShoot2.animation.play('ShootGreen');
-			add(CupShoot2);
-		}
-		else if (toUse == 1)
-		{
-			CupShoot22.animation.play('ShootGreen');
-			add(CupShoot22);
-		}
-		else if (toUse == 2)
-		{
-			CupShoot23.animation.play('ShootGreen');
-			add(CupShoot23);
-		}
+			CupShootGREEN.animation.play('ShootGreen');
+			add(CupShootGREEN);
 
-		GreenShootTMR = timer;
-	
-		CupShooting2 = true;
+			CupShooting2 = true;
+		});
 	}
 
 	function SansDodgeMechanic()

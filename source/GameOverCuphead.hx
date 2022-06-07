@@ -19,6 +19,7 @@ import flixel.effects.FlxFlicker;
 import flixel.tweens.FlxTween;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxCamera;
+import Achievements;
 
 class GameOverCuphead extends MusicBeatSubstate
 {
