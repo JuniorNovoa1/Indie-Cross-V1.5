@@ -52,59 +52,59 @@
 			],
 			"anim": "idle",
 			"fps": 30,
-			"name": "BF idle dance instance 1",
+			"name": "BF annoyed instance 1",
 			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
-				25,
-				-3
+				23,
+				-9
 			],
 			"anim": "singLEFT",
 			"fps": 30,
-			"name": "BF NOTE LEFT instance 1",
+			"name": "BF NOTE LEFT copy instance 1",
 			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
-				-17,
-				-35
-			],
-			"anim": "singDOWN",
-			"fps": 30,
-			"name": "BF NOTE DOWN instance 1",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-57,
-				56
+				-55,
+				63
 			],
 			"anim": "singUP",
 			"fps": 30,
-			"name": "BF NOTE UP instance 1",
+			"name": "BF NOTE UP copy instance 1",
 			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
-				-35,
-				-9
+				-24,
+				-55
+			],
+			"anim": "singDOWN",
+			"fps": 30,
+			"name": "BF NOTE DOWN copy instance 1",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-39,
+				-7
 			],
 			"anim": "singRIGHT",
 			"fps": 30,
-			"name": "BF NOTE RIGHT instance 1",
+			"name": "BF NOTE RIGHT copy instance 1",
 			"indices": []
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/BoyFriend_BendyShade",
+	"image": "characters/BF_FINAL",
 	"position": [
 		0,
-		350
+		400
 	],
 	"healthicon": "bf",
 	"flip_x": true,
@@ -114,9 +114,9 @@
 		209
 	],
 	"camera_position": [
-		0,
-		0
+		300,
+		-250
 	],
 	"sing_duration": 4,
-	"scale": 1
+	"scale": 1.5
 }

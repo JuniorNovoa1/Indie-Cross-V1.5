@@ -312,6 +312,7 @@ class PlayState extends MusicBeatState
 	var musicbox:FlxSprite;
 	var light:FlxSprite;
 	var sammy:FlxSprite;
+	var runbg:FlxSprite;
 	var Ink:FlxSprite;
 	var InkTimer:Int = 3;
 	var InkOnScreen:Int = 0;
@@ -500,7 +501,7 @@ class PlayState extends MusicBeatState
 			attackbutton.animation.addByPrefix('canUse', "Attack instance 1", 24, false);
 			attackbutton.animation.play('canUse');
 			attackbutton.antialiasing = ClientPrefs.globalAntialiasing;
-			attackbutton.scale.set(0.65, 0.65);
+			attackbutton.scale.set(0.5, 0.5);
 			attackbutton.updateHitbox();
 			add(attackbutton);
 			attackbutton.cameras = [camHUD2];
@@ -516,7 +517,7 @@ class PlayState extends MusicBeatState
 			dodgebutton.animation.addByPrefix('canUse', "Dodge instance 1", 24, false);
 			dodgebutton.animation.play('canUse');
 			dodgebutton.antialiasing = ClientPrefs.globalAntialiasing;
-			dodgebutton.scale.set(0.65, 0.65);
+			dodgebutton.scale.set(0.5, 0.5);
 			dodgebutton.updateHitbox();
 			add(dodgebutton);
 			dodgebutton.cameras = [camHUD2];
@@ -702,12 +703,13 @@ class PlayState extends MusicBeatState
 					add(bg);
 				}
 			case 'bendy-run':
-				var runbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('run/Fuck_the_hallway', 'bendy'));
+				runbg = new FlxSprite(DAD_X -14000, 0);
+				runbg.frames = Paths.getSparrowAtlas('run/Fuck_the_hallway', 'bendy');
 				runbg.scale.set(2.5, 2.5);
-				runbg.animation.addByPrefix('idle', "Loop01 instance 1", 254);
+				runbg.animation.addByPrefix('idle', "Loop01 instance 1", 60);
 				runbg.animation.play('idle');
 				runbg.antialiasing = ClientPrefs.globalAntialiasing;
-				runbg.screenCenter();
+				runbg.screenCenter(Y);
 				runbg.updateHitbox();
 				add(runbg);
 			case 'cuphead-p1':
@@ -3749,8 +3751,8 @@ class PlayState extends MusicBeatState
 					cheated = "false";
 				}
 
-				File.saveContent("assets/score/" + SONG.song + " at " + time + ".txt", " Song Score: " + songScore + "\n Percentage: " + Highscore.floorDecimal(ratingPercent * 100, 2) + "%" + "\n Note Hits: " + songHits + "\n Note Misses: " + songMisses + "\n Cheated: " + cheated);
-				trace("saved score: assets/score/" + SONG.song + " at " + time + ".txt", " Song Score: " + songScore + "\n Percentage: " + Highscore.floorDecimal(ratingPercent * 100, 2) + "%" + "\n Note Hits: " + songHits + "\n Note Misses: " + songMisses + "\n Cheated: " + cheated);
+				File.saveContent("assets/score/" + SONG.song + " at " + time + ".txt", " Song: " + SONG.song + "\n Song Score: " + songScore + "\n Percentage: " + Highscore.floorDecimal(ratingPercent * 100, 2) + "%" + "\n Note Hits: " + songHits + "\n Note Misses: " + songMisses + "\n Cheated: " + cheated);
+				trace("saved score: assets/score/" + SONG.song + " at " + time + ".txt", " Song: " + SONG.song + "\n Song Score: " + songScore + "\n Percentage: " + Highscore.floorDecimal(ratingPercent * 100, 2) + "%" + "\n Note Hits: " + songHits + "\n Note Misses: " + songMisses + "\n Cheated: " + cheated);
 				#end
 			}
 
@@ -5020,7 +5022,7 @@ class PlayState extends MusicBeatState
 		dad.playAnim('boom', true);
 		dad.nonanimated = true;
 
-		new FlxTimer().start(0.25, function(tmr:FlxTimer)
+		new FlxTimer().start(0.35, function(tmr:FlxTimer)
 		{
 			FlxG.sound.play(Paths.sound('shoot', 'cup'));
 			dad.nonanimated = false;
@@ -5036,7 +5038,7 @@ class PlayState extends MusicBeatState
             MugmanShit();
 		}
 			
-		new FlxTimer().start(0.35, function(tmr:FlxTimer)
+		new FlxTimer().start(0.85, function(tmr:FlxTimer)
 		{				
 			if (dodging && !cpuControlled)
 			{
@@ -5147,7 +5149,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 
-		new FlxTimer().start(1.2, function(tmr:FlxTimer)
+		new FlxTimer().start(1.325, function(tmr:FlxTimer)
 		{
 			if (cpuControlled)
 			{
@@ -5173,41 +5175,116 @@ class PlayState extends MusicBeatState
 
 	function BullshitCupTween()
 	{
-		FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.35);
+		FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
 
-		new FlxTimer().start(0.35, function(tmr:FlxTimer)
+		new FlxTimer().start(0.25, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.35);
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
 		});
 
-		new FlxTimer().start(0.70, function(tmr:FlxTimer)
+		new FlxTimer().start(0.50, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.35);
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
 		});
 
-		new FlxTimer().start(1.15, function(tmr:FlxTimer)
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.35);
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
 		});
 
-		new FlxTimer().start(1.5, function(tmr:FlxTimer)
+		new FlxTimer().start(1.0, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.35);
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
 		});	
 
-		new FlxTimer().start(1.85, function(tmr:FlxTimer)
+		new FlxTimer().start(1.25, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.35);
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
 		});	
 
-		new FlxTimer().start(2.2, function(tmr:FlxTimer)
+		new FlxTimer().start(1.50, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.35);
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
 		});	
 
-		new FlxTimer().start(2.55, function(tmr:FlxTimer)
+		new FlxTimer().start(1.75, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.35);
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
+		});	
+
+		new FlxTimer().start(1.50, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
+		});	
+
+		new FlxTimer().start(1.75, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
+		});	
+
+		new FlxTimer().start(2.0, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
+		});	
+		
+		new FlxTimer().start(2.25, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
+		});	
+
+		new FlxTimer().start(2.50, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
+		});	
+	
+		new FlxTimer().start(2.75, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
+		});	
+
+		new FlxTimer().start(3.0, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
+		});	
+	
+		new FlxTimer().start(3.25, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
+		});	
+
+		new FlxTimer().start(3.50, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
+		});	
+	
+		new FlxTimer().start(3.75, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
+		});	
+
+		new FlxTimer().start(4.0, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
+		});	
+
+		new FlxTimer().start(4.25, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
+		});	
+	
+		new FlxTimer().start(4.50, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
+		});	
+		
+		new FlxTimer().start(4.75, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +300 }, 0.25);
+		});	
+	
+		new FlxTimer().start(5.0, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(CupBullshit2, { y:DAD_Y +375 }, 0.25);
 		});	
 	}
 
@@ -5243,7 +5320,7 @@ class PlayState extends MusicBeatState
 		CupShootGREEN.antialiasing = ClientPrefs.globalAntialiasing;
 		CupShootGREEN.scrollFactor.set(0.9, 0.9);
 
-		new FlxTimer().start(0.15, function(tmr:FlxTimer)
+		new FlxTimer().start(0.75, function(tmr:FlxTimer)
 		{
 			CupShootGREEN.animation.play('ShootGreen');
 			add(CupShootGREEN);

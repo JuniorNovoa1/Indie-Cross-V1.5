@@ -1,76 +1,76 @@
 {
 	"animations": [
 		{
-			"loop": false,
-			"offsets": [
-				120,
-				3
-			],
-			"anim": "Scream",
-			"fps": 24,
-			"name": "Scream instance 1",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				239,
-				200
-			],
-			"anim": "singUP",
-			"fps": 24,
-			"name": "Up instance 1",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				464,
-				10
-			],
-			"anim": "singLEFT",
-			"fps": 24,
-			"name": "Left instance 1",
-			"indices": []
-		},
-		{
-			"loop": false,
 			"offsets": [
 				130,
-				-80
+				3
 			],
+			"loop": false,
+			"fps": 60,
+			"anim": "Scream",
+			"indices": [],
+			"name": "Scream instance 1"
+		},
+		{
+			"offsets": [
+				534,
+				10
+			],
+			"loop": false,
+			"fps": 60,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "Left instance 1"
+		},
+		{
+			"offsets": [
+				130,
+				-100
+			],
+			"loop": false,
+			"fps": 60,
 			"anim": "singDOWN",
-			"fps": 24,
-			"name": "bendydown instance 1",
-			"indices": []
+			"indices": [],
+			"name": "bendydown instance 1"
 		},
 		{
 			"loop": false,
-			"offsets": [
-				116,
-				-38
-			],
-			"anim": "singRIGHT",
-			"fps": 24,
-			"name": "B-Right instance 1",
-			"indices": []
-		},
-		{
 			"offsets": [
 				0,
 				0
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "idle",
+			"fps": 60,
+			"name": "Bendy Idle instance 1",
+			"indices": []
+		},
+		{
+			"offsets": [
+				309,
+				250
+			],
+			"loop": false,
+			"fps": 60,
+			"anim": "singUP",
 			"indices": [],
-			"name": "Bendy Idle instance 1"
+			"name": "Up instance 1"
+		},
+		{
+			"offsets": [
+				116,
+				-58
+			],
+			"loop": false,
+			"fps": 60,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "B-Right instance 1"
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/Bendy_remastered",
 	"position": [
-		0,
+		-200,
 		220
 	],
 	"healthicon": "bendyP1",
@@ -81,9 +81,9 @@
 		0
 	],
 	"camera_position": [
-		-500,
-		-650
+		-200,
+		-550
 	],
 	"sing_duration": 4,
-	"scale": 2.6
+	"scale": 2.5
 }
