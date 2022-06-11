@@ -111,12 +111,12 @@ class FreeplayBonus extends MusicBeatState
 
 		if (!FlxG.save.data.CupBeaten && !FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2 && !FlxG.save.data.BendyBeaten && !Debug)
 		{
-		    addSong('tutorial', 1, 'gf', FlxColor.fromRGB(146, 113, 253)); //to prevent crash lol
+		    addSong('tutorial', -1, 'gf', FlxColor.fromRGB(146, 113, 253)); //to prevent crash lol
 		}
 
 		if (FlxG.save.data.CupBeaten || Debug)
 		{
-			addSong('satanic-funkin', 1, 'devil', FlxColor.fromRGB(146, 113, 253));
+			addSong('satanic-funkin', 0, 'devil', FlxColor.fromRGB(146, 113, 253));
 		}
 
 		if (FlxG.save.data.SansBeaten || Debug)
@@ -131,8 +131,8 @@ class FreeplayBonus extends MusicBeatState
 
 		if (FlxG.save.data.BendyBeaten || Debug)
 		{
-			addSong('ritual', 1, 'sammy', FlxColor.fromRGB(146, 113, 253));
-			addSong('freaky-machine', 1, 'dad', FlxColor.fromRGB(146, 113, 253));
+			addSong('ritual', 2, 'sammy', FlxColor.fromRGB(146, 113, 253));
+			addSong('freaky-machine', 2, 'dad', FlxColor.fromRGB(146, 113, 253));
 		}
 
 		bg = new FlxSprite().loadGraphic(Paths.image('BG'));
@@ -227,7 +227,7 @@ class FreeplayBonus extends MusicBeatState
 		add(textBG);
 
 		#if PRELOAD_ALL
-		var leText:String = "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
+		var leText:String = "Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
 		var size:Int = 16;
 		#else
 		var leText:String = "Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
@@ -236,7 +236,7 @@ class FreeplayBonus extends MusicBeatState
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, leText, size);
 		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
-		add(text);
+		//add(text);
 		super.create();
 	}
 

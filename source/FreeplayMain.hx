@@ -111,14 +111,14 @@ class FreeplayMain extends MusicBeatState
 
 		if (!FlxG.save.data.CupBeaten && !FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2 && !FlxG.save.data.BendyBeaten && !Debug)
 		{
-			addSong('snake-eyes', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253)); //to prevent crash lol
+			addSong('snake-eyes', 0, 'cupheadP1', FlxColor.fromRGB(146, 113, 253)); //to prevent crash lol
 		}
 		//cuphead
 		if (FlxG.save.data.CupBeaten || Debug)
 		{
-			addSong('snake-eyes', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253));
-			addSong('technicolor-tussle', 1, 'cupheadP1', FlxColor.fromRGB(146, 113, 253));
-			addSong('knockout', 1, 'cupheadP2', FlxColor.fromRGB(146, 113, 253));
+			addSong('snake-eyes', 0, 'cupheadP1', FlxColor.fromRGB(146, 113, 253));
+			addSong('technicolor-tussle', 0, 'cupheadP1', FlxColor.fromRGB(146, 113, 253));
+			addSong('knockout', 0, 'cupheadP2', FlxColor.fromRGB(146, 113, 253));
 		}
         //sans
 		if (FlxG.save.data.SansBeaten && !FlxG.save.data.SansBeaten2 || Debug)
@@ -137,10 +137,10 @@ class FreeplayMain extends MusicBeatState
 		//bendy
 		if (FlxG.save.data.BendyBeaten || Debug)
 		{
-			addSong('imminent-demise', 1, 'dad', FlxColor.fromRGB(146, 113, 253));
-			addSong('terrible-sin', 1, 'bendyP1', FlxColor.fromRGB(146, 113, 253));
-			addSong('last-reel', 1, 'bendyP1', FlxColor.fromRGB(146, 113, 253));
-			addSong('nightmare-run', 1, 'bendyP1', FlxColor.fromRGB(146, 113, 253));		
+			addSong('imminent-demise', 2, 'dad', FlxColor.fromRGB(146, 113, 253));
+			addSong('terrible-sin', 2, 'bendyP1', FlxColor.fromRGB(146, 113, 253));
+			addSong('last-reel', 2, 'bendyP1', FlxColor.fromRGB(146, 113, 253));
+			addSong('nightmare-run', 2, 'bendyP1', FlxColor.fromRGB(146, 113, 253));		
 		}
 
 		bg = new FlxSprite().loadGraphic(Paths.image('BG'));

@@ -111,7 +111,7 @@ class FreeplayNightmare extends MusicBeatState
 
 		if (FlxG.save.data.CupBeaten || Debug)
 		{
-			addSong('devils-gambit', 1, 'cupheadP3', FlxColor.fromRGB(146, 113, 253));
+			addSong('devils-gambit', 0, 'cupheadP3', FlxColor.fromRGB(146, 113, 253));
 		}
 
 		if (FlxG.save.data.SansBeaten2 || Debug)
@@ -121,7 +121,7 @@ class FreeplayNightmare extends MusicBeatState
 
 		if (FlxG.save.data.BendyBeaten || Debug)
 		{
-			addSong('despair', 1, 'bendyP2', FlxColor.fromRGB(146, 113, 253));
+			addSong('despair', 2, 'bendyP2', FlxColor.fromRGB(146, 113, 253));
 		}
 
 		bg = new FlxSprite().loadGraphic(Paths.image('BG'));
