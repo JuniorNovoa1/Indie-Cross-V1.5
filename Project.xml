@@ -168,6 +168,15 @@
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	
+	<!-- Build external crash reporter with platform-dependent batch script -->
+	<section if="BUILD_CRASH_DIALOG">
+		<section if="release">
+		    <postbuild cmd="build-crash-dialog.sh" if="macos" />
+			<postbuild cmd="build-crash-dialog.bat" if="windows" />
+			<postbuild cmd="./build-crash-dialog.sh" if="linux" />
+		</section>
+	</section>
+
 	<icon path="art/icon16.png" size='16'/>
 	<icon path="art/icon32.png" size='32'/>
 	<icon path="art/icon64.png" size='64'/>
