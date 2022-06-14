@@ -8,7 +8,6 @@
 
 -D macos
 -D ABI=-MD
--D WXSTATIC
 -D HXCPP_M64
 
 -cpp build/macos
