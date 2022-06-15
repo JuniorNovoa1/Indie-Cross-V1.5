@@ -1,4 +1,3 @@
-
 package;
 
 import haxe.ui.HaxeUIApp;
@@ -9,27 +8,25 @@ import haxe.ui.macros.ComponentMacros;
 import sys.io.File;
 import sys.io.Process;
 
-class Main
+class CrashDialog
 {
-	/** 
-	 * Okay so since I am not funny (prolly never will), feel free to add a PR
-	 * extending this list of quotes, or raise an issue if you're too lazy
-	 * to do it. Thanks -gedehari
+	/*
+		massive thanks to gedehari for the crash dialog code
 	 */
 	static final quotes:Array<String> = [
-		"Blueballed.", // gedehari
-		"This isn't spooky, this is scary!", // gedehari
-		"Izzy Engine is D-izzy.", // 52
-		"Useless, but not for long.", // ito
-		"He's in your bed, and Izzy has crashed.", // ito
-		"I think I'm dying this time.", // ito
-		"Skill issue.", // shubs
-		"Tight bars. Can't say the same for the game.", // shubs
-		"Totally not stolen from NotITG!", // shubs
-		"And I was just about to beat it too!", // shubs
-		"Almost as dead as Garcello.", // shubs
-		"Please stop you aren't even making sense!", // shubs
-		"You were so bad the game just crashed.",  // shubs
+		"Oops.",
+		"Not a fun day, I take it?",
+		"Sorry to bring your funkin' to a halt.",
+		"Also try Minecraft!",
+		"Main.hx isn't supposed to hold this much.",
+		"Flixel is wonderful.",
+		"No controlly is cannoli.",
+		"Not feeling it today, here's your error.",
+		"Stream Kawai Sprite.",
+		"Check for semicolons, kids.",
+		"Class is screwed. Or maybe not, I don't know.",
+		"How many headaches have you been through today?",
+		"Don't null-ly reference your objects, y'all!"
 	];
 
 	public static function main()
@@ -52,7 +49,7 @@ class Main
 				app.addComponent(mainView);
 
 				var messageLabel:Label = mainView.findComponent("message-label", Label);
-				messageLabel.text = quotes[Std.random(quotes.length)] + "\nUnfortunately, Izzy Engine has crashed.";
+				messageLabel.text = quotes[Std.random(quotes.length)] + "\nUnfortunately, Indie Cross has crashed.";
 				messageLabel.percentWidth = 100;
 				messageLabel.textAlign = "center";
 
@@ -88,9 +85,9 @@ class Main
 				mainView.findComponent("restart-button", Button).onClick = function(_)
 				{
 					#if windows
-					new Process("IzzyEngine.exe", []);
+					new Process("Indie Cross", []);
 					#elseif linux
-					new Process("./IzzyEngine", []);
+					new Process("./Indie Cross", []);
 					#end
 
 					Sys.exit(0);
