@@ -66,6 +66,7 @@ import openfl.events.IOErrorEvent;
 import openfl.events.Event;
 import openfl.net.FileReference;
 import openfl.utils.Dictionary;
+import openfl.filters.ShaderFilter;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -4448,6 +4449,27 @@ class PlayState extends MusicBeatState
 				char.playAnim(animToPlay, true);
 				char.holdTimer = 0;
 			}
+		}
+
+		if (SONG.song == 'Devils-Gambit' || SONG.song == 'Bad-Time' || SONG.song == 'Despair')
+		{
+			var funny:ChromaticAberration;
+			funny = new ChromaticAberration();
+	
+			camGame.setFilters([new ShaderFilter(funny)]);
+			camGame.shake(0.015, 0.055);
+			camHUD.setFilters([new ShaderFilter(funny)]);
+			camHUD.shake(0.015, 0.055);
+
+			trace('shader added');
+
+			new FlxTimer().start(0.055, function(tmr:FlxTimer)
+			{
+				camGame.filtersEnabled = false;
+				camHUD.filtersEnabled = false;
+
+				trace('shader removed');
+			});
 		}
 
 		if (SONG.needsVoices)
