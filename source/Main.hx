@@ -38,6 +38,8 @@ class Main extends Sprite
     final lowFps:Int = 20;
 	var focusMusicTween:FlxTween;
 
+	var SoundVolume:Float = 0.0;
+
 	public static var gjToastManager:GJToastManager; //this is needed for the child
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
@@ -69,6 +71,9 @@ class Main extends Sprite
 	{
 		trace("Game unfocused");
 	
+		SoundVolume = FlxG.sound.volume;
+		trace('Previous sound volume: ' + SoundVolume);
+
 		// Lower global volume when unfocused
 		if (focusMusicTween != null)
 			focusMusicTween.cancel();
@@ -81,11 +86,12 @@ class Main extends Sprite
 	function onWindowFocusIn()
 	{
 		trace("Game focused");
-	
+
 		// Normal global volume when focused
 		if (focusMusicTween != null)
 			focusMusicTween.cancel();
-		focusMusicTween = FlxTween.tween(FlxG.sound, {volume: 1.0}, 0.4);
+		focusMusicTween = FlxTween.tween(FlxG.sound, {volume: SoundVolume}, 0.4);
+		trace('Setting sound volume to: ' + SoundVolume);
 	
 		// Bring framerate back when focused
 		FlxG.drawFramerate = ClientPrefs.framerate;
@@ -93,58 +99,7 @@ class Main extends Sprite
 
 	function onCrash(e:UncaughtErrorEvent):Void
 	{
-		var errMsg:String = "";
-		var path:String;
-		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
-		var dateNow:String = Date.now().toString();
-	
-		dateNow = StringTools.replace(dateNow, " ", "_");
-		dateNow = StringTools.replace(dateNow, ":", "'");
-	
-		path = "./crash/" + "IndieCross_" + dateNow + ".txt";
-	
-		for (stackItem in callStack)
-		{
-			switch (stackItem)
-			{
-				case FilePos(s, file, line, column):
-					errMsg += file + " (line " + line + ")\n";
-				default:
-					Sys.println(stackItem);
-			}
-		}
-	
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the Discord: https://discord.gg/4cDPxpv62C";
-	
-		if (!FileSystem.exists("./crash/"))
-			FileSystem.createDirectory("./crash/");
-	
-		File.saveContent(path, errMsg + "\n");
-	
-		Sys.println(errMsg);
-		Sys.println("Crash dump saved in " + Path.normalize(path));
-	
-		var crashDialoguePath:String = "IndieCross-CrashDialog";
-	
-		#if windows
-		crashDialoguePath += ".exe";
-		#end
-	
-		if (FileSystem.exists("./" + crashDialoguePath))
-		{
-			Sys.println("Found crash dialog: " + crashDialoguePath);
-	
-			#if linux
-			crashDialoguePath = "./" + crashDialoguePath;
-			#end
-			new Process(crashDialoguePath, [path]);
-		}
-		else
-		{
-			// I had to do this or the stupid CI won't build :distress:
-			Sys.println("No crash dialog found! Making a simple alert instead...");
-			Application.current.window.alert(errMsg, "Error!");
-		}
+		lime.app.Application.current.window.alert('Game will shut down.', 'An error has occured!'); //1. description, 2. Main Title
 
 		Sys.exit(1);
 	}

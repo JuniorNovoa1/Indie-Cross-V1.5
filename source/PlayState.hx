@@ -712,21 +712,21 @@ class PlayState extends MusicBeatState
 				add(runbg2);
 			case 'cuphead-p1':
 				var cupbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('BG-00', 'cup'));
-				cupbg.scale.set(2.5, 2.5);
+				cupbg.scale.set(3.5, 3.5);
 				cupbg.antialiasing = ClientPrefs.globalAntialiasing;
 				cupbg.screenCenter();
 				cupbg.updateHitbox();
 				add(cupbg);
 
 				var cupfarbg:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('BG-01', 'cup'));
-				cupfarbg.scale.set(2.5, 2.5);
+				cupfarbg.scale.set(3.5, 3.5);
 				cupfarbg.antialiasing = ClientPrefs.globalAntialiasing;
 				cupfarbg.screenCenter();
 				cupfarbg.updateHitbox();
 				add(cupfarbg);
 
 				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('Foreground', 'cup'));
-				bg.scale.set(2.5, 2.5);
+				bg.scale.set(3.5, 3.5);
 				bg.antialiasing = ClientPrefs.globalAntialiasing;
 				bg.screenCenter();
 				bg.updateHitbox();
@@ -746,21 +746,21 @@ class PlayState extends MusicBeatState
 
             case 'cuphead-p2':
 				var cupbg2:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('CH-RN-00', 'cup'));
-				cupbg2.scale.set(2.5, 2.5);
+				cupbg2.scale.set(3.5, 3.5);
 				cupbg2.antialiasing = ClientPrefs.globalAntialiasing;
 				cupbg2.screenCenter();
 				cupbg2.updateHitbox();
 				add(cupbg2);
 
 				var cupfarbg2:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('CH-RN-01', 'cup'));
-				cupfarbg2.scale.set(2.5, 2.5);
+				cupfarbg2.scale.set(3.5, 3.5);
 				cupfarbg2.antialiasing = ClientPrefs.globalAntialiasing;
 				cupfarbg2.screenCenter();
 				cupfarbg2.updateHitbox();
 				add(cupfarbg2);
 
 				var bg:FlxSprite = new FlxSprite(1600, -400).loadGraphic(Paths.image('CH-RN-02', 'cup'));
-				bg.scale.set(2.5, 2.5);
+				bg.scale.set(3.5, 3.5);
 				bg.antialiasing = ClientPrefs.globalAntialiasing;
 				bg.screenCenter();
 				bg.updateHitbox();
@@ -2568,14 +2568,10 @@ class PlayState extends MusicBeatState
 		{
 			health -= 0.0015;
 			CupShooting2 = false;
-			/*
-			new FlxTimer().start(GreenShootTMR, function(tmr:FlxTimer)
+			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				CupShootGREEN.visible = false;
-				remove(CupShootGREEN);
-				CupShooting2 = false;
+				CupShootGREEN.alpha = 0.0000000000001;
 			});
-			*/
 		}
 
 		if (cupheadsong && canAttack)
@@ -5027,21 +5023,21 @@ class PlayState extends MusicBeatState
 
 		CupFX = new FlxSprite(-600, 175);
 		CupFX.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
-		CupFX.animation.addByPrefix('FX', "BurstFX instance 1", 24, false);
+		CupFX.animation.addByPrefix('FX', "BurstFX instance 1", 24, true);
 		CupFX.animation.play('FX');
 		CupFX.antialiasing = ClientPrefs.globalAntialiasing;
-		CupFX.scrollFactor.set(0.9, 0.9);
-		CupFX.cameras = [camHUD];
+		CupFX.scrollFactor.set(0.0, 0.0);
+		//CupFX.scale.set(0.75, 0.75);
 		add(CupFX);
 		FlxTween.tween(CupFX, { x:5000, y:175 }, 3.25, { type: FlxTween.ONESHOT });
 
 		CupBullshit = new FlxSprite(-600, 175);
 		CupBullshit.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
-		CupBullshit.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, false);
+		CupBullshit.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, true);
 		CupBullshit.animation.play('Shoot');
 		CupBullshit.antialiasing = ClientPrefs.globalAntialiasing;
-		CupBullshit.scrollFactor.set(0.9, 0.9);
-		CupBullshit.cameras = [camHUD];
+		CupBullshit.scrollFactor.set(0.0, 0.0);
+		//CupBullshit.scale.set(0.75, 0.75);
 		add(CupBullshit);
 		FlxTween.tween(CupBullshit, { x:5000, y:175 }, 3.25, { type: FlxTween.ONESHOT });
 		
@@ -5130,10 +5126,10 @@ class PlayState extends MusicBeatState
 		CupBullshit2.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, true);
 		CupBullshit2.animation.play('Shoot');
 		CupBullshit2.antialiasing = ClientPrefs.globalAntialiasing;
-		CupBullshit2.scrollFactor.set(0.9, 0.9);
+		CupBullshit2.scrollFactor.set(0.0, 0.0);
 		CupBullshit2.scale.set(1.25, 1.25);
 		add(CupBullshit2);
-		FlxTween.tween(CupBullshit2, { x:2100 }, 0.75);
+		FlxTween.tween(CupBullshit2, { x:2600 }, 0.85);
 
 		BullshitCupTween();
 
@@ -5149,10 +5145,10 @@ class PlayState extends MusicBeatState
 	
 		new FlxTimer().start(1, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(CupBullshit2, { x:-5000 }, 5.75, { type: FlxTween.ONESHOT });
+			FlxTween.tween(CupBullshit2, { x:-5600 }, 5.85, { type: FlxTween.ONESHOT });
 		});
 				
-		new FlxTimer().start(0.375, function(tmr:FlxTimer)
+		new FlxTimer().start(0.4, function(tmr:FlxTimer)
 		{
 			if (cpuControlled)
 			{
@@ -5175,7 +5171,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 
-		new FlxTimer().start(1.325, function(tmr:FlxTimer)
+		new FlxTimer().start(1.375, function(tmr:FlxTimer)
 		{
 			if (cpuControlled)
 			{
@@ -5316,7 +5312,7 @@ class PlayState extends MusicBeatState
 
 	function CupShootMechanic1()
 	{	
-		CupShootFX = new FlxSprite(950, 800); //for offsets i recommend going by hundreds
+		CupShootFX = new FlxSprite(1450, 1200); //for offsets i recommend going by hundreds
 		CupShootFX.frames = Paths.getSparrowAtlas('bull/Cupheadshoot', 'cup');
 		CupShootFX.animation.addByPrefix('FX', "BulletFlashFX instance 1", 30, true);
 		CupShootFX.animation.play('FX');
@@ -5324,12 +5320,12 @@ class PlayState extends MusicBeatState
 		CupShootFX.scrollFactor.set(0.9, 0.9);
 		add(CupShootFX);
 
-		CupShoot = new FlxSprite(925, 700); //for offsets i recommend going by hundreds
+		CupShoot = new FlxSprite(1425, 1000); //for offsets i recommend going by hundreds
 		CupShoot.frames = Paths.getSparrowAtlas('bull/Cupheadshoot', 'cup');
 		CupShoot.animation.addByPrefix('Bullet', "BulletFX_H-Tween_03 instance 1", 30, true);
 		CupShoot.animation.play('Bullet');
 		CupShoot.antialiasing = ClientPrefs.globalAntialiasing;
-		CupShoot.scrollFactor.set(0.9, 0.9);
+		CupShoot.scrollFactor.set(0.0, 0.0);
 		add(CupShoot);
 			
 		dad.playAnim('hadokenROUND', false);
@@ -5340,14 +5336,15 @@ class PlayState extends MusicBeatState
 
 	function CupShootMechanic2()
 	{
-		CupShootGREEN = new FlxSprite(DAD_X +200, DAD_Y +325); //for offsets i recommend going by hundreds
+		CupShootGREEN = new FlxSprite(DAD_X +400, DAD_Y +725); //for offsets i recommend going by hundreds
 		CupShootGREEN.frames = Paths.getSparrowAtlas('bull/GreenShit', 'cup');
 		CupShootGREEN.animation.addByPrefix('ShootGreen', "Greenshit0", 30, false);
 		CupShootGREEN.antialiasing = ClientPrefs.globalAntialiasing;
-		CupShootGREEN.scrollFactor.set(0.9, 0.9);
+		CupShootGREEN.scrollFactor.set(0.0, 0.0);
 
 		new FlxTimer().start(0.75, function(tmr:FlxTimer)
 		{
+			FlxG.sound.play(Paths.sound('attacks/chaser0', 'cup'));
 			CupShootGREEN.animation.play('ShootGreen');
 			add(CupShootGREEN);
 
