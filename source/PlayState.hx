@@ -699,6 +699,17 @@ class PlayState extends MusicBeatState
 				runbg.screenCenter(Y);
 				runbg.updateHitbox();
 				add(runbg);
+			case 'bendy-run2':
+				var runbg2:FlxSprite;
+				runbg2 = new FlxSprite(DAD_X -14000, 0);
+				runbg2.frames = Paths.getSparrowAtlas('run/Fuck_the_hallway', 'bendy');
+				runbg2.scale.set(2.5, 2.5);
+				runbg2.animation.addByPrefix('idle', "Loop02 instance 1", 255);
+				runbg2.animation.play('idle');
+				runbg2.antialiasing = ClientPrefs.globalAntialiasing;
+				runbg2.screenCenter(Y);
+				runbg2.updateHitbox();
+				add(runbg2);
 			case 'cuphead-p1':
 				var cupbg:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('BG-00', 'cup'));
 				cupbg.scale.set(2.5, 2.5);
