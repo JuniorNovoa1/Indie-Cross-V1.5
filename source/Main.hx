@@ -35,10 +35,10 @@ class Main extends Sprite
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 	public static var fpsVar:FPS;
 
-    final lowFps:Int = 20;
+	//for when the game is not focused/is focused
 	var focusMusicTween:FlxTween;
-
 	var SoundVolume:Float = 0.0;
+	//ok done!!!!!!
 
 	public static var gjToastManager:GJToastManager; //this is needed for the child
 
@@ -77,10 +77,10 @@ class Main extends Sprite
 		// Lower global volume when unfocused
 		if (focusMusicTween != null)
 			focusMusicTween.cancel();
-		focusMusicTween = FlxTween.tween(FlxG.sound, {volume: 0.3}, 0.4);
+		focusMusicTween = FlxTween.tween(FlxG.sound, {volume: 0.1}, 0.4);
 	
 		// Conserve power by lowering draw framerate when unfocuced
-		FlxG.drawFramerate = lowFps;
+		FlxG.drawFramerate = 5;
 	}
 	
 	function onWindowFocusIn()

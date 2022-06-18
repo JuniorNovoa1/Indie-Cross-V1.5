@@ -5023,7 +5023,7 @@ class PlayState extends MusicBeatState
 
 		CupFX = new FlxSprite(-600, 175);
 		CupFX.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
-		CupFX.animation.addByPrefix('FX', "BurstFX instance 1", 24, true);
+		CupFX.animation.addByPrefix('FX', "BurstFX instance 1", 24, false);
 		CupFX.animation.play('FX');
 		CupFX.antialiasing = ClientPrefs.globalAntialiasing;
 		CupFX.scrollFactor.set(0.0, 0.0);
@@ -5031,7 +5031,7 @@ class PlayState extends MusicBeatState
 		add(CupFX);
 		FlxTween.tween(CupFX, { x:5000, y:175 }, 3.25, { type: FlxTween.ONESHOT });
 
-		CupBullshit = new FlxSprite(-600, 175);
+		CupBullshit = new FlxSprite(-600, 275);
 		CupBullshit.frames = Paths.getSparrowAtlas('bull/Cuphead Hadoken', 'cup');
 		CupBullshit.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, true);
 		CupBullshit.animation.play('Shoot');
@@ -5126,7 +5126,7 @@ class PlayState extends MusicBeatState
 		CupBullshit2.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, true);
 		CupBullshit2.animation.play('Shoot');
 		CupBullshit2.antialiasing = ClientPrefs.globalAntialiasing;
-		CupBullshit2.scrollFactor.set(0.0, 0.0);
+		CupBullshit2.scrollFactor.set(0.9, 0.9);
 		CupBullshit2.scale.set(1.25, 1.25);
 		add(CupBullshit2);
 		FlxTween.tween(CupBullshit2, { x:2600 }, 0.85);
