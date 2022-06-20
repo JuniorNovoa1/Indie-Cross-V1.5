@@ -325,6 +325,9 @@ class PlayState extends MusicBeatState
 	var sanssong:Bool = false;
 	var bendysong:Bool = false;
 
+	//cuphead card thing
+	var cupheadcard:Bool = false;
+
 	#if desktop
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -526,10 +529,11 @@ class PlayState extends MusicBeatState
 			dodgeEnabled = false;
 			SongCreator = 'Saru & CDMusic - ';
 		}
+		//only one ik about the thing
 		else if (SONG.song == 'Last-Reel')
 		{
-			attackEnabled = false;
-			dodgeEnabled = false;
+			attackEnabled = true;
+			dodgeEnabled = true;
 			SongCreator = 'Joan Atlas - ';
 		}
 		else if (SONG.song == 'Nightmare-Run')
@@ -573,9 +577,9 @@ class PlayState extends MusicBeatState
 		DodgeKey = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_dodge'));
 		if (attackEnabled)
 		{
-			//canAttack = true;
+			canAttack = true;
 
-			if (cupheadsong)
+			if (cupheadcard)
 			{
 				CupCard = new FlxSprite(-200, 150);
 				CupCard.frames = Paths.getSparrowAtlas('Cardcrap', 'cup');
@@ -983,7 +987,10 @@ class PlayState extends MusicBeatState
 			sanssong = false;
 			bendysong = true;
 		}
-
+	    if (SONG.song == 'Technicolor-Tussle' || SONG.song == 'Knockout'|| SONG.song == 'Devils-Gambit')
+		{
+			cupheadcard = true;
+		}
 
 		// "GLOBAL" SCRIPTS
 		#if LUA_ALLOWED
