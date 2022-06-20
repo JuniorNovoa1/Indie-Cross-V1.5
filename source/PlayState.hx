@@ -458,8 +458,8 @@ class PlayState extends MusicBeatState
 		}
 		else if (SONG.song == 'Sansational')
 		{
-			attackEnabled = false;
-			dodgeEnabled = false;
+			attackEnabled = true;
+			dodgeEnabled = true;
 			SongCreator = 'Tenzubushi - ';
 		}
 		else if (SONG.song == 'Final-Stretch')
@@ -468,17 +468,16 @@ class PlayState extends MusicBeatState
 			dodgeEnabled = false;
 			SongCreator = 'Saru - ';
 		}
-		//idk if these have attack or dodge and i don't want to check
 		else if (SONG.song == 'Burning-In-Hell')
 		{
-			attackEnabled = false;
-			dodgeEnabled = false;
+			attackEnabled = true;
+			dodgeEnabled = true;
 			SongCreator = 'TheInnuendo & Saster - ';
 		}
 		else if (SONG.song == 'Bad-Time')
 		{
 			attackEnabled = false;
-			dodgeEnabled = false;
+			dodgeEnabled = true;
 			SongCreator = 'Tenzubushi - ';
 		}
 		else if (SONG.song == 'Bad-Time')
