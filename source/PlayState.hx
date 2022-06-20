@@ -465,7 +465,103 @@ class PlayState extends MusicBeatState
 			dodgeEnabled = false;
 			SongCreator = 'Saru - ';
 		}
-
+		//idk if these have attack or dodge and i don't want to check
+		else if (SONG.song == 'Burning-In-Hell')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'TheInnuendo & Saster - ';
+		}
+		else if (SONG.song == 'Bad-Time')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'Tenzubushi - ';
+		}
+		else if (SONG.song == 'Bad-Time')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'Tenzubushi - ';
+		}
+		else if (SONG.song == 'Bad-To-The-Bone')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'Yamahearted - ';
+		}
+		else if (SONG.song == 'Bonedoggle')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'Saster - ';
+		}
+		else if (SONG.song == 'Despair')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'DMusic, Joan Atlas & Rozebud - ';
+		}
+		else if (SONG.song == 'Devils-Gambit')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'Saru & TheInnuend0 - ';
+		}
+		else if (SONG.song == 'Freaky-Machine')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'DAGames & Saster - ';
+		}
+		else if (SONG.song == 'Gose')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'CrystalSlime - ';
+		}
+		else if (SONG.song == 'Imminent-Demise')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'Saru & CDMusic - ';
+		}
+		else if (SONG.song == 'Last-Reel')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'Joan Atlas - ';
+		}
+		else if (SONG.song == 'Nightmare-Run')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'Orenji Music & Rozebud - ';
+		}
+		else if (SONG.song == 'Ritual')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'BBPanzu & Brandxns - ';
+		}
+		else if (SONG.song == 'Saness')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'CrystalSlime - ';
+		}
+		else if (SONG.song == 'Satanic-Funkin')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'TheInnuend0 - ';
+		}
+		else if (SONG.song == 'Terrible-Sin')
+		{
+			attackEnabled = false;
+			dodgeEnabled = false;
+			SongCreator = 'CDMusic & Rozebud - ';
+		}
 		#if desktop
 		TitleDifficulty = ' [' + CoolUtil.difficultyString() + ']';
 
@@ -806,14 +902,17 @@ class PlayState extends MusicBeatState
 			    cupbgdevil.updateHitbox();
 			    add(cupbgdevil);
 
-				var lightdevil:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NMClight', 'cup'));
-				lightdevil = new FlxSprite(350, -250);
-				lightdevil.frames = Paths.getSparrowAtlas('NMClight', 'cup');
-				lightdevil.animation.addByPrefix('idle', "rgrrr instance 10000", 24);
-				lightdevil.animation.play('idle');
-				lightdevil.antialiasing = ClientPrefs.globalAntialiasing;
-				lightdevil.updateHitbox();
-				add(lightdevil);
+				if (!ClientPrefs.lowQuality)
+					{
+						var lightdevil:FlxSprite = new FlxSprite(-725, -400).loadGraphic(Paths.image('NMClight', 'cup'));
+						lightdevil = new FlxSprite(350, -250);
+						lightdevil.frames = Paths.getSparrowAtlas('NMClight', 'cup');
+						lightdevil.animation.addByPrefix('idle', "rgrrr instance 10000", 24);
+						lightdevil.animation.play('idle');
+						lightdevil.antialiasing = ClientPrefs.globalAntialiasing;
+						lightdevil.updateHitbox();
+						add(lightdevil);
+					}
 			case 'hall':
 				var sansBG:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('hall', 'sans'));
 			    sansBG.scale.set(2.5, 2.5);

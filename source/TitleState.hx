@@ -341,7 +341,7 @@ class TitleState extends MusicBeatState
 		PlayButton.antialiasing = ClientPrefs.globalAntialiasing;
 		add(PlayButton);
 
-		Logo = new FlxSprite(-50, 200); //how did this take me 2 hours to figure out
+		Logo = new FlxSprite(-45, 200); //how did this take me 2 hours to figure out
 		Logo.frames = Paths.getSparrowAtlas('title/Logo');
 		Logo.animation.addByPrefix('Idle', 'Tween 11 instance 1', 24); 
 		Logo.animation.play('Idle');
