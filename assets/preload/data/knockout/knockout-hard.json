@@ -4,6 +4,7 @@
 		"player1": "bfcupRAIN",
 		"gfVersion": "gf",
 		"player2": "cuphead-pissed",
+		"events": [],	
 		"notes": [
 			{
 				"typeOfSection": 0,
@@ -8745,7 +8746,6 @@
 				"mustHitSection": true
 			}
 		],
-		"events": [],
 		"player3": "dad",
 		"song": "Knockout",
 		"validScore": true,

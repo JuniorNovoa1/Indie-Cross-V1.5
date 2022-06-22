@@ -3663,6 +3663,9 @@ class PlayState extends MusicBeatState
 						}
 					});
 				}
+			case 'Camera Tween Zoom':
+				TraceLog('Zoom: ' + Std.parseFloat(value1) + ' Time to zoom: ' + Std.parseFloat(value2));
+				FlxTween.tween(camGame, {zoom: Std.parseFloat(value1)}, Std.parseFloat(value2));
 			case 'Cuphead Dodge':
 				TraceLog('Cuphead dodge event');
 				CupDodgeMechanic(Std.parseFloat(value1), value2);
