@@ -83,8 +83,8 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
-		['You Suck!', 0.2], //From 0% to 19%
-		['Shit', 0.4], //From 20% to 39%
+		['DELETE THE GAME!', 0.2], //From 0% to 19%
+		['you are shit at this game', 0.4], //From 20% to 39%
 		['Bad', 0.5], //From 40% to 49%
 		['Bruh', 0.6], //From 50% to 59%
 		['Meh', 0.69], //From 60% to 68%
@@ -803,7 +803,7 @@ class PlayState extends MusicBeatState
 				runbg2 = new FlxSprite(DAD_X -14000, 0);
 				runbg2.frames = Paths.getSparrowAtlas('run/Fuck_the_hallway', 'bendy');
 				runbg2.scale.set(2.5, 2.5);
-				runbg2.animation.addByPrefix('idle', "Loop02 instance 1", 255);
+				runbg2.animation.addByPrefix('idle', "Tunnel instance 1", 60);
 				runbg2.animation.play('idle');
 				runbg2.antialiasing = ClientPrefs.globalAntialiasing;
 				runbg2.screenCenter(Y);
@@ -986,7 +986,7 @@ class PlayState extends MusicBeatState
 			sanssong = false;
 			bendysong = true;
 		}
-	    if (SONG.song == 'Technicolor-Tussle' || SONG.song == 'Knockout'|| SONG.song == 'Devils-Gambit')
+	    if (SONG.song == 'Technicolor-Tussle' || SONG.song == 'Knockout')
 		{
 			cupheadcard = true;
 		}
@@ -5185,7 +5185,7 @@ class PlayState extends MusicBeatState
 			}
 	
 			if (cpuControlled) //don't worry i got yall botplay users! -Junior
-			{
+			{ //ok junior thank you -Bushtrain460615
 				canDodge = false;
 			}
 		});
@@ -5665,7 +5665,23 @@ class PlayState extends MusicBeatState
 					remove(videoSprite);
 			}
 		}
-
+		if (curSong == 'nightmare-run')
+			{
+				switch (curStep)
+				{
+					case 162:
+				            var runbg2:FlxSprite;
+				            runbg2 = new FlxSprite(DAD_X -14000, 0);
+				            runbg2.frames = Paths.getSparrowAtlas('run/Fuck_the_hallway', 'bendy');
+				            runbg2.scale.set(2.5, 2.5);
+				            runbg2.animation.addByPrefix('idle', "Tunnel instance 1", 60);
+				            runbg2.animation.play('idle');
+				            runbg2.antialiasing = ClientPrefs.globalAntialiasing;
+				            runbg2.screenCenter(Y);
+				            runbg2.updateHitbox();
+				            add(runbg2);
+			}
+		}
 		if (SONG.song == 'Whoopee')
 		{
 		    switch (curStep)
