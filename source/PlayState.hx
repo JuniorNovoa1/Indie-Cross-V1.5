@@ -332,9 +332,6 @@ class PlayState extends MusicBeatState
 	var sammy:FlxSprite;
 	var runbg:FlxSprite;
 	var Ink:FlxSprite;
-	var Ink2:FlxSprite;
-	var Ink3:FlxSprite;
-	var Ink4:FlxSprite;
 	var InkTimer:Int = 3;
 	var InkOnScreen:Int = 0;
 	var InkCurrentlyOnScreen:Bool = false;
@@ -2837,32 +2834,32 @@ class PlayState extends MusicBeatState
 		else if (InkOnScreen == 2)
 		{
 			remove(Ink);
-			Ink2 = new FlxSprite().loadGraphic(Paths.image('Damage02', 'bendy'));
-			Ink2.antialiasing = ClientPrefs.globalAntialiasing;
-			Ink2.scrollFactor.set(0, 0);
-			Ink2.cameras = [camHUD2];
-			Ink2.screenCenter();
-			add(Ink2);
+			Ink = new FlxSprite().loadGraphic(Paths.image('Damage02', 'bendy'));
+			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.scrollFactor.set(0, 0);
+			Ink.cameras = [camHUD2];
+			Ink.screenCenter();
+			add(Ink);
 		}
 		else if (InkOnScreen == 3)
 		{
-			remove(Ink2);
-			Ink3 = new FlxSprite().loadGraphic(Paths.image('Damage03', 'bendy'));
-			Ink3.antialiasing = ClientPrefs.globalAntialiasing;
-			Ink3.scrollFactor.set(0, 0);
-			Ink3.cameras = [camHUD2];
-			Ink3.screenCenter();
-			add(Ink3);
+			remove(Ink);
+			Ink = new FlxSprite().loadGraphic(Paths.image('Damage03', 'bendy'));
+			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.scrollFactor.set(0, 0);
+			Ink.cameras = [camHUD2];
+			Ink.screenCenter();
+			add(Ink);
 		}
 		else if (InkOnScreen == 4)
 		{
-			remove(Ink3);
-			Ink4 = new FlxSprite().loadGraphic(Paths.image('Damage04', 'bendy'));
-			Ink4.antialiasing = ClientPrefs.globalAntialiasing;
-			Ink4.scrollFactor.set(0, 0);
-			Ink4.cameras = [camHUD2];
-			Ink4.screenCenter();
-			add(Ink4);
+			remove(Ink);
+			Ink = new FlxSprite().loadGraphic(Paths.image('Damage04', 'bendy'));
+			Ink.antialiasing = ClientPrefs.globalAntialiasing;
+			Ink.scrollFactor.set(0, 0);
+			Ink.cameras = [camHUD2];
+			Ink.screenCenter();
+			add(Ink);
 		}
 
 		if (InkCurrentlyOnScreen)
@@ -2871,9 +2868,6 @@ class PlayState extends MusicBeatState
 			new FlxTimer().start(3, function(tmr:FlxTimer)
 			{
 				FlxTween.tween(Ink, {alpha: 0}, 1);
-				FlxTween.tween(Ink2, {alpha: 0}, 1);
-				FlxTween.tween(Ink3, {alpha: 0}, 1);
-				FlxTween.tween(Ink4, {alpha: 0}, 1);
 
 				InkOnScreen = 0;
 				InkCurrentlyOnScreen = false;
