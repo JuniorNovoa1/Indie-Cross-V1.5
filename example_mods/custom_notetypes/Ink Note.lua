@@ -1,12 +1,13 @@
 function onCreate()
 	--Iterate over all notes
 	for i = 0, getProperty('unspawnNotes.length')-1 do
+		--Check if the note is an Sonic Note
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Ink Note' then
-			setPropertyFromGroup('unspawnNotes',i,'noAnimation',true) --Check if the note on the chart is a Bullet Note
 			setPropertyFromGroup('unspawnNotes', i, 'texture', 'INKNOTE_assets'); --Change texture
 			setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'noteSplashes')
+			setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', true);
 			if getPropertyFromGroup('unspawnNotes', i, 'mustPress') then --Doesn't let Dad/Opponent notes get ignored
-				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', false); --Miss has penalties
+				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); --Miss has no penalties
 			end
 		end
 	end
