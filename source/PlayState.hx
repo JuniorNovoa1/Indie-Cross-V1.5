@@ -119,6 +119,23 @@ class PlayState extends MusicBeatState
 	public var GF_X:Float = 400;
 	public var GF_Y:Float = 130;
 
+	public var BF_XCAM:Float = 0;
+	public var BF_YCAM:Float = 0;
+
+	public var BF_XLEFTCAM:Float = 0;
+	public var BF_YUPCAM:Float = 0;
+	public var BF_YDOWNCAM:Float = 0;
+	public var BF_XRIGHTCAM:Float = 0;
+
+	//dad now!!
+	public var DAD_XCAM:Float = 0;
+	public var DAD_YCAM:Float = 0;
+
+	public var DAD_XLEFTCAM:Float = 0;
+	public var DAD_YUPCAM:Float = 0;
+	public var DAD_YDOWNCAM:Float = 0;
+	public var DAD_XRIGHTCAM:Float = 0;
+
 	public var songSpeedTween:FlxTween;
 	public var songSpeed(default, set):Float = 1;
 	public var songSpeedType:String = "multiplicative";
@@ -1105,6 +1122,24 @@ class PlayState extends MusicBeatState
 			if(gf != null)
 				gf.visible = false;
 		}
+
+		//bf next dad!!!!
+		BF_XCAM = boyfriend.x + boyfriendCameraOffset[0];
+		BF_YCAM = boyfriend.y + boyfriendCameraOffset[1];
+
+		BF_XLEFTCAM = BF_XCAM -50;
+		BF_YDOWNCAM = BF_YCAM +50;
+		BF_YUPCAM = BF_YCAM -50;
+		BF_XRIGHTCAM = BF_XCAM +50;
+
+		//dad now!!!
+		DAD_XCAM = dad.x + opponentCameraOffset[0];
+		DAD_YCAM = dad.y + opponentCameraOffset[1];
+
+		DAD_XLEFTCAM = DAD_XCAM -50;
+		DAD_YDOWNCAM = DAD_YCAM +50;
+		DAD_YUPCAM = DAD_YCAM -50;
+		DAD_XRIGHTCAM = DAD_XCAM +50;
 
 		switch(curStage)
 		{
@@ -2627,6 +2662,60 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 
+		//dad cam now!!
+		if (dad.animation.curAnim.name == 'singUP') {
+			triggerEventNote('Camera Follow Pos', '' + DAD_XCAM, '' + DAD_YUPCAM);
+		}
+		
+		if (dad.animation.curAnim.name == 'singDOWN') {
+			triggerEventNote('Camera Follow Pos', '' + DAD_XCAM, '' + DAD_YDOWNCAM);
+		}
+		
+		if (dad.animation.curAnim.name == 'singLEFT') {
+			triggerEventNote('Camera Follow Pos', '' + DAD_XLEFTCAM, '' + DAD_YCAM);
+		}
+		
+		if (dad.animation.curAnim.name == 'singRIGHT') {
+			triggerEventNote('Camera Follow Pos', '' + DAD_XRIGHTCAM, '' + DAD_YCAM);
+		}
+		
+		if (dad.animation.curAnim.name == 'idle') {
+			triggerEventNote('Camera Follow Pos', '', '');
+		}
+
+		//bf cam movement
+		if (boyfriend.animation.curAnim.name == 'hurt') {
+			triggerEventNote('Camera Follow Pos', '' + BF_XCAM, '' + BF_YCAM);
+		}
+
+		if (boyfriend.animation.curAnim.name == 'dodge') {
+			triggerEventNote('Camera Follow Pos', '' + BF_XCAM, '' + BF_YCAM);
+		}
+
+		if (boyfriend.animation.curAnim.name == 'attack') {
+			triggerEventNote('Camera Follow Pos', '' + BF_XCAM, '' + BF_YCAM);
+		}
+		 
+		if (boyfriend.animation.curAnim.name == 'singUP') {
+			triggerEventNote('Camera Follow Pos', '' + BF_XCAM, '' + BF_YUPCAM);
+		}
+
+		if (boyfriend.animation.curAnim.name == 'singDOWN') {
+			triggerEventNote('Camera Follow Pos', '' + BF_XCAM, '' + BF_YDOWNCAM);
+		}
+
+		if (boyfriend.animation.curAnim.name == 'singLEFT') {
+			triggerEventNote('Camera Follow Pos', '' + BF_XLEFTCAM, '' + BF_YCAM);
+		}
+
+		if (boyfriend.animation.curAnim.name == 'singRIGHT') {
+			triggerEventNote('Camera Follow Pos', '' + BF_XRIGHTCAM, '' + BF_YCAM);
+		}
+
+		if (boyfriend.animation.curAnim.name == 'idle') {
+			triggerEventNote('Camera Follow Pos', '', '');
+		}
+
 		/* //this broke the cooldown for attacking!!!!!
 		if (cupheadsong && attackEnabled)
 		{
@@ -2638,7 +2727,7 @@ class PlayState extends MusicBeatState
 		}
 		*/
 
-		if (health == 0.1 && SONG.song == 'Despair')
+		if (health == 0 && SONG.song == 'Despair')
 		{
 			DespairDEATH();
 		}
@@ -2689,6 +2778,14 @@ class PlayState extends MusicBeatState
 			if (cupheadsong)
 			{
 				BFattackCup();
+			}
+			else if (sanssong)
+			{
+				BFattackSans();
+			}
+			else if (bendysong)
+			{
+				BFattackBendy();
 			}
 		}
 
@@ -3698,11 +3795,13 @@ class PlayState extends MusicBeatState
 		if (!SONG.notes[id].mustHitSection)
 		{
 			moveCamera(true);
+			triggerEventNote('Camera Follow Pos', '' + DAD_XCAM, '' + DAD_YCAM);
 			callOnLuas('onMoveCamera', ['dad']);
 		}
 		else
 		{
 			moveCamera(false);
+			triggerEventNote('Camera Follow Pos', '' + BF_XCAM, '' + BF_YCAM);
 			callOnLuas('onMoveCamera', ['boyfriend']);
 		}
 	}
@@ -4558,9 +4657,9 @@ class PlayState extends MusicBeatState
 			funny = new ChromaticAberration();
 	
 			camGame.setFilters([new ShaderFilter(funny)]);
-			camGame.shake(0.015, 0.055);
+			camGame.shake(0.01, 0.055);
 			camHUD.setFilters([new ShaderFilter(funny)]);
-			camHUD.shake(0.015, 0.055);
+			camHUD.shake(0.01, 0.055);
 
 			trace('shader added');
 
@@ -5741,6 +5840,10 @@ class PlayState extends MusicBeatState
 		{
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
+		}
+
+		if (isCameraOnForcedPos) { //so the camera returns to normal
+			moveCameraSection(Std.int(curStep / 16));
 		}
 
 		iconP1.scale.set(1.2, 1.2);

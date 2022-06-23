@@ -7,7 +7,7 @@
 				16
 			],
 			"anim": "singLEFTmiss",
-			"fps": 30,
+			"fps": 60,
 			"name": "L-Miss",
 			"indices": []
 		},
@@ -18,7 +18,7 @@
 				-32
 			],
 			"anim": "singDOWNmiss",
-			"fps": 30,
+			"fps": 60,
 			"name": "D-Miss",
 			"indices": []
 		},
@@ -29,7 +29,7 @@
 				105
 			],
 			"anim": "singUPmiss",
-			"fps": 30,
+			"fps": 60,
 			"name": "U-Miss",
 			"indices": []
 		},
@@ -40,7 +40,7 @@
 				15
 			],
 			"anim": "singRIGHTmiss",
-			"fps": 30,
+			"fps": 60,
 			"name": "R-Miss",
 			"indices": []
 		},
@@ -51,60 +51,60 @@
 				0
 			],
 			"anim": "idle",
-			"fps": 30,
-			"name": "BF annoyed instance 1",
+			"fps": 60,
+			"name": "BF idle dance instance 1",
 			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
-				23,
-				-9
+				25,
+				-3
 			],
 			"anim": "singLEFT",
-			"fps": 30,
-			"name": "BF NOTE LEFT copy instance 1",
+			"fps": 60,
+			"name": "BF NOTE LEFT instance 1",
 			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
-				-55,
-				63
-			],
-			"anim": "singUP",
-			"fps": 30,
-			"name": "BF NOTE UP copy instance 1",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-24,
-				-55
+				-17,
+				-35
 			],
 			"anim": "singDOWN",
-			"fps": 30,
-			"name": "BF NOTE DOWN copy instance 1",
+			"fps": 60,
+			"name": "BF NOTE DOWN instance 1",
 			"indices": []
 		},
 		{
 			"loop": false,
 			"offsets": [
-				-39,
-				-7
+				-57,
+				56
+			],
+			"anim": "singUP",
+			"fps": 60,
+			"name": "BF NOTE UP instance 1",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-35,
+				-9
 			],
 			"anim": "singRIGHT",
-			"fps": 30,
-			"name": "BF NOTE RIGHT copy instance 1",
+			"fps": 60,
+			"name": "BF NOTE RIGHT instance 1",
 			"indices": []
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/BF_FINAL",
+	"image": "characters/BoyFriend_BendyShade",
 	"position": [
 		0,
-		400
+		350
 	],
 	"healthicon": "bf",
 	"flip_x": true,
@@ -114,9 +114,9 @@
 		209
 	],
 	"camera_position": [
-		300,
-		-250
+		0,
+		0
 	],
 	"sing_duration": 4,
-	"scale": 1.5
-}
+	"scale": 1
+} 

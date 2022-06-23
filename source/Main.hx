@@ -80,7 +80,7 @@ class Main extends Sprite
 		focusMusicTween = FlxTween.tween(FlxG.sound, {volume: 0.1}, 0.4);
 	
 		// Conserve power by lowering draw framerate when unfocuced
-		FlxG.drawFramerate = 30;
+		FlxG.drawFramerate = 20;
 	}
 	
 	function onWindowFocusIn()
@@ -173,11 +173,7 @@ class Main extends Sprite
 		#end
 		*/
 
-		#if html5
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
-		#else
-		FlxG.mouse.visible = false;
-		#end
 	}
 }
