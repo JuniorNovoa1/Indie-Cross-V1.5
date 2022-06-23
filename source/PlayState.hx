@@ -5231,7 +5231,7 @@ class PlayState extends MusicBeatState
 	{	
 		CupBullshit2 = new FlxSprite(DAD_X, DAD_Y +300);
 		CupBullshit2.frames = Paths.getSparrowAtlas('bull/Roundabout', 'cup');
-		CupBullshit2.animation.addByPrefix('Shoot', "Hadolen instance 1", 24, true);
+		CupBullshit2.animation.addByPrefix('Shoot', "Roundabout instance 1", 24, true);
 		CupBullshit2.animation.play('Shoot');
 		CupBullshit2.antialiasing = ClientPrefs.globalAntialiasing;
 		CupBullshit2.scrollFactor.set(0.9, 0.9);
@@ -5666,20 +5666,20 @@ class PlayState extends MusicBeatState
 			}
 		}
 		if (curSong == 'nightmare-run')
+		{
+			switch (curStep)
 			{
-				switch (curStep)
-				{
-					case 162:
-				            var runbg2:FlxSprite;
-				            runbg2 = new FlxSprite(DAD_X -14000, 0);
-				            runbg2.frames = Paths.getSparrowAtlas('run/Fuck_the_hallway', 'bendy');
-				            runbg2.scale.set(2.5, 2.5);
-				            runbg2.animation.addByPrefix('idle', "Tunnel instance 1", 60);
-				            runbg2.animation.play('idle');
-				            runbg2.antialiasing = ClientPrefs.globalAntialiasing;
-				            runbg2.screenCenter(Y);
-				            runbg2.updateHitbox();
-				            add(runbg2);
+				case 162:
+				    var runbg2:FlxSprite;
+				    runbg2 = new FlxSprite(DAD_X -14000, 0);
+			        runbg2.frames = Paths.getSparrowAtlas('run/Fuck_the_hallway', 'bendy');
+		            runbg2.scale.set(2.5, 2.5);
+		            runbg2.animation.addByPrefix('idle', "Tunnel instance 1", 60);
+		            runbg2.animation.play('idle');
+			        runbg2.antialiasing = ClientPrefs.globalAntialiasing;
+			        runbg2.screenCenter(Y);
+			        runbg2.updateHitbox();
+			        add(runbg2);
 			}
 		}
 		if (SONG.song == 'Whoopee')
