@@ -1,9 +1,6 @@
 package;
 
 import flixel.graphics.FlxGraphic;
-import flixel.tweens.FlxTween;
-import haxe.CallStack;
-import haxe.io.Path;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
@@ -12,12 +9,20 @@ import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
-import lime.app.Application;
 import openfl.display.StageScaleMode;
+
+#if CRASH_HANDLER
+import lime.app.Application;
 import openfl.events.UncaughtErrorEvent;
+import haxe.CallStack;
+import haxe.io.Path;
+import Discord.DiscordClient;
 import sys.FileSystem;
 import sys.io.File;
 import sys.io.Process;
+#end
+
+import flixel.tweens.FlxTween;
 import GameJolt;
 import Discord.DiscordClient;
 
@@ -54,7 +59,6 @@ class Main extends Sprite
 	{
 		super();
 
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		Application.current.window.onFocusOut.add(onWindowFocusOut);
 		Application.current.window.onFocusIn.add(onWindowFocusIn);
 
@@ -68,6 +72,7 @@ class Main extends Sprite
 		}
 	}
 
+	//trace from izzie engine!!!!!!!
 	function onWindowFocusOut()
 	{
 		trace("Game unfocused");
@@ -84,6 +89,7 @@ class Main extends Sprite
 		FlxG.drawFramerate = 20;
 	}
 	
+	//trace from izzie engine!!!!!!!
 	function onWindowFocusIn()
 	{
 		trace("Game focused");
@@ -96,13 +102,6 @@ class Main extends Sprite
 	
 		// Bring framerate back when focused
 		FlxG.drawFramerate = ClientPrefs.framerate;
-	}
-
-	function onCrash(e:UncaughtErrorEvent):Void
-	{
-		lime.app.Application.current.window.alert('Game will shut down.', 'An error has occured!'); //1. description, 2. Main Title
-
-		Sys.exit(1);
 	}
 
 	private function init(?E:Event):Void
@@ -131,12 +130,6 @@ class Main extends Sprite
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
-
-		#if (desktop && !debug)
-		initialState = Startup;
-		#else
-		initialState = MainMenuState;
-		#end
 	
 		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
@@ -177,20 +170,24 @@ class Main extends Sprite
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 
+		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
+		#end
 	}
+
+	#if CRASH_HANDLER
 	function onCrash(e:UncaughtErrorEvent):Void
 	{
 		var errMsg:String = "";
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var dateNow:String = Date.now().toString();
-
-		dateNow = dateNow.replace(" ", "_");
-		dateNow = dateNow.replace(":", "'");
-
-		path = "./crash/" + "Indie Cross Error_" + dateNow + ".txt";
-
+	
+		//dateNow = dateNow.replace(" ", "_"); //THIS IS BROKEN FOR SOME REASON
+		//dateNow = dateNow.replace(":", "'"); //THIS IS BROKEN FOR SOME REASON
+	
+		path = "./crash/" + "PsychEngine_" + dateNow + ".txt";
+	
 		for (stackItem in callStack)
 		{
 			switch (stackItem)
@@ -201,19 +198,20 @@ class Main extends Sprite
 					Sys.println(stackItem);
 			}
 		}
-
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/JuniorNovoa1/Indie-Cross-V1.5\n\n> Crash Handler written by: sqirra-rng";
-
+	
+		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
+	
 		if (!FileSystem.exists("./crash/"))
 			FileSystem.createDirectory("./crash/");
-
+	
 		File.saveContent(path, errMsg + "\n");
-
+	
 		Sys.println(errMsg);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
-
+	
 		Application.current.window.alert(errMsg, "Error!");
 		DiscordClient.shutdown();
 		Sys.exit(1);
 	}
+	#end
 }
