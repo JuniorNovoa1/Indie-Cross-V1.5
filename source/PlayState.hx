@@ -2228,7 +2228,7 @@ class PlayState extends MusicBeatState
 		startOnTime = 0;
 
 		if(paused) {
-			//TraceLog('Oopsie doopsie! Paused sound');
+			TraceLog('Oopsie doopsie! Paused sound');
 			FlxG.sound.music.pause();
 			vocals.pause();
 		}
@@ -2251,7 +2251,7 @@ class PlayState extends MusicBeatState
 	private var eventPushedMap:Map<String, Bool> = new Map<String, Bool>();
 	private function generateSong(dataPath:String):Void
 	{
-		// FlxG.log.add(ChartParser.parse());
+		TraceLog(ChartParser.parse());
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
 
 		switch(songSpeedType)
@@ -2411,7 +2411,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		// TraceLog(unspawnNotes.length);
+		TraceLog(unspawnNotes.length);
 		// playerCounter += 1;
 
 		unspawnNotes.sort(sortByShit);
@@ -2473,7 +2473,7 @@ class PlayState extends MusicBeatState
 	{
 		for (i in 0...4)
 		{
-			// FlxG.log.add(i);
+			TraceLog(i);
 			var targetAlpha:Float = 1;
 			if (player < 1 && ClientPrefs.middleScroll) targetAlpha = 0.35;
 
@@ -3113,7 +3113,7 @@ class PlayState extends MusicBeatState
 					songTime = (songTime + Conductor.songPosition) / 2;
 					Conductor.lastSongPos = Conductor.songPosition;
 					// Conductor.songPosition += FlxG.elapsed * 1000;
-					// TraceLog('MISSED FRAME');
+					TraceLog('MISSED FRAME');
 				}
 
 				if(updateTime) {
@@ -3404,7 +3404,7 @@ class PlayState extends MusicBeatState
 
 	public function getControl(key:String) {
 		var pressed:Bool = Reflect.getProperty(controls, key);
-		//TraceLog('Control result: ' + pressed);
+		TraceLog('Control result: ' + pressed);
 		return pressed;
 	}
 
@@ -3585,7 +3585,7 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'Play Animation':
-				//TraceLog('Anim to play: ' + value1);
+				TraceLog('Anim to play: ' + value1);
 				var char:Character = dad;
 				switch(value2.toLowerCase().trim()) {
 					case 'bf' | 'boyfriend':
@@ -4134,7 +4134,7 @@ class PlayState extends MusicBeatState
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
-		//TraceLog(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
+		TraceLog(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
 
 		// boyfriend.playAnim('hey');
 		vocals.volume = 1;
@@ -4345,7 +4345,7 @@ class PlayState extends MusicBeatState
 	{
 		var eventKey:FlxKey = event.keyCode;
 		var key:Int = getKeyFromEvent(eventKey);
-		//TraceLog('Pressed: ' + eventKey);
+		TraceLog('Pressed: ' + eventKey);
 
 		if (!cpuControlled && !paused && key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || ClientPrefs.controllerMode))
 		{
@@ -4421,7 +4421,7 @@ class PlayState extends MusicBeatState
 			}
 			callOnLuas('onKeyPress', [key]);
 		}
-		//TraceLog('pressed: ' + controlArray);
+		TraceLog('pressed: ' + controlArray);
 	}
 	
 	private function onKeyRelease(event:KeyboardEvent):Void
@@ -4438,7 +4438,7 @@ class PlayState extends MusicBeatState
 			}
 			callOnLuas('onKeyRelease', [key]);
 		}
-		//TraceLog('released: ' + controlArray);
+		TraceLog('released: ' + controlArray);
 	}
 
 	private function getKeyFromEvent(key:FlxKey):Int
@@ -4545,7 +4545,7 @@ class PlayState extends MusicBeatState
 		}
 
 		//For testing purposes
-		//TraceLog(daNote.missHealth);
+		TraceLog(daNote.missHealth);
 		songMisses++;
 		vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
@@ -4598,7 +4598,7 @@ class PlayState extends MusicBeatState
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
-			// FlxG.log.add('played imss note');
+			TraceLog('played imss note');
 
 			/*boyfriend.stunned = true;
 
@@ -5078,7 +5078,7 @@ class PlayState extends MusicBeatState
 	function TraceLog(EFORE:String)
 	{
         trace(EFORE);
-		FlxG.log.warn(EFORE);
+		FlxG.log.add(EFORE);
 	}
 
 	function BFattackCup()
@@ -5802,7 +5802,7 @@ class PlayState extends MusicBeatState
 		super.beatHit();
 
 		if(lastBeatHit >= curBeat) {
-			//TraceLog('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
+			TraceLog('BEAT HIT: ' + curBeat + ', LAST HIT: ' + lastBeatHit);
 			return;
 		}
 
@@ -5816,7 +5816,7 @@ class PlayState extends MusicBeatState
 			if (SONG.notes[Math.floor(curStep / 16)].changeBPM)
 			{
 				Conductor.changeBPM(SONG.notes[Math.floor(curStep / 16)].bpm);
-				//FlxG.log.add('CHANGED BPM!');
+				TraceLog('CHANGED BPM!');
 				setOnLuas('curBpm', Conductor.bpm);
 				setOnLuas('crochet', Conductor.crochet);
 				setOnLuas('stepCrochet', Conductor.stepCrochet);
@@ -5827,7 +5827,7 @@ class PlayState extends MusicBeatState
 			// else
 			// Conductor.changeBPM(SONG.bpm);
 		}
-		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
+		TraceLog('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 
 		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null && !endingSong && !isCameraOnForcedPos)
 		{
@@ -5979,7 +5979,7 @@ class PlayState extends MusicBeatState
 			{
 				// Rating Percent
 				ratingPercent = Math.min(1, Math.max(0, totalNotesHit / totalPlayed));
-				//TraceLog((totalNotesHit / totalPlayed) + ', Total: ' + totalPlayed + ', notes hit: ' + totalNotesHit);
+				TraceLog((totalNotesHit / totalPlayed) + ', Total: ' + totalPlayed + ', notes hit: ' + totalNotesHit);
 
 				// Rating Name
 				if(ratingPercent >= 1)
