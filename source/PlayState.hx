@@ -2251,7 +2251,7 @@ class PlayState extends MusicBeatState
 	private var eventPushedMap:Map<String, Bool> = new Map<String, Bool>();
 	private function generateSong(dataPath:String):Void
 	{
-		TraceLog(ChartParser.parse());
+		// TraceLog(ChartParser.parse());
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype','multiplicative');
 
 		switch(songSpeedType)
@@ -2411,7 +2411,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		TraceLog(unspawnNotes.length);
+		// TraceLog(unspawnNotes.length);
 		// playerCounter += 1;
 
 		unspawnNotes.sort(sortByShit);
@@ -2473,7 +2473,7 @@ class PlayState extends MusicBeatState
 	{
 		for (i in 0...4)
 		{
-			TraceLog(i);
+			TraceLog("Arrows:" + i);
 			var targetAlpha:Float = 1;
 			if (player < 1 && ClientPrefs.middleScroll) targetAlpha = 0.35;
 
@@ -3113,7 +3113,7 @@ class PlayState extends MusicBeatState
 					songTime = (songTime + Conductor.songPosition) / 2;
 					Conductor.lastSongPos = Conductor.songPosition;
 					// Conductor.songPosition += FlxG.elapsed * 1000;
-					TraceLog('MISSED FRAME');
+					// TraceLog('MISSED FRAME');
 				}
 
 				if(updateTime) {
@@ -4134,7 +4134,7 @@ class PlayState extends MusicBeatState
 	private function popUpScore(note:Note = null):Void
 	{
 		var noteDiff:Float = Math.abs(note.strumTime - Conductor.songPosition + ClientPrefs.ratingOffset);
-		TraceLog(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
+		// TraceLog(noteDiff, ' ' + Math.abs(note.strumTime - Conductor.songPosition));
 
 		// boyfriend.playAnim('hey');
 		vocals.volume = 1;
@@ -4421,7 +4421,7 @@ class PlayState extends MusicBeatState
 			}
 			callOnLuas('onKeyPress', [key]);
 		}
-		TraceLog('pressed: ' + controlArray);
+		// TraceLog('pressed: ' + controlArray);
 	}
 	
 	private function onKeyRelease(event:KeyboardEvent):Void
@@ -4438,7 +4438,7 @@ class PlayState extends MusicBeatState
 			}
 			callOnLuas('onKeyRelease', [key]);
 		}
-		TraceLog('released: ' + controlArray);
+		// TraceLog('released: ' + controlArray);
 	}
 
 	private function getKeyFromEvent(key:FlxKey):Int
@@ -4545,7 +4545,7 @@ class PlayState extends MusicBeatState
 		}
 
 		//For testing purposes
-		TraceLog(daNote.missHealth);
+		// TraceLog(daNote.missHealth);
 		songMisses++;
 		vocals.volume = 0;
 		if(!practiceMode) songScore -= 10;
@@ -5827,7 +5827,7 @@ class PlayState extends MusicBeatState
 			// else
 			// Conductor.changeBPM(SONG.bpm);
 		}
-		TraceLog('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
+		// TraceLog('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 
 		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null && !endingSong && !isCameraOnForcedPos)
 		{
