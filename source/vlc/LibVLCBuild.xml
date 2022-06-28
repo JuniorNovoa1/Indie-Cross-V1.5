@@ -12,6 +12,11 @@
 		<lib name='${CPP_DIR}/lib/libvlccore.lib' if='windows'/>
 	</target>
 
+	<target id='haxe' tool='linker' toolid='app'>
+            <lib name='${CPP_DIR}/lib/libvlc.a' if='macos'/>
+		    <lib name='${CPP_DIR}/lib/libvlccore.a' if='macos'/>
+	</target>
+
 	<target id="haxe" tool="linker" if="macos">
             <flag value="-framework"/>
             <flag value="OpenGL"/>
