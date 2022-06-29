@@ -66,9 +66,9 @@
 		<library name="shared"        preload="true" />
 		<library name="bendy"         preload="true" />
 		<library name="cup"           preload="true" />
-		<library name="sans"           preload="true" />
+		<library name="sans"          preload="true" />
 		<library name="achievements"  preload="true" />
-		<library name="score"  preload="true" />
+		<library name="score"         preload="true" />
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
@@ -81,8 +81,8 @@
 		<library name="score"         preload="false" />
 	</section>
 	
-	<assets path="plugins/"             rename=''               if="VIDEOS_ALLOWED windows" />
-	<assets path="dlls/"                rename=''               if="VIDEOS_ALLOWED windows" />
+	<assets path="plugins/"             rename=''               if="windows" />
+	<assets path="dlls/"                rename=''               if="windows" />
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
