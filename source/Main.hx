@@ -181,12 +181,14 @@ class Main extends Sprite
 		var errMsg:String = "";
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
-		var dateNow:String = Date.now().toString();
+		var dateNow:String = "" + Date.now().toString();
 	
-		//dateNow = dateNow.replace(" ", "_"); //THIS IS BROKEN FOR SOME REASON
-		//dateNow = dateNow.replace(":", "'"); //THIS IS BROKEN FOR SOME REASON
+		/*
+		dateNow = dateNow.replace(" ", "_"); //THIS IS BROKEN FOR SOME REASON
+		dateNow = dateNow.replace(":", "'"); //THIS IS BROKEN FOR SOME REASON
+		*/
 	
-		path = "./crash/" + "PsychEngine_" + dateNow + ".txt";
+		path = "./crash/" + "Indie Cross_" + dateNow + ".txt";
 	
 		for (stackItem in callStack)
 		{
@@ -199,7 +201,22 @@ class Main extends Sprite
 			}
 		}
 	
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += 
+		"\n
+		Uncaught Error: " 
+		+ 
+		e.error 
+		+ 
+		"\n
+		Please report this error to the Discord server: 
+		https://discord.gg/J2HMjaUqfr
+		\n
+		\n
+		> Crash Handler written by: sqirra-rng
+		\n
+		\n
+		> Port by: JuniorNovoa and Bushtrain";
+		//did this so its more editable
 	
 		if (!FileSystem.exists("./crash/"))
 			FileSystem.createDirectory("./crash/");

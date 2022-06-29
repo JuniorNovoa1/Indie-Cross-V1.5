@@ -1124,8 +1124,8 @@ class PlayState extends MusicBeatState
 		}
 
 		//bf next dad!!!!
-		BF_XCAM = boyfriend.x + boyfriendCameraOffset[0];
-		BF_YCAM = boyfriend.y + boyfriendCameraOffset[1];
+		BF_XCAM = boyfriend.x +boyfriendCameraOffset[0];
+		BF_YCAM = boyfriend.y +boyfriendCameraOffset[1];
 
 		BF_XLEFTCAM = BF_XCAM -50;
 		BF_YDOWNCAM = BF_YCAM +50;
@@ -1133,8 +1133,8 @@ class PlayState extends MusicBeatState
 		BF_XRIGHTCAM = BF_XCAM +50;
 
 		//dad now!!!
-		DAD_XCAM = dad.x + opponentCameraOffset[0];
-		DAD_YCAM = dad.y + opponentCameraOffset[1];
+		DAD_XCAM = dad.x +opponentCameraOffset[0];
+		DAD_YCAM = dad.y +opponentCameraOffset[1];
 
 		DAD_XLEFTCAM = DAD_XCAM -50;
 		DAD_YDOWNCAM = DAD_YCAM +50;
@@ -4345,7 +4345,7 @@ class PlayState extends MusicBeatState
 	{
 		var eventKey:FlxKey = event.keyCode;
 		var key:Int = getKeyFromEvent(eventKey);
-		TraceLog('Pressed: ' + eventKey);
+		//TraceLog('Pressed: ' + eventKey);
 
 		if (!cpuControlled && !paused && key > -1 && (FlxG.keys.checkStatus(eventKey, JUST_PRESSED) || ClientPrefs.controllerMode))
 		{
@@ -5979,7 +5979,7 @@ class PlayState extends MusicBeatState
 			{
 				// Rating Percent
 				ratingPercent = Math.min(1, Math.max(0, totalNotesHit / totalPlayed));
-				TraceLog((totalNotesHit / totalPlayed) + ', Total: ' + totalPlayed + ', notes hit: ' + totalNotesHit);
+				//TraceLog((totalNotesHit / totalPlayed) + ', Total: ' + totalPlayed + ', notes hit: ' + totalNotesHit);
 
 				// Rating Name
 				if(ratingPercent >= 1)
