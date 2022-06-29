@@ -15,10 +15,10 @@
 	</target>
 	#end
 
-    #if macos
+    #if mac
 	<target id='haxe' tool='linker'>
-            <lib name='${CPP_DIR}/lib/libvlc.a' if='macos'/>
-		    <lib name='${CPP_DIR}/lib/libvlccore.a' if='macos'/>
+            <lib name='${CPP_DIR}/lib/mac/libvlc.a' if='mac'/>
+		    <lib name='${CPP_DIR}/lib/mac/libvlccore.a' if='mac'/>
 	</target>
     #end
 

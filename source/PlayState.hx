@@ -1124,8 +1124,8 @@ class PlayState extends MusicBeatState
 		}
 
 		//bf next dad!!!!
-		BF_XCAM = boyfriend.x +boyfriendCameraOffset[0];
-		BF_YCAM = boyfriend.y +boyfriendCameraOffset[1];
+		BF_XCAM = boyfriend.x += boyfriendCameraOffset[0];
+		BF_YCAM = boyfriend.y += boyfriendCameraOffset[1];
 
 		BF_XLEFTCAM = BF_XCAM -50;
 		BF_YDOWNCAM = BF_YCAM +50;
@@ -1133,8 +1133,8 @@ class PlayState extends MusicBeatState
 		BF_XRIGHTCAM = BF_XCAM +50;
 
 		//dad now!!!
-		DAD_XCAM = dad.x +opponentCameraOffset[0];
-		DAD_YCAM = dad.y +opponentCameraOffset[1];
+		DAD_XCAM = dad.x += opponentCameraOffset[0];
+		DAD_YCAM = dad.y += opponentCameraOffset[1];
 
 		DAD_XLEFTCAM = DAD_XCAM -50;
 		DAD_YDOWNCAM = DAD_YCAM +50;
@@ -5248,6 +5248,8 @@ class PlayState extends MusicBeatState
 		dad.playAnim('boom', true);
 		dad.nonanimated = true;
 
+		triggerEventNote('Camera Follow Pos', '' + BF_XCAM, '' + BF_YCAM);
+
 		new FlxTimer().start(0.35, function(tmr:FlxTimer)
 		{
 			FlxG.sound.play(Paths.sound('shoot', 'cup'));
@@ -5342,6 +5344,8 @@ class PlayState extends MusicBeatState
 		dad.playAnim('boom', true);
 		dad.nonanimated = true;
 
+		triggerEventNote('Camera Follow Pos', '' + BF_XCAM, '' + BF_YCAM);
+
 		new FlxTimer().start(0.25, function(tmr:FlxTimer)
 		{
 			dad.nonanimated = false;
@@ -5373,10 +5377,14 @@ class PlayState extends MusicBeatState
 			{
 				canDodge = false;
 			}
+
+			triggerEventNote('Camera Follow Pos', '' + BF_XCAM, '' + BF_YCAM);
 		});
 
 		new FlxTimer().start(1.375, function(tmr:FlxTimer)
 		{
+			triggerEventNote('Camera Follow Pos', '' + BF_XCAM, '' + BF_YCAM);
+
 			if (cpuControlled)
 			{
 				BFdodgeCup();
@@ -5546,7 +5554,7 @@ class PlayState extends MusicBeatState
 		CupShootGREEN.antialiasing = ClientPrefs.globalAntialiasing;
 		CupShootGREEN.scrollFactor.set(0.0, 0.0);
 
-		new FlxTimer().start(0.75, function(tmr:FlxTimer)
+		new FlxTimer().start(0.05, function(tmr:FlxTimer)
 		{
 			FlxG.sound.play(Paths.sound('attacks/chaser0', 'cup'));
 			CupShootGREEN.animation.play('ShootGreen');

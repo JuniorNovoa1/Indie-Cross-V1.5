@@ -181,12 +181,10 @@ class Main extends Sprite
 		var errMsg:String = "";
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
-		var dateNow:String = "" + Date.now().toString();
+		var dateNow:String = Date.now().toString();
 	
-		/*
-		dateNow = dateNow.replace(" ", "_"); //THIS IS BROKEN FOR SOME REASON
-		dateNow = dateNow.replace(":", "'"); //THIS IS BROKEN FOR SOME REASON
-		*/
+		//dateNow = dateNow.replace(" ", "_"); //THIS IS BROKEN FOR SOME REASON
+		//dateNow = dateNow.replace(":", "'"); //THIS IS BROKEN FOR SOME REASON
 	
 		path = "./crash/" + "Indie Cross_" + dateNow + ".txt";
 	
