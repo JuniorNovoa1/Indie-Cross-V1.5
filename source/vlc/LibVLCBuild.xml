@@ -1,4 +1,5 @@
 <xml>
+    #if VIDEOS_ALLOWED
 	<set name="PROJECT_DIR" value="${this_dir}" />
 	<set name="CPP_DIR" value="${PROJECT_DIR}/cpp" />
 	
@@ -7,15 +8,19 @@
 		<compilervalue name="-I" value="${CPP_DIR}/src/" />
 	</files>
 	
+	#if windows
 	<target id='haxe' tool='linker' toolid='exe'>
 		<lib name='${CPP_DIR}/lib/libvlc.lib' if='windows'/>
 		<lib name='${CPP_DIR}/lib/libvlccore.lib' if='windows'/>
 	</target>
+	#end
 
-	<target id='haxe' tool='linker' toolid='app'>
+    #if macos
+	<target id='haxe' tool='linker'>
             <lib name='${CPP_DIR}/lib/libvlc.a' if='macos'/>
 		    <lib name='${CPP_DIR}/lib/libvlccore.a' if='macos'/>
 	</target>
+    #end
 
 	<target id="haxe" tool="linker" if="macos">
             <flag value="-framework"/>
@@ -29,5 +34,5 @@
             <flag value="-framework"/>      
             <flag value="Glut"/>
         </target>
-	
+	#end
 </xml>
