@@ -2494,7 +2494,7 @@ class PlayState extends MusicBeatState
 			{
 				playerStrums.add(babyArrow);
 			}
-			else
+			else 
 			{
 				if(ClientPrefs.middleScroll)
 				{
@@ -2503,6 +2503,7 @@ class PlayState extends MusicBeatState
 						babyArrow.x += FlxG.width / 2 + 25;
 					}
 				}
+
 				opponentStrums.add(babyArrow);
 			}
 
@@ -3182,7 +3183,10 @@ class PlayState extends MusicBeatState
 			notes.forEachAlive(function(daNote:Note)
 			{
 				var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
-				if(!daNote.mustPress) strumGroup = opponentStrums;
+				if(!daNote.mustPress) 
+				{
+					strumGroup = opponentStrums;
+				}
 
 				var strumX:Float = strumGroup.members[daNote.noteData].x;
 				var strumY:Float = strumGroup.members[daNote.noteData].y;
