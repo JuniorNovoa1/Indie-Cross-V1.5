@@ -30,6 +30,7 @@ class MainMenuState extends MusicBeatState
 	public static var psychEngineVersion:String = '0.5.2h';
 	public static var IndieCrossVersion:String = '1.5';
 	public static var curSelected:Int = 0;
+	public var mouseControls:Bool = true;
 
 	var optionShit:Array<String> = ['story_mode', 'freeplay', 'options', 'credits', 'awards'];
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -47,6 +48,7 @@ class MainMenuState extends MusicBeatState
 
 	var menuSketch:FlxSprite;
 	var bg:FlxSprite;	
+	
 
 	var U = false;
 	var N = false;
