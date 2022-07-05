@@ -1,5 +1,0 @@
-Start random Bendys
-
-Value1: minimum beats for a Bendy cutout to appear
-
-Value2: maximum beats for a Bendy cutout to appear
