@@ -1,0 +1,5 @@
+Makes a Bendy Cutout pop-up on the screen
+
+Value1: Pop-up instance (1-4)
+
+Value2: nothing
