@@ -82,8 +82,6 @@
 		<library name="score"         preload="false" />
 	</section>
 	
-	<assets path="plugins/"             rename=''               if="VIDEOS_ALLOWED" />
-	<assets path="dlls/"                rename=''               if="VIDEOS_ALLOWED" />
 	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
@@ -121,6 +119,7 @@
 	<haxelib name="tentools" />
     <haxelib name="systools" />
     <ndll name="systools" haxelib="systools" />
+	<haxelib name="hxCodec"/>
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
