@@ -82,11 +82,12 @@ class Main extends Sprite
 		// Lower global volume when unfocused
 		if (focusMusicTween != null)
 			focusMusicTween.cancel();
+
 		if (SoundVolume != 0)
 		{
 			focusMusicTween = FlxTween.tween(FlxG.sound, {volume: 0.1}, 0.4);
 		}
-		else
+		else if (SoundVolume == 0)
 		{
 			focusMusicTween = FlxTween.tween(FlxG.sound, {volume: 0}, 0.4);
 		}
