@@ -146,53 +146,7 @@ class Startup extends MusicBeatState
 
 	public function Video():Void // for background videos and its edited kade engine 1.18 code lol
 	{  
-		#if desktop
-		useVideo = true;
-
-		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
-		var str1:String = "WEBM SHIT";
-		// WebmPlayer.SKIP_STEP_LIMIT = 90;
-		webmHandler = new WebmHandler();
-		webmHandler.source(ourSource);
-		webmHandler.makePlayer();
-		webmHandler.webm.name = str1;
-
-		GlobalVideo.setWebm(webmHandler);
-
-		GlobalVideo.get().source('assets/videos/credits/intro.webm');
-		GlobalVideo.get().clearPause();
-		if (GlobalVideo.isWebm)
-		{
-			GlobalVideo.get().updatePlayer();
-		}
-		GlobalVideo.get().show();
-
-		if (GlobalVideo.isWebm)
-		{
-			GlobalVideo.get().restart();
-		}
-		else
-		{
-			GlobalVideo.get().play();
-		}
-
-		FlxG.sound.playMusic(Paths.sound('credits/intro'));
-	
-		var data = webmHandler.webm.bitmapData;
-		videoSprite = new FlxSprite(-470, -30).loadGraphic(data);
-		videoSprite.scrollFactor.set(0, 0);
-		videoSprite.cameras = [camHUD2];
-		videoSprite.antialiasing = ClientPrefs.globalAntialiasing;
-		videoSprite.screenCenter();
-		add(videoSprite);
-		
-		trace('ITS PLAYING NOW!!!!!!');
-		
-		webmHandler.resume();
-		//VideoPlaying = true;
-		#else
-		VideoPlaying = true;
-		#end
+		trace('No Video Yet');
 	}
 
 	function cache()

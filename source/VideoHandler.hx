@@ -1,195 +1,144 @@
-//This was made by GWebDev lol btw this uses actuate
 package;
 
-import motion.Actuate;
-import openfl.display.Sprite;
-import openfl.events.AsyncErrorEvent;
-import openfl.events.MouseEvent;
-import openfl.events.NetStatusEvent;
-import openfl.media.Video;
-import openfl.net.NetConnection;
-import openfl.net.NetStream;
+#if android
+import android.Tools;
+#end
 import flixel.FlxG;
+import openfl.events.Event;
+import vlc.VLCBitmap;
 
-using StringTools;
+/**
+ * Play a video using cpp.
+ * Use bitmap to connect to a graphic or use `VideoSprite`.
+ */
+class VideoHandler extends VLCBitmap {
+	public var readyCallback:Void->Void = null;
+	public var finishCallback:Void->Void = null;
 
-class VideoHandler
-{
-	public var netStream:NetStream;
-	public var video:Video;
-	public var isReady:Bool = false;
-	public var addOverlay:Bool = false;
-	public var vidPath:String = "";
-	public var ignoreShit:Bool = false;
-	
-	public function new()
-	{
-		isReady = false;
+	public var canSkip:Bool = true;
+	public var canUseSound:Bool = true;
+	public var canUseAutoResize:Bool = true;
+
+	private var pauseMusic:Bool = false;
+
+	public function new() {
+		super();
+
+		onReady = onVLCReady;
+		onComplete = onVLCComplete;
+		onError = onVLCError;
+
+		FlxG.addChildBelowMouse(this);
 	}
-	
-	public function source(?vPath:String):Void
-	{
-		if (vPath != null && vPath.length > 0)
-		{
-		vidPath = vPath;
+
+	private function update(?e:Event):Void {
+		if (canSkip
+			&& ((FlxG.keys.justPressed.ENTER && !FlxG.keys.pressed.ALT)
+				|| FlxG.keys.justPressed.SPACE #if android || FlxG.android.justReleased.BACK #end)
+			&& initComplete)
+			onVLCComplete();
+
+		if (FlxG.sound.muted || FlxG.sound.volume <= 0)
+			volume = 0;
+		else if (canUseSound)
+			volume = FlxG.sound.volume;
+	}
+
+	private function resize(?e:Event):Void {
+		if (canUseAutoResize) {
+			set_width(calc(0));
+			set_height(calc(1));
 		}
 	}
-	
-	public function init1():Void
-	{
-		isReady = false;
-		video = new Video();
-		video.visible = false;
-	}
-	
-	public function init2():Void
-	{
-		#if web
-		var netConnection = new NetConnection ();
-		netConnection.connect (null);
-		
-		netStream = new NetStream (netConnection);
-		netStream.client = { onMetaData: client_onMetaData };
-		netStream.addEventListener (AsyncErrorEvent.ASYNC_ERROR, netStream_onAsyncError);
 
-		netConnection.addEventListener (NetStatusEvent.NET_STATUS, netConnection_onNetStatus);
-		netConnection.addEventListener (NetStatusEvent.NET_STATUS, onPlay);
-		netConnection.addEventListener (NetStatusEvent.NET_STATUS, onEnd);
+	private function createUrl(fileName:String):String {
+		#if android
+		var filePath:String = Tools.getFileUrl(fileName);
+		return filePath;
+		#elseif linux
+		var filePath:String = 'file://' + Sys.getCwd() + fileName;
+		return filePath;
+		#elseif (windows || mac)
+		var filePath:String = 'file:///' + Sys.getCwd() + fileName;
+		return filePath;
 		#end
 	}
-	
-	public function client_onMetaData (metaData:Dynamic) {
-		
-		video.attachNetStream (netStream);
-		
-		video.width = FlxG.width;
-		video.height = FlxG.height;
-		
+
+	private function onVLCReady():Void {
+		if (readyCallback != null)
+			readyCallback();
 	}
-	
-	
-	public function netStream_onAsyncError (event:AsyncErrorEvent):Void {
-		
-		trace ("Error loading video");
-		
+
+	private function onVLCError(e:String):Void {
+		throw "VLC caught an error: " + e;
 	}
-	
-	
-	public function netConnection_onNetStatus (event:NetStatusEvent):Void {
-		trace (event.info.code);
-	}
-	
-	public function play():Void
-	{
-		#if web
-		ignoreShit = true;
-		netStream.close();
-		init2();
-		netStream.play(vidPath);
-		ignoreShit = false;
-		#end
-		trace(vidPath);
-	}
-	
-	public function stop():Void
-	{
-		netStream.close();
-		onStop();
-	}
-	
-	public function restart():Void
-	{
-		play();
-		onRestart();
-	}
-	
-	public function update(elapsed:Float):Void
-	{
-		video.x = GlobalVideo.calc(0);
-		video.y = GlobalVideo.calc(1);
-		video.width = GlobalVideo.calc(2);
-		video.height = GlobalVideo.calc(3);
-	}
-	
-	public var stopped:Bool = false;
-	public var restarted:Bool = false;
-	public var played:Bool = false;
-	public var ended:Bool = false;
-	public var paused:Bool = false;
-	
-	public function pause():Void
-	{
-		netStream.pause();
-		paused = true;
-	}
-	
-	public function resume():Void
-	{
-		netStream.resume();
-		paused = false;
-	}
-	
-	public function togglePause():Void
-	{
-		if (paused)
-		{
-			resume();
-		} else {
-			pause();
+
+	private function onVLCComplete() {
+		if (FlxG.sound.music != null && pauseMusic)
+			FlxG.sound.music.resume();
+
+		if (FlxG.stage.hasEventListener(Event.ENTER_FRAME))
+			FlxG.stage.removeEventListener(Event.ENTER_FRAME, update);
+
+		if (FlxG.stage.hasEventListener(Event.RESIZE))
+			FlxG.stage.removeEventListener(Event.RESIZE, resize);
+
+		if (FlxG.signals.focusGained.has(resume))
+			FlxG.signals.focusGained.remove(resume);
+
+		if (FlxG.signals.focusLost.has(pause))
+			FlxG.signals.focusLost.remove(pause);
+
+		dispose();
+
+		if (FlxG.game.contains(this)) {
+			FlxG.game.removeChild(this);
+
+			if (finishCallback != null)
+				finishCallback();
 		}
 	}
-	
-	public function clearPause():Void
-	{
-		paused = false;
+
+	/**
+	 * Native video support for Flixel & OpenFL
+	 * @param path Example: `your/video/here.mp4`
+	 * @param loop Loop the video.
+	 * @param haccelerated if you want the hardware to accelerated for the video.
+	 * @param pauseMusic Pause music until done video.
+	 */
+	public function playVideo(path:String, loop:Bool = false, haccelerated:Bool = true, pauseMusic:Bool = false):Void {
+		this.pauseMusic = pauseMusic;
+
+		if (FlxG.sound.music != null && pauseMusic)
+			FlxG.sound.music.pause();
+
+		resize();
+		playFile(createUrl(path), loop, haccelerated);
+
+		FlxG.stage.addEventListener(Event.ENTER_FRAME, update);
+		FlxG.stage.addEventListener(Event.RESIZE, resize);
+
+		FlxG.signals.focusGained.add(resume);
+		FlxG.signals.focusLost.add(pause);
 	}
-	
-	public function onStop():Void
-	{
-		if (!ignoreShit)
-		{
-			stopped = true;
+
+	private function calc(ind:Int):Float {
+		var appliedWidth:Float = FlxG.stage.stageHeight * (FlxG.width / FlxG.height);
+		var appliedHeight:Float = FlxG.stage.stageWidth * (FlxG.height / FlxG.width);
+
+		if (appliedHeight > FlxG.stage.stageHeight)
+			appliedHeight = FlxG.stage.stageHeight;
+
+		if (appliedWidth > FlxG.stage.stageWidth)
+			appliedWidth = FlxG.stage.stageWidth;
+
+		switch (ind) {
+			case 0:
+				return appliedWidth;
+			case 1:
+				return appliedHeight;
 		}
-	}
-	
-	public function onRestart():Void
-	{
-		restarted = true;
-	}
-	
-	public function onPlay(event:NetStatusEvent):Void
-	{
-		if (event.info.code == "NetStream.Play.Start")
-		{
-			played = true;
-		}
-	}
-	
-	public function onEnd(event:NetStatusEvent):Void
-	{
-		if (event.info.code == "NetStream.Play.Complete")
-		{
-			ended = true;
-		}
-	}
-	
-	public function alpha():Void
-	{
-		video.alpha = GlobalVideo.daAlpha1;
-	}
-	
-	public function unalpha():Void
-	{
-		video.alpha = GlobalVideo.daAlpha2;
-	}
-	
-	public function hide():Void
-	{
-		video.visible = false;
-	}
-	
-	public function show():Void
-	{
-		video.visible = true;
+
+		return 0;
 	}
 }

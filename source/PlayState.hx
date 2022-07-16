@@ -1505,6 +1505,30 @@ class PlayState extends MusicBeatState
 				remove(Wallop);
 			});
 		}
+
+		function playCutscene(name:String, atEndOfSong:Bool = false)
+			{
+				inCutscene = true;
+				FlxG.sound.music.stop();
+			
+				var video:VideoHandler = new VideoHandler();
+				video.finishCallback = function()
+				{
+					if (atEndOfSong)
+					{
+						if (storyPlaylist.length <= 0)
+							FlxG.switchState(new StoryMenuState());
+						else
+						{
+							SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
+							FlxG.switchState(new PlayState());
+						}
+					}
+					else
+						startCountdown();
+				}
+				video.playVideo(Paths.video(name));
+			}
 		
 		var daSong:String = Paths.formatToSongPath(curSong);
 		if (isStoryMode && !seenCutscene)
@@ -1568,41 +1592,40 @@ class PlayState extends MusicBeatState
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
 				case 'snake-eyes':
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/1.webm", new PlayState()));
-					startCountdown();
+                    playCutscene('1');
 				case 'technicolor-tussle':
 					Warning.CupWarning = true;
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/2.webm", new Warning()));
+					playCutscene('2');
 					startCountdown();
 				case 'knockout':
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/cuphead/3.webm", new PlayState()));
+					playCutscene('3');
 					startCountdown();
 				case 'imminent-demise':
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/1.webm", new PlayState()));
+					playCutscene('1b');
 					startCountdown();
 			    case 'terrible-sin':
 					Warning.BendyWarning1 = true;
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/2.webm", new Warning()));
+					playCutscene('2b');
 					startCountdown();
 				case 'last-reel':
 					Warning.BendyWarning2 = true;
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/3.webm", new Warning()));
+					playCutscene('3b');
 					startCountdown();
 				case 'nightmare-run':
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/bendy/4.webm", new PlayState()));
+					playCutscene('4b');
 					startCountdown();
 				case 'whoopee':
 					Warning.SansWarning = true;
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/1.webm", new Warning()));
+					playCutscene('1s');
 					startCountdown();
 				case 'sansational':
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/2.webm", new PlayState()));
+					playCutscene('2s');
 					startCountdown();
 				case 'final-stretch':
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/3.webm", new PlayState()));
+					playCutscene('3s');
 					startCountdown();
 				case 'burning-in-hell':
-					LoadingState.loadAndSwitchState(new VideoState("assets/videos/sans/4b.webm", new PlayState()));
+					playCutscene('4s2');
 					startCountdown();
 				default:
 					startCountdown();
